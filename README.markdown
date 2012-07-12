@@ -5,6 +5,8 @@ A jQuery plugin that dynamically generates a table of contents. Tocify can be op
 
 [Homepage](http://gregfranko.com/jquery.tocify.js/)
 
+[Annotated Source Code](http://gregfranko.com/docs/jquery.tocify.html)
+
 **Notable Features**
 
    - Styleable with the **jQueryUI Themeroller**
@@ -25,6 +27,9 @@ A jQuery plugin that dynamically generates a table of contents. Tocify can be op
 jQuery 1.7.2+
 
 jQueryUI Widget Factory 1.8.20+
+
+##Requirements
+History.js 1.7.1+
 
 ##Browser Support
 IE7+, Firefox 4+, Chrome, Safari 4+, and Opera 11+
@@ -47,7 +52,7 @@ If you find that you need a feature that Tocify does not currently support, eith
 ##Change Log
 
 
-`0.1.0` - July 11, 2012
+`0.1.0` - July 12, 2012
 
 - Initial Tocify release.  Added annotated source code and documentation
 

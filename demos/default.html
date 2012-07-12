@@ -60,24 +60,47 @@
 <br />
 <h1>Optional Dependencies</h1>
 <br />
-<h4 class="headerDoc">History.js</h4>
+<h4 class="headerDoc">jQueryUI CSS Theme</h4>
+<p>A jQueryUI theme is only required if you want to use jQueryUI to style your table of contents
+<br /><br />
+<h4 class="headerDoc">History.js 1.7.1+</h4>
 <p>History.js is required if you want forward and back button support.
 <br /><br />
-Note: If you do not include History.js, then Tocify will not have history support, but it will still be functional.
+Note: If you do not include History.js, then Tocify will not have history support, but it will still be fully functional.
 </p>
 <br />
+
+<h1>Browser Support</h1>
+<br />
+<h5>IE7+, Firefox 4+, Chrome, Safari 4+, and Opera 11+</h3>
+<br /><br />
+
 <h1>Getting Started</h1>
 <br />
 <h3 class="headerDoc">Downloads</h3>
 <br />
 <p>Download the latest versions of...</p>
 1. <a href="http://www.jquery.com" target="_blank">jQuery</a>
-<br />
-2. <a href="http://jqueryui.com/download" target="_blank">jQueryUI Widget Factory</a> (You only need the Widget component underneath the UI Core dependency)
-<br />
-3. <a href="https://github.com/balupton/History.js/" target="_blank">History.js</a> (If you want forward and back button support)
 <br /><br />
-<h3 class="headerDoc">HTML</h3>
+2. <a href="http://jqueryui.com/download" target="_blank">jQueryUI Widget Factory</a> (You only need the Widget component underneath the UI Core dependency)
+<br /><br />
+3. <a href="http://jqueryui.com/download" target="_blank">jQueryUI CSS Theme</a> (Only required if you want to use jQueryUI to style your table of contents)
+<br /><br />
+4. <a href="https://github.com/balupton/History.js/" target="_blank">History.js</a> (Only required if you want forward and back button support)
+<br /><br />
+<h3 class="headerDoc">Code</h3>
+<br />
+<p class="headerDoc">HTML</p>
+1. Create a div element with a unique id (eg. "toc")
+<br /><br />
+<p class="headerDoc">JavaScript</p>
+2. Call the tocify plugin on the element you just created
+<br /><br />
+<p class="headerDoc">CSS</p>
+3. Adjust jquery.css styles to match your page
+
+<br /><br />
+<iframe style="width: 100%; height: 300px" src="http://jsfiddle.net/gregfranko/fykPc/5/embedded/html,js,css,result/presentation/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 
 <br /><br />
 <h1>Options</h1>
@@ -211,6 +234,20 @@ $(function() {
     var toc = $("#toc").tocify({ context: ".documentation", selectors: "h1, h3, h4" });
     $('#switcher').themeswitcher();
 });
+</script>
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-30888305-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
 </script>
 
 
