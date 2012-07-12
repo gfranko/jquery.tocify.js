@@ -1,0 +1,191 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Tocify by gfranko</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+<div id="toc">
+  <div class="toc-title">
+    <h1>Tocify</h1>
+    <p>A jQueryUI Table of Contents Plugin</p>
+    <div id="switcher" align="center"></div>
+  </div>
+</div>
+<div class="documentation well">
+<br /><b />
+<h1>Description</h1>
+<br />
+<div class="github-widget" data-repo="gfranko/jquery.tocify.js"></div>
+<br />
+<h3>Notable Features</h3>
+<br />
+<p>Supports <span class="headerDoc">HTML5 History pushstate API</span> (via History.js) for forward and back button support</p>
+<br />
+<p>Supports styling with <span class="headerDoc">jQueryUI Themeroller</span></p>
+<br />
+<p>Supports show/hide animations with <span class="headerDoc">jQuery effects</span></p>
+<br />
+<p>Supports <span class="headerDoc">smooth scrolling animations</span>
+</p>
+<br />
+<p>Supports <span class="headerDoc">dynamic scroll highlighting</span></p>
+<br />
+<p>Supports <span class="headerDoc">dynamic scroll show/hide effects</span></p>
+<br />
+<p>Supports <span class="headerDoc">page extender</span> option to make sure a page is big enough to scroll to all table of content items</p>
+<br />
+<h1>Requirements</h1>
+<br />
+<h4>jQuery 1.7.2+</h4>
+<p>The latest version of jQuery is always recommended</p>
+<br />
+<h4>jQueryUI Widget Factory 1.8.20+</h4>
+<p>The latest version of the jQueryUI Widget Factory is always recommended</p>
+<br />
+<h1>Optional Dependencies</h1>
+<br />
+<h4>History.js</h4>
+<p>History.js is required if you want forward and back button support.
+<br /><br />
+Note: If you do not include History.js, then Tocify will not have history support, but it will still be functional.
+</p>
+<br />
+<h1>Getting Started</h1>
+<br />
+<h3>Downloads</h3>
+<br />
+<p>Download the latest versions of...</p>
+1. <a href="http://www.jquery.com" target="_blank">jQuery</a>
+<br />
+2. <a href="http://jqueryui.com/download" target="_blank">jQueryUI Widget Factory</a> (You only need the Widget component underneath the UI Core dependency)
+<br />
+3. <a href="https://github.com/balupton/History.js/" target="_blank">History.js</a> (If you want forward and back button support)
+
+<br /><br />
+<h1>Options</h1>
+<br />
+<h3>context</h3>
+<p>The container element that holds all of the elements used to generate the table of contents.</p>
+<br />
+<p>Accepts String: Any jQuery selector</p>
+<br />
+<h6>Default</h6>
+<p>context: "body"</p>
+<br /><br />
+<h3>selectors</h3>
+<p>The element's used to generate the table of contents.  The order is very important since it will determine the table of content's nesting structure</p>
+<br />
+<p>Accepts a String Array: Each string must be a valid jQuery selector</p>
+<br />
+<h6>Default</h6>
+<p>selectors: ["h1"]</p>
+<br /><br />
+<h3>showEffect</h3>
+<p>Used to display any of the table of contents nested items</p>
+<br />
+<p>Accepts String: "none", "fadeIn", "show", "slideDown", or any of the jQueryUI show effects (i.e. "bounce")</p>
+<br />
+<h6>Default</h6>
+<p>showEffect: "slideDown"</p>
+<br /><br />
+<h3>showEffectSpeed</h3>
+<p>The time duration of the show animation</p>
+<br />
+<p>Accepts Number (milliseconds) or String: "slow", "medium", or "fast"</p>
+<br />
+<h6>Default</h6>
+<p>showEffectSpeed: "medium"</p>
+<br /><br />
+<h3>hideEffect</h3>
+<p>Used to hide any of the table of contents nested items</p>
+<br />
+<p>Accepts String: "none", "fadeOut", "hide", "slideUp", or any of the jQueryUI hide effects (i.e. "explode")</p>
+<br />
+<h6>Default</h6>
+<p>hideEffect: "slideUp"</p>
+<br /><br />
+<h3>hideEffectSpeed</h3>
+<p>The time duration of the hide animation</p>
+<br />
+<p>Accepts Number (milliseconds) or String: "slow", "medium", or "fast"</p>
+<br />
+<h6>Default</h6>
+<p>hideEffectSpeed: "medium"</p>
+<br /><br />
+<h3>smoothScroll</h3>
+<p>Animates the page scroll when specific table of content items are clicked and the page moves up or down</p>
+<br />
+<p>Accepts a boolean: true or false</p>
+<br />
+<h6>Default</h6>
+<p>smoothScroll: true</p>
+<br /><br />
+<h3>smoothScrollSpeed</h3>
+<p>The time duration of the smoothScroll animation</p>
+<br />
+<p>Accepts Number (milliseconds) or String: "slow", "medium", or "fast"</p>
+<br />
+<h6>Default</h6>
+<p>smoothScrollSpeed: "medium"</p>
+<br /><br />
+<h3>showAndHideOnScroll</h3>
+<br />
+<p>Determines if table of content nested items should be shown and hidden while a user scrolls the page</p>
+<br />
+<p>Accepts a boolean: true or false</p>
+<br />
+<h6>Default</h6>
+<br />
+<p>showAndHideOnScroll: true</p>
+<br /><br />
+<h3>highlightOnScroll</h3>
+<br />
+<p>Determines if table of content nested items should be highlighted (set to a different background color to show it is the currently active item) while scrolling</p>
+<br />
+<p>Accepts a boolean: true or false</p>
+<br />
+<h6>Default</h6>
+<br />
+<p>highlightOnScroll: true</p>
+<br /><br />
+
+<h3>highlightOffset</h3>
+<br />
+<p>The offset distance in pixels to trigger the next active table of contents item</p>
+<br />
+<p>Accepts a number</p>
+<br />
+<h6>Default</h6>
+<br />
+<p>highlightOffset: 40</p>
+<br /><br />
+
+<h3>jqueryUI</h3>
+<br />
+<p>Determines if jqueryUI or regular CSS classes will be added to the table of contents</p>
+<br />
+<p>Accepts a boolean: true or false</p>
+<br />
+<h6>Default</h6>
+<br />
+<p>jqueryUI: true</p>
+<br /><br />
+
+<h3>extendPage</h3>
+<br />
+<p>If a user scrolls to the bottom of the page and the page is not tall enough to scroll to the last table of contents item, then the page height is increased</p>
+<br />
+<p>Accepts a boolean: true or false</p>
+<br />
+<h6>Default</h6>
+<br />
+<p>extendPage: true</p>
+
+</div>
+
+  </body>
+</html>
