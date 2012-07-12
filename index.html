@@ -1,84 +1,252 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
   <head>
-    <meta charset='utf-8' />
-    <meta http-equiv="X-UA-Compatible" content="chrome=1" />
-    <meta name="description" content="Jquery.tocify.js : A jQuery plugin, inspired by the Can.js and JavaScript Garden documentation, that dynamically generates a table of contents.  Tocify can be optionally styled with ThemeRoller, and animated with jQuery show/hide effects.  Tocify also provides support for smooth scrolling, scroll highlighting, and the HTML5 pushstate API via History.js." />
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Tocify by gfranko</title>
+    <link href='http://fonts.googleapis.com/css?family=Kameron:400,700|Sansita+One' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="stylesheets/bootstrap.css" />
+    <link type="text/css" rel="stylesheet" href="src/stylesheets/jqueryUI/jquery-ui-1.8.18.custom.css" />
+    <link type="text/css" rel="stylesheet" href="src/stylesheets/Tocify/jquery.tocify.css" />
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if gt IE 5]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Jquery.tocify.js</title>
   </head>
-
   <body>
+<a href="https://github.com/gfranko/jquery.tocify.js" target="_blank"><img style="position: fixed;top: 0; right: 0; border: 0;z-index:999999;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png" alt="Fork me on GitHub" alt="Fork me on GitHub"></a>
+<br />
+<div id="toc">
+  <div class="toc-title">
+    <h1>Tocify</h1>
+    <p>A jQuery Table of Contents Plugin</p>
+    <div id="switcher" align="center"></div>
+  </div>
+</div>
+<div class="documentation well">
+<br /><b />
+<h1>Description</h1>
+<br />
+<div class="github-widget" data-repo="gfranko/jquery.tocify.js"></div>
+<br />
+<h3>Notable Features</h3>
+<br />
+<p>Supports <span class="headerDoc">HTML5 History pushstate API</span> (via History.js) for forward and back button support</p>
+<br />
+<p>Supports styling with <span class="headerDoc">jQueryUI Themeroller</span></p>
+<br />
+<p>Supports show/hide animations with <span class="headerDoc">jQuery effects</span></p>
+<br />
+<p>Supports <span class="headerDoc">smooth scrolling animations</span>
+</p>
+<br />
+<p>Supports <span class="headerDoc">dynamic scroll highlighting</span></p>
+<br />
+<p>Supports <span class="headerDoc">dynamic scroll show/hide effects</span></p>
+<br />
+<p>Supports <span class="headerDoc">page extender</span> option to make sure a page is big enough to scroll to all table of content items</p>
+<br />
+<h1>Requirements</h1>
+<br />
+<h4 class="headerDoc">jQuery 1.7.2+</h4>
+<p>The latest version of jQuery is always recommended</p>
+<br />
+<h4 class="headerDoc">jQueryUI Widget Factory 1.8.20+</h4>
+<p>The latest version of the jQueryUI Widget Factory is always recommended</p>
+<br />
+<h1>Optional Dependencies</h1>
+<br />
+<h4 class="headerDoc">jQueryUI CSS Theme</h4>
+<p>A jQueryUI theme is only required if you want to use jQueryUI to style your table of contents
+<br /><br />
+<h4 class="headerDoc">History.js 1.7.1+</h4>
+<p>History.js is required if you want forward and back button support.
+<br /><br />
+Note: If you do not include History.js, then Tocify will not have history support, but it will still be fully functional.
+</p>
+<br />
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/gfranko/jquery.tocify.js">View on GitHub</a>
+<h1>Browser Support</h1>
+<br />
+<h5>IE7+, Firefox 4+, Chrome, Safari 4+, and Opera 11+</h3>
+<br /><br />
 
-          <h1 id="project_title">Jquery.tocify.js</h1>
-          <h2 id="project_tagline">A jQuery plugin, inspired by the Can.js and JavaScript Garden documentation, that dynamically generates a table of contents.  Tocify can be optionally styled with ThemeRoller, and animated with jQuery show/hide effects.  Tocify also provides support for smooth scrolling, scroll highlighting, and the HTML5 pushstate API via History.js.</h2>
+<h1>Getting Started</h1>
+<br />
+<h3 class="headerDoc">Downloads</h3>
+<br />
+<p>Download the latest versions of...</p>
+1. <a href="http://www.jquery.com" target="_blank">jQuery</a>
+<br /><br />
+2. <a href="http://jqueryui.com/download" target="_blank">jQueryUI Widget Factory</a> (You only need the Widget component underneath the UI Core dependency)
+<br /><br />
+3. <a href="http://jqueryui.com/download" target="_blank">jQueryUI CSS Theme</a> (Only required if you want to use jQueryUI to style your table of contents)
+<br /><br />
+4. <a href="https://github.com/balupton/History.js/" target="_blank">History.js</a> (Only required if you want forward and back button support)
+<br /><br />
+<h3 class="headerDoc">Code</h3>
+<br />
+<p class="headerDoc">HTML</p>
+1. Create a div element with a unique id (eg. "toc")
+<br /><br />
+<p class="headerDoc">JavaScript</p>
+2. Call the tocify plugin on the element you just created
+<br /><br />
+<p class="headerDoc">CSS</p>
+3. Adjust jquery.css styles to match your page
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/gfranko/jquery.tocify.js/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/gfranko/jquery.tocify.js/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
+<br /><br />
+<iframe style="width: 100%; height: 300px" src="http://jsfiddle.net/gregfranko/fykPc/5/embedded/html,js,css,result/presentation/" allowfullscreen="allowfullscreen" frameborder="0"></iframe>
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>Welcome to GitHub Pages.</h3>
+<br /><br />
+<h1>Options</h1>
+<br />
+<h3 class="headerDoc">context</h3>
+<p>The container element that holds all of the elements used to generate the table of contents.</p>
+<br />
+<p>Accepts String: Any jQuery selector</p>
+<br />
+<h6>Default</h6>
+<p>context: "body"</p>
+<br /><br />
+<h3 class="headerDoc">selectors</h3>
+<p>The element's used to generate the table of contents.  The order is very important since it will determine the table of content's nesting structure</p>
+<br />
+<p>Accepts a String: Each comma separated selector must be a valid jQuery selector</p>
+<br />
+<h6>Default</h6>
+<p>selectors: "h1, h2, h3"</p>
+<br /><br />
+<h3 class="headerDoc">showEffect</h3>
+<p>Used to display any of the table of contents nested items</p>
+<br />
+<p>Accepts String: "none", "fadeIn", "show", "slideDown", or any of the jQueryUI show effects (i.e. "bounce")</p>
+<br />
+<h6>Default</h6>
+<p>showEffect: "slideDown"</p>
+<br /><br />
+<h3 class="headerDoc">showEffectSpeed</h3>
+<p>The time duration of the show animation</p>
+<br />
+<p>Accepts Number (milliseconds) or String: "slow", "medium", or "fast"</p>
+<br />
+<h6>Default</h6>
+<p>showEffectSpeed: "medium"</p>
+<br /><br />
+<h3 class="headerDoc">hideEffect</h3>
+<p>Used to hide any of the table of contents nested items</p>
+<br />
+<p>Accepts String: "none", "fadeOut", "hide", "slideUp", or any of the jQueryUI hide effects (i.e. "explode")</p>
+<br />
+<h6>Default</h6>
+<p>hideEffect: "slideUp"</p>
+<br /><br />
+<h3 class="headerDoc">hideEffectSpeed</h3>
+<p>The time duration of the hide animation</p>
+<br />
+<p>Accepts Number (milliseconds) or String: "slow", "medium", or "fast"</p>
+<br />
+<h6>Default</h6>
+<p>hideEffectSpeed: "medium"</p>
+<br /><br />
+<h3 class="headerDoc">smoothScroll</h3>
+<p>Animates the page scroll when specific table of content items are clicked and the page moves up or down</p>
+<br />
+<p>Accepts a boolean: true or false</p>
+<br />
+<h6>Default</h6>
+<p>smoothScroll: true</p>
+<br /><br />
+<h3 class="headerDoc">smoothScrollSpeed</h3>
+<p>The time duration of the smoothScroll animation</p>
+<br />
+<p>Accepts Number (milliseconds) or String: "slow", "medium", or "fast"</p>
+<br />
+<h6>Default</h6>
+<p>smoothScrollSpeed: "medium"</p>
+<br /><br />
+<h3 class="headerDoc">showAndHideOnScroll</h3>
+<br />
+<p>Determines if table of content nested items should be shown and hidden while a user scrolls the page</p>
+<br />
+<p>Accepts a boolean: true or false</p>
+<br />
+<h6>Default</h6>
+<br />
+<p>showAndHideOnScroll: true</p>
+<br /><br />
+<h3 class="headerDoc">highlightOnScroll</h3>
+<br />
+<p>Determines if table of content nested items should be highlighted (set to a different background color to show it is the currently active item) while scrolling</p>
+<br />
+<p>Accepts a boolean: true or false</p>
+<br />
+<h6>Default</h6>
+<br />
+<p>highlightOnScroll: true</p>
+<br /><br />
 
-<p>This automatic page generator is the easiest way to create beautiful pages for all of your projects. Author your page content here using GitHub Flavored Markdown, select a template crafted by a designer, and publish. After your page is generated, you can check out the new branch:</p>
+<h3 class="headerDoc">highlightOffset</h3>
+<br />
+<p>The offset distance in pixels to trigger the next active table of contents item</p>
+<br />
+<p>Accepts a number</p>
+<br />
+<h6>Default</h6>
+<br />
+<p>highlightOffset: 40</p>
+<br /><br />
 
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
+<h3 class="headerDoc">jqueryUI</h3>
+<br />
+<p>Determines if jqueryUI or regular CSS classes will be added to the table of contents</p>
+<br />
+<p>Accepts a boolean: true or false</p>
+<br />
+<h6>Default</h6>
+<br />
+<p>jqueryUI: true</p>
+<br /><br />
 
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
+<h3 class="headerDoc">extendPage</h3>
+<br />
+<p>If a user scrolls to the bottom of the page and the page is not tall enough to scroll to the last table of contents item, then the page height is increased</p>
+<br />
+<p>Accepts a boolean: true or false</p>
+<br />
+<h6>Default</h6>
+<br />
+<p>extendPage: true</p>
+<br /><br />
 
-<h3>Designer Templates</h3>
+<h1>Inspired By</h1>
+<br />
+<h3 class="headerDoc"><a href="http://www.canjs.us/" target="_blank">Can.js</a></h3>
+<br /><br />
+<h3 class="headerDoc"><a href="http://bonsaiden.github.com/JavaScript-Garden/" target="_blank">JavaScript Garden</a></h3>
+<br /><br />
 
-<p>We've crafted some handsome templates for you to use. Go ahead and continue to layouts to browse through them. You can easily go back to edit your page before publishing. After publishing your page, you can revisit the page generator and switch to another theme. Your Page content will be preserved if it remained markdown format.</p>
-
-<h3>Rather Drive Stick?</h3>
-
-<p>If you prefer to not use the automatic generator, push a branch named <code>gh-pages</code> to your repository to create a page manually. In addition to supporting regular HTML content, GitHub Pages support Jekyll, a simple, blog aware static site generator written by our own Tom Preston-Werner. Jekyll makes it easy to create site-wide headers and footers without having to copy them across every page. It also offers intelligent blog support and other advanced templating features.</p>
-
-<h3>Authors and Contributors</h3>
-
-<p>You can <a href="https://github.com/blog/821" class="user-mention">@mention</a> a GitHub username to generate a link to their profile. The resulting <code>&lt;a&gt;</code> element will link to the contributor's GitHub Profile. For example: In 2007, Chris Wanstrath (<a href="https://github.com/defunkt" class="user-mention">@defunkt</a>), PJ Hyett (<a href="https://github.com/pjhyett" class="user-mention">@pjhyett</a>), and Tom Preston-Werner (<a href="https://github.com/mojombo" class="user-mention">@mojombo</a>) founded GitHub.</p>
-
-<h3>Support or Contact</h3>
-
-<p>Having trouble with Pages? Check out the documentation at <a href="http://help.github.com/pages">http://help.github.com/pages</a> or contact <a href="mailto:support@github.com">support@github.com</a> and we’ll help you sort it out.</p>
-      </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Jquery.tocify.js maintained by <a href="https://github.com/gfranko">gfranko</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-              <script type="text/javascript">
-            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-          </script>
-          <script type="text/javascript">
-            try {
-              var pageTracker = _gat._getTracker("UA-30888305-1");
-            pageTracker._trackPageview();
-            } catch(err) {}
-          </script>
+<h1>Contributors</h1>
+<br />
+<h3 class="headerDoc"><a href="https://github.com/gfranko" target="_blank">Greg Franko</a></h3>
+</div>
+<script src="libs/jquery/jquery-1.7.2.min.js"></script>
+<script src="libs/jqueryui/jquery-ui-1.8.20.custom.min.js"></script>
+<script src="libs/history/jquery.history.js"></script>
+<script src="src/javascripts/jquery.tocify.js"></script>
+<script src="http://jqueryui.com/themeroller/themeswitchertool/"></script>
+<script src="javascripts/githubrepo.js"></script>
+<script>
+$(function() {
+    var toc = $("#toc").tocify({ context: ".documentation", selectors: "h1, h3, h4" });
+    $('#switcher').themeswitcher();
+});
+</script>
 
 
-  </body>
+</body>
 </html>

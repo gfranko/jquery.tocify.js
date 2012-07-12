@@ -1,0 +1,50 @@
+#toc {
+    position: fixed;
+    top: 20px;
+    width: 300px;
+    margin-left: 50px;
+    border: 1px solid #ccc;
+    max-height: 95%;
+    overflow: auto;
+}
+
+#toc .toc-title {
+    text-align: center;
+    padding-top: 10px;
+}
+
+#toc ul, #toc li {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border: none;
+    line-height: 25px;
+}
+
+.header {
+    text-indent: 10px;
+}
+.sub-header {
+    text-indent: 20px;
+    display: none;
+}
+
+.sub-header li {
+    font-size: 12px;
+}
+
+.sub-header .sub-header {
+    text-indent: 30px;
+}
+
+.sub-header .sub-header .sub-header {
+    text-indent: 40px;
+}
+
+.documentation {
+   width: 60%;
+   margin-left: 400px;
+   padding: 10px;
+   position: absolute;
+   top: 20px;
+}
