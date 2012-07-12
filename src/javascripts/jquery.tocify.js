@@ -378,6 +378,24 @@
 
                                 }));
 
+                                // If an elemenet 
+                                if($("." + self.focusClass).length) {
+
+                                    // Animates the html and body element scrolltops
+                                    $("html, body").animate({
+
+                                        // Sets the jQuery `scrollTop` to the top offset of the HTML div tag that matches the current list item's `data-href` tag
+                                        "scrollTop": $('div[data-unique="' + $("." + self.focusClass).attr("data-unique") + '"]').offset().top + "px"
+                        
+                                        }, {
+
+                                        // Sets the smoothScroll animation time duration to the smoothScrollSpeed option
+                                        "duration": duration
+
+                                    });
+
+                                }
+
                             }
 
                         }
