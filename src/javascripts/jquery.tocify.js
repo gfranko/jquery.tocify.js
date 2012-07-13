@@ -415,7 +415,7 @@
                                 elem = $('li[data-unique="' + $(this).prev("div").attr("data-unique") + '"]');
 
                                 // If the `highlightOnScroll` option is true
-                                if(self.options.highlightOnScroll) {
+                                if(self.options.highlightOnScroll && elem.length) {
 
                                     // Removes highlighting from all of the list item's
                                     $("." + self.focusClass).removeClass(self.focusClass);
@@ -632,4 +632,3 @@
     });
 
 })); //end of plugin
-
