@@ -28,7 +28,7 @@ jQuery 1.7.2+
 
 jQueryUI Widget Factory 1.8.20+
 
-##Requirements
+##Optional Dependencies
 History.js 1.7.1+
 
 ##Browser Support

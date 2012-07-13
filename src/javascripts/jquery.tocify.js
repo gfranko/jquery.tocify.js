@@ -378,6 +378,7 @@
 
                                 }));
 
+                                // If an elemenet 
                                 if($("." + self.focusClass).length) {
 
                                     // Animates the html and body element scrolltops
