@@ -32,8 +32,8 @@
             // The container element that holds all of the elements used to generate the table of contents
             context: "body",
 
-            // **selectors**: Accepts an Array of Strings: Any jQuery selectors
-            // The element's used to generate the table of contents.  The order is very important since it will determine the table of content's nesting structure
+            // **selectors**: Accepts a string of header elements
+            // The header element's used to generate the table of contents.  The order is very important since it will determine the table of content's nesting structure
             selectors: "h1, h2, h3",
 
             // **showEffect**: Accepts String: "none", "fadeIn", "show", or "slideDown"
