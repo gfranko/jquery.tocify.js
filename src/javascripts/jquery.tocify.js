@@ -1,4 +1,4 @@
-/* jquery Tocify - v0.1.0 - 2012-07-12
+/* jquery Tocify - v0.1.0 - 2012-07-15
 * http://www.gregfranko.com/jquery.tocify.js/
 * Copyright (c) 2012 Greg Franko; Licensed MIT */
 
@@ -59,6 +59,10 @@
             // **smoothScrollSpeed**: Accepts Number (milliseconds) or String: "slow", "medium", or "fast"
             // The time duration of the smoothScroll animation
             smoothScrollSpeed: "medium",
+
+            // **scrollTo**: Accepts Number (pixels)
+            // The amount of space between the top of page and the selected table of contents item after the page has been scrolled
+            scrollTo: 0,
 
             // **showAndHideOnScroll**: Accepts a boolean: true or false
             // Determines if table of contents nested items should be shown and hidden while scrolling
@@ -286,7 +290,7 @@
                 $("html, body").animate({
 
                     // Sets the jQuery `scrollTop` to the top offset of the HTML div tag that matches the current list item's `data-href` tag
-                    "scrollTop": $('div[data-unique="' + $self.attr("data-unique") + '"]').offset().top + "px"
+                    "scrollTop": $('div[data-unique="' + $self.attr("data-unique") + '"]').offset().top - self.options.scrollTo + "px"
                         
                 }, {
 
@@ -378,7 +382,7 @@
 
                                 }));
 
-                                // If an elemenet 
+                                // If an element
                                 if($("." + self.focusClass).length) {
 
                                     // Animates the html and body element scrolltops
@@ -406,13 +410,13 @@
                     setTimeout(function() {
 
                         // Loops through each anchor tag on the page with a `name` attribute
-                        $(self.options.context).find("div[name]").next().each(function() {
+                        $(self.options.context).find("div[data-unique]").next().each(function() {
 
                             // If the user has scrolled to within x (the highlightOffset option) distance of the currently traversed anchor tag
                             if ((Math.abs($(this).offset().top - winScrollTop) < self.options.highlightOffset)) {
 
                                 // Stores the list item HTML element that corresponds to the currently traversed anchor tag
-                                elem = $('li[data-unique="' + $(this).prev("div").attr("data-unique") + '"]');
+                                elem = $('li[data-unique="' + $(this).prev("div[data-unique]").attr("data-unique") + '"]');
 
                                 // If the `highlightOnScroll` option is true
                                 if(self.options.highlightOnScroll && elem.length) {
@@ -467,7 +471,7 @@
                     // The list item that corresponds to the state change
                     var elem = $('li[data-href="' + window.History.getState().title + '"]');
 
-                    if(elem.next(".sub-header").length) {
+                    if(elem.next(".sub-header").length || elem.parent().is(".header")) {
 
                         // Show the all of the sub-headers within the current header
                         self.show(elem.next(".sub-header"));
