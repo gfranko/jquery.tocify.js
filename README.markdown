@@ -26,7 +26,7 @@ A jQuery plugin that dynamically generates a table of contents. Tocify can be op
 ##Requirements
 jQuery 1.7.2+
 
-jQueryUI Widget Factory 1.8.20+
+jQueryUI Widget Factory 1.8.21+
 
 ##Optional Dependencies
 History.js 1.7.1+
