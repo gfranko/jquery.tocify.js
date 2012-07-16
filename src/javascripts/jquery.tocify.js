@@ -1,4 +1,4 @@
-/* jquery Tocify - v0.1.0 - 2012-07-15
+/* jquery Tocify - v0.2.0 - 2012-07-16
 * http://www.gregfranko.com/jquery.tocify.js/
 * Copyright (c) 2012 Greg Franko; Licensed MIT */
 
@@ -23,7 +23,7 @@
     $.widget("toc.tocify", {
 
         //Plugin version
-        version: "0.1.0",
+        version: "0.2.0",
 
         // These options will be used as defaults
         options: {

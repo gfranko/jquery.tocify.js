@@ -52,6 +52,10 @@ If you find that you need a feature that Tocify does not currently support, eith
 ##Change Log
 
 
+`0.2.0` - July 16, 2012
+
+- Added the **scrollTo** option.  Upgraded to jQueryUI 1.8.21.  Multiple bug fixes.  Upgraded the project page (included in the demos folder) to use Twitter Bootstrap.  I will soon move the demo page into it's own separate project to create a boilerplate for documenting open source projects.
+
 `0.1.0` - July 12, 2012
 
 - Initial Tocify release.  Added annotated source code and documentation
