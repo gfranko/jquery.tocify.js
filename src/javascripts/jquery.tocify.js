@@ -1,4 +1,4 @@
-/* jquery Tocify - v0.2.0 - 2012-07-16
+/* jquery Tocify - v0.3.0 - 2012-08-15
 * http://www.gregfranko.com/jquery.tocify.js/
 * Copyright (c) 2012 Greg Franko; Licensed MIT */
 
@@ -23,7 +23,7 @@
     $.widget("toc.tocify", {
 
         //Plugin version
-        version: "0.2.0",
+        version: "0.3.0",
 
         // These options will be used as defaults
         options: {
@@ -32,9 +32,13 @@
             // The container element that holds all of the elements used to generate the table of contents
             context: "body",
 
-            // **selectors**: Accepts a string of header elements
-            // The header element's used to generate the table of contents.  The order is very important since it will determine the table of content's nesting structure
+            // **selectors**: Accepts an Array of Strings: Any jQuery selectors
+            // The element's used to generate the table of contents.  The order is very important since it will determine the table of content's nesting structure
             selectors: "h1, h2, h3",
+
+            // **showAndHide**: Accepts a boolean: true or false
+            // Used to determine if elements should be shown and hidden
+            showAndHide: true,
 
             // **showEffect**: Accepts String: "none", "fadeIn", "show", or "slideDown"
             // Used to display any of the table of contents nested items
@@ -247,7 +251,7 @@
             this.element.on("click.tocify", "li", function(event) {
 
                 // If the History.js plugin has been included on the page
-                if(window.History) {
+                if(window.History && window.History.Adapter) {
 
                     // Adds a new state and url to the history
                     window.History.pushState(null, $(this).attr("data-href"), "?" + $(this).attr("data-href"));
@@ -261,7 +265,7 @@
                 $(this).addClass(self.focusClass);
 
                 // If the History.js plugin has not been included on the page
-                if(!window.History) {
+                if(!window.History && !window.History.Adapter && self.options.showAndHide) {
 
                     // Show the all of the sub-headers within the current header
                     self.show($(this).closest(".header").find(".sub-header"));
@@ -382,24 +386,6 @@
 
                                 }));
 
-                                // If an element
-                                if($("." + self.focusClass).length) {
-
-                                    // Animates the html and body element scrolltops
-                                    $("html, body").animate({
-
-                                        // Sets the jQuery `scrollTop` to the top offset of the HTML div tag that matches the current list item's `data-href` tag
-                                        "scrollTop": $('div[data-unique="' + $("." + self.focusClass).attr("data-unique") + '"]').offset().top + "px"
-                        
-                                        }, {
-
-                                        // Sets the smoothScroll animation time duration to the smoothScrollSpeed option
-                                        "duration": duration
-
-                                    });
-
-                                }
-
                             }
 
                         }
@@ -410,16 +396,16 @@
                     setTimeout(function() {
 
                         // Loops through each anchor tag on the page with a `name` attribute
-                        $(self.options.context).find("div[data-unique]").next().each(function() {
+                        $(self.options.context).find("div[name]").next().each(function() {
 
                             // If the user has scrolled to within x (the highlightOffset option) distance of the currently traversed anchor tag
                             if ((Math.abs($(this).offset().top - winScrollTop) < self.options.highlightOffset)) {
 
                                 // Stores the list item HTML element that corresponds to the currently traversed anchor tag
-                                elem = $('li[data-unique="' + $(this).prev("div[data-unique]").attr("data-unique") + '"]');
+                                elem = $('li[data-unique="' + $(this).prev("div").attr("data-unique") + '"]');
 
                                 // If the `highlightOnScroll` option is true
-                                if(self.options.highlightOnScroll && elem.length) {
+                                if(self.options.highlightOnScroll) {
 
                                     // Removes highlighting from all of the list item's
                                     $("." + self.focusClass).removeClass(self.focusClass);
@@ -430,7 +416,7 @@
                                 }
 
                                 // If the `showAndHideOnScroll` option is true
-                                if(self.options.showAndHideOnScroll) {
+                                if(self.options.showAndHideOnScroll && self.options.showAndHide) {
 
                                      // If the current element's parent is a header element
                                      if(elem.parent().hasClass("header")) {
@@ -463,7 +449,7 @@
             });
 
             // If the History.js plugin has been included on the page
-            if(window.History) {
+            if(window.History && window.History.Adapter && self.options.showAndHide) {
 
                 // Binds to the StateChange Event
                 window.History.Adapter.bind(window,'statechange',function() {
@@ -471,7 +457,7 @@
                     // The list item that corresponds to the state change
                     var elem = $('li[data-href="' + window.History.getState().title + '"]');
 
-                    if(elem.next(".sub-header").length || elem.parent().is(".header")) {
+                    if(elem.next(".sub-header").length) {
 
                         // Show the all of the sub-headers within the current header
                         self.show(elem.next(".sub-header"));
@@ -636,3 +622,4 @@
     });
 
 })); //end of plugin
+

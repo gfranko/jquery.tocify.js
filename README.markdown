@@ -51,10 +51,21 @@ If you find that you need a feature that Tocify does not currently support, eith
 
 ##Change Log
 
+`0.3.0` - July 16, 2012
+
+- Added the **showAndHide** option.
+- Bug fixes for when the jQuery history.js plugin is not used
+- Upgraded the CSS file (removed unneccessary styles, etc.)
+- Upgraded to jQueryUI 1.8.23.
+- Upgraded to jQuery 1.8.0.
+- Upgraded demo page
 
 `0.2.0` - July 16, 2012
 
-- Added the **scrollTo** option.  Upgraded to jQueryUI 1.8.21.  Multiple bug fixes.  Upgraded the project page (included in the demos folder) to use Twitter Bootstrap.  I will soon move the demo page into it's own separate project to create a boilerplate for documenting open source projects.
+- Added the **scrollTo** option.  Upgraded to jQueryUI 1.8.21.
+- Multiple bug fixes.
+- Upgraded the project page (included in the demos folder) to use Twitter Bootstrap.
+* I will soon move the demo page into it's own separate project to create a boilerplate for documenting open source projects.
 
 `0.1.0` - July 12, 2012
 

@@ -1,29 +1,20 @@
 /*
- * jquery.tocify.css 0.2.0
+ * jquery.tocify.css 0.3.0
  * Author: @gregfranko
  */
 
-body {
-    padding-top: 20px;
-}
-
+/* Table of Contents Outer Div */
 #toc {
-    width: 20%;
-    margin-left: 2%;
     position: fixed;
+    top: 20px;
+    width: 300px;
+    margin-left: 50px;
     border: 1px solid #ccc;
     max-height: 95%;
     overflow: auto;
-    webkit-border-radius: 2px;
-    moz-border-radius: 2px;
-    border-radius: 2px;
 }
 
-#toc .toc-title {
-    text-align: center;
-    padding-top: 10px;
-}
-
+/* Table of Content Items */
 #toc ul, #toc li {
     list-style: none;
     margin: 0;
@@ -32,30 +23,28 @@ body {
     line-height: 25px;
 }
 
+/* Table of Content Header (Top Most) Items */
 .header {
     text-indent: 10px;
 }
+
+/* Table of Content SubHeader (One Level) Nested) Items */
 .sub-header {
     text-indent: 20px;
     display: none;
 }
 
+/* Table of Content SubHeader (Nested) Items */
 .sub-header li {
     font-size: 12px;
 }
 
+/* Table of Content SubHeader (Two Level) Nested Items */
 .sub-header .sub-header {
     text-indent: 30px;
 }
 
+/* Table of Content SubHeader (Three Level) Nested Items */
 .sub-header .sub-header .sub-header {
     text-indent: 40px;
-}
-
-@media (max-width: 767px) {
-    #toc {
-        position: relative;
-        width: 100%;
-        margin: 0px;
-    }
 }
