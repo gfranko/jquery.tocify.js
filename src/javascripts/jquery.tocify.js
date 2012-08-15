@@ -368,7 +368,7 @@
                     if(self.options.extendPage) {
 
                         // If the user has scrolled to the bottom of the page and the last toc item is not focused
-                        if(($.browser.webkit && winScrollTop >= scrollHeight - winHeight) || (!$.browser.webkit && winHeight + winScrollTop === docHeight)) {
+                        if(($.browser.webkit && winScrollTop >= scrollHeight - winHeight) || (!$.browser.webkit && winHeight + winScrollTop > docHeight - 25)) {
 
                             self.element.scrollTop(winScrollTop);
 
