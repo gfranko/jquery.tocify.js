@@ -6,7 +6,7 @@
 /* Table of Contents Outer Div */
 #toc {
     position: fixed;
-    top: 20px;
+    top: 0px;
     width: 300px;
     margin-left: 50px;
     border: 1px solid #ccc;

@@ -396,16 +396,16 @@
                     setTimeout(function() {
 
                         // Loops through each anchor tag on the page with a `name` attribute
-                        $(self.options.context).find("div[name]").next().each(function() {
+                        $(self.options.context).find("div[data-unique]").next().each(function() {
 
                             // If the user has scrolled to within x (the highlightOffset option) distance of the currently traversed anchor tag
                             if ((Math.abs($(this).offset().top - winScrollTop) < self.options.highlightOffset)) {
 
                                 // Stores the list item HTML element that corresponds to the currently traversed anchor tag
-                                elem = $('li[data-unique="' + $(this).prev("div").attr("data-unique") + '"]');
+                                elem = $('li[data-unique="' + $(this).prev("div[data-unique]").attr("data-unique") + '"]');
 
-                                // If the `highlightOnScroll` option is true
-                                if(self.options.highlightOnScroll) {
+                                // If the `highlightOnScroll` option is true and a next element is found
+                                if(self.options.highlightOnScroll && elem.length) {
 
                                     // Removes highlighting from all of the list item's
                                     $("." + self.focusClass).removeClass(self.focusClass);
@@ -457,7 +457,7 @@
                     // The list item that corresponds to the state change
                     var elem = $('li[data-href="' + window.History.getState().title + '"]');
 
-                    if(elem.next(".sub-header").length) {
+                    if(elem.next(".sub-header").length || elem.parent().is(".header")) {
 
                         // Show the all of the sub-headers within the current header
                         self.show(elem.next(".sub-header"));

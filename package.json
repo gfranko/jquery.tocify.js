@@ -23,8 +23,8 @@
     }
   ],
   "dependencies": {
-    "jquery": "1.7.2",
-    "jqueryUI Widget Factory": "1.8.20",
+    "jquery": "1.8.0",
+    "jqueryUI Widget Factory": "1.8.23",
     "jquery.history.js": "1.7.1"
   },
   "keywords": ["jQuery", "jQueryUI", "Table of Contents Plugin"]
