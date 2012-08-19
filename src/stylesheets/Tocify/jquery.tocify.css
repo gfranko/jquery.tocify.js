@@ -1,5 +1,5 @@
 /*
- * jquery.tocify.css 0.2.0
+ * jquery.tocify.css 0.4.0
  * Author: @gregfranko
  */
 
@@ -56,6 +56,6 @@ body {
     #toc {
         position: relative;
         width: 100%;
-        margin: 0px;
+        margin: 0px 0px 20px 0px;
     }
 }
