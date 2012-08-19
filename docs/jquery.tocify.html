@@ -1,4 +1,4 @@
-<!DOCTYPE html>  <html> <head>   <title>jquery.tocify.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               jquery.tocify.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="cm">/* jquery Tocify - v0.3.0 - 2012-08-15</span>
+<!DOCTYPE html>  <html> <head>   <title>jquery.tocify.js</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               jquery.tocify.js             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="cm">/* jquery Tocify - v0.4.0 - 2012-08-19</span>
 <span class="cm">* http://www.gregfranko.com/jquery.tocify.js/</span>
 <span class="cm">* Copyright (c) 2012 Greg Franko; Licensed MIT */</span>
 
@@ -23,7 +23,7 @@
     <span class="nx">$</span><span class="p">.</span><span class="nx">widget</span><span class="p">(</span><span class="s2">&quot;toc.tocify&quot;</span><span class="p">,</span> <span class="p">{</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>Plugin version</p>             </td>             <td class="code">               <div class="highlight"><pre>
-        <span class="nx">version</span><span class="o">:</span> <span class="s2">&quot;0.3.0&quot;</span><span class="p">,</span>
+        <span class="nx">version</span><span class="o">:</span> <span class="s2">&quot;0.4.0&quot;</span><span class="p">,</span>
 
 </pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>These options will be used as defaults</p>             </td>             <td class="code">               <div class="highlight"><pre>
         <span class="nx">options</span><span class="o">:</span> <span class="p">{</span>
@@ -623,6 +623,26 @@ If a user scrolls to the bottom of the page and the page is not tall enough to s
 
 </pre></div>             </td>           </tr>                               <tr id="section-137">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-137">&#182;</a>               </div>               <p>Maintains chainability</p>             </td>             <td class="code">               <div class="highlight"><pre>
             <span class="k">return</span> <span class="k">this</span><span class="p">;</span>
+
+        <span class="p">},</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-138">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-138">&#182;</a>               </div>               <h2>setOption</h2>
+
+<pre><code> Sets a single Tocify option after the plugin is invoked
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="nx">setOption</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+            <span class="nx">$</span><span class="p">.</span><span class="nx">Widget</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_setOption</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
+
+        <span class="p">},</span>
+
+</pre></div>             </td>           </tr>                               <tr id="section-139">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-139">&#182;</a>               </div>               <h2>setOptions</h2>
+
+<pre><code> Sets a single or multiple Tocify options after the plugin is invoked
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>
+        <span class="nx">setOptions</span><span class="o">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+
+            <span class="nx">$</span><span class="p">.</span><span class="nx">Widget</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">_setOptions</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="nx">arguments</span><span class="p">);</span>
 
         <span class="p">}</span>
 

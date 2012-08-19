@@ -5,7 +5,7 @@ A jQuery plugin that dynamically generates a table of contents. Tocify can be op
 
 [Homepage](http://gregfranko.com/jquery.tocify.js/)
 
-[Annotated Source Code](http://gregfranko.com/docs/jquery.tocify.html)
+[Annotated Source Code](http://gregfranko.com/jquery.tocify.js/docs/jquery.tocify.html)
 
 **Notable Features**
 
@@ -50,6 +50,12 @@ You'll find source code in the "src" subdirectory!
 If you find that you need a feature that Tocify does not currently support, either let me know via the Tocify issue tracker, or fork Tocify on Github and easily extend it to create your own widget!
 
 ##Change Log
+
+`0.4.0` - August 19, 2012
+
+- Added the **setOption** and **setOptions** methods
+- Upgraded the CSS file
+- Updated demo page
 
 `0.3.0` - August 15, 2012
 

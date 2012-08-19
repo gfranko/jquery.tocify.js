@@ -1,4 +1,4 @@
-/* jquery Tocify - v0.3.0 - 2012-08-15
+/* jquery Tocify - v0.4.0 - 2012-08-19
 * http://www.gregfranko.com/jquery.tocify.js/
 * Copyright (c) 2012 Greg Franko; Licensed MIT */
 
@@ -23,7 +23,7 @@
     $.widget("toc.tocify", {
 
         //Plugin version
-        version: "0.3.0",
+        version: "0.4.0",
 
         // These options will be used as defaults
         options: {
@@ -616,6 +616,24 @@
 
             //Maintains chainability
             return this;
+
+        },
+
+        // setOption
+        // ----------
+        //      Sets a single Tocify option after the plugin is invoked
+        setOption: function() {
+
+            $.Widget.prototype._setOption.apply(this, arguments);
+
+        },
+
+        // setOptions
+        // ----------
+        //      Sets a single or multiple Tocify options after the plugin is invoked
+        setOptions: function() {
+
+            $.Widget.prototype._setOptions.apply(this, arguments);
 
         }
 

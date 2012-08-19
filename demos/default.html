@@ -26,6 +26,9 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
     <style>
+    body {
+      padding-top: 20px;
+    }
     p {
       font-size: 16px;
     }
@@ -184,15 +187,43 @@
               <h2>Options</h2>
               <br />
               <h3>Setting Options</h3>
-              <p class="well">
-              All options can be <strong>set</strong> when the plugin is called.</p>
+<p class="well">
+              All options can be <strong>set</strong> when the plugin is called.  Certain options can also be set after the plugin is called using the <strong>setOption()</strong> or <strong>setOptions()</strong> methods.</p>
 
               <span class="note">Here is an example of setting a <strong>single option</strong> when the plugin is first invoked:</span>
               <pre class="prettyprint">
               //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
               $(function() {
-                  //Calls the selectBoxIt method on your HTML select box and updates the showEffect option
+                  // Calls the selectBoxIt method on your HTML select box and updates the showEffect option
                   var toc = $("#toc").tocify({ showEffect: "fadeIn" });
+              });
+              </pre>
+              <br />
+
+              <span class="note">Here is an example of setting a <strong>single option</strong> after the plugin is first invoked using the <strong>setOption</strong> method:</span>
+              <pre class="prettyprint">
+              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
+              $(function() {
+                  // Calls the selectBoxIt method on your HTML select box
+                  var toc = $("#toc").tocify().data("tocify");
+
+                  // Sets the smoothScroll option to false
+                  toc.setOption("showEffect", "fadeIn");
+
+              });
+              </pre>
+              <br />
+
+              <span class="note">Here is an example of setting a <strong>multiple options</strong> after the plugin is first invoked using the <strong>setOptions</strong> method:</span>
+              <pre class="prettyprint">
+              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
+              $(function() {
+                  // Calls the selectBoxIt method on your HTML select box and updates the showEffect option
+                  var toc = $("#toc").tocify().data("tocify");
+
+                  // Sets the showEffect, scrollTo, and smoothScroll options
+                  toc.setOptions({ showEffect: "fadeIn", scrollTo: 50, smoothScroll: false });
+
               });
               </pre>
               <br />
@@ -235,10 +266,21 @@
                   <th>Options</th>
                 </tr>
                 <tr>
+                  <td class="optionName" title="context" data-content="The container element that holds all of the elements used to generate the table of contents"><a href="#">context</a></td>
+                  <td>String</td>
+                  <td>"body"</td>
+                  <td>Any valid jQuery selector</td>
+                </tr>
                   <td class="optionName" title="selectors" data-content="The element's used to generate the table of contents. The order is very important since it will determine the table of content's nesting structure."><a href="#">selectors</a></td>
                   <td>String</td>
                   <td>"h1,h2,h3"</td>
                   <td>Each comma separated selector must be a header element.</td>
+                </tr>
+                <tr>
+                  <td class="optionName" title="showAndHide" data-content="Used to determine if elements should be shown and hidden.  Turn this to false and remove the display:none CSS property for subheader elements (in jquery.tocify.css) to have a non-animated/fully visible table of contents."><a href="#">showAndHide</a></td>
+                  <td>Boolean</td>
+                  <td>true</td>
+                  <td>true or false</td>
                 </tr>
                 <tr>
                   <td class="optionName" title="showEffect" data-content="Used to display any of the table of contents nested items."><a href="#">showEffect</a></td>
@@ -328,17 +370,18 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+    <script src="../libs/jquery/jquery-1.8.0.min.js"></script>
     <script src="../libs/jqueryui/jquery-ui-1.8.23.custom.min.js"></script>
     <script src="../libs/history/jquery.history.js"></script>
-    <script src="javascripts/bootstrap.min.js"></script>
-    <script src="../src/javascripts/jquery.tocify.js"></script>
+    <script src="javascripts/bootstrap.js"></script>
+    <script src="../src/javascripts/jquery.tocify.min.js"></script>
     <script src="javascripts/prettify.js"></script>
     <script src="javascripts/githubrepo.js"></script>
     <script>
         $(function() {
 
-            $("#toc").tocify({ selectors: "h2, h3, h4" });
+            var toc = $("#toc").tocify({ selectors: "h2, h3, h4" }).data("tocify");
+
             prettyPrint();
             $(".optionName").popover();
             $("a[href='#']").click(function(event) {
