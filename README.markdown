@@ -51,7 +51,7 @@ If you find that you need a feature that Tocify does not currently support, eith
 
 ##Change Log
 
-`0.3.0` - July 16, 2012
+`0.3.0` - August 15, 2012
 
 - Added the **showAndHide** option.
 - Bug fixes for when the jQuery history.js plugin is not used
