@@ -26,12 +26,23 @@
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="../assets/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="../assets/ico/apple-touch-icon-57-precomposed.png">
     <style>
+    body {
+      padding-top: 20px;
+    }
     p {
       font-size: 16px;
     }
     .headerDoc {
       color: #005580;
     }
+
+@media (max-width: 767px) {
+    #toc {
+        position: relative;
+        width: 100%;
+        margin: 0px 0px 20px 0px;
+    }
+}
     </style>
   </head>
 
@@ -174,7 +185,7 @@
               </p>
 
               <pre class="prettyprint">
-              // Executes your code when the DOM is ready.  Acts the same as $(document).ready().
+              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
               $(function() {
                   //Calls the tocify method on your HTML div.
                   $("#toc").tocify();
@@ -184,7 +195,7 @@
               <h2>Options</h2>
               <br />
               <h3>Setting Options</h3>
-              <p class="well">
+<p class="well">
               All options can be <strong>set</strong> when the plugin is called.  Certain options can also be set after the plugin is called using the <strong>setOption()</strong> or <strong>setOptions()</strong> methods.</p>
 
               <span class="note">Here is an example of setting a <strong>single option</strong> when the plugin is first invoked:</span>
@@ -234,7 +245,7 @@
               <pre class="prettyprint">
               //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
               $(function() {
-                  // Calls the tocify method on your HTML div
+                  //Calls the tocify method on your HTML div
                   var toc = $("#toc").tocify().data("tocify");
 
                   // Writes the showEffect option to the console
@@ -340,16 +351,22 @@
                   <td>Accepts any number (pixels)</td>
                 </tr>
                 <tr>
-                  <td class="optionName" title="jqueryUI" data-content="Determines if jqueryUI or regular CSS classes will be added to the table of contents"><a href="#">jqueryUI</a></td>
-                  <td>Boolean</td>
-                  <td>true</td>
-                  <td>true or false</td>
+                  <td class="optionName" title="theme" data-content="Determines if Twitter Bootstrap, jQueryUI, or Tocify classes should be added to the table of contents"><a href="#">theme</a></td>
+                  <td>String</td>
+                  <td>"twitterBootstrap"</td>
+                  <td>"twitterBootstrap", "jqueryUI", or "none"</td>
                 </tr>
                 <tr>
                   <td class="optionName" title="extendPage" data-content="If a user scrolls to the bottom of the page and the page is not tall enough to scroll to the last table of contents item, then the page height is increased"><a href="#">extendPage</a></td>
                   <td>Boolean</td>
                   <td>true</td>
                   <td>true or false</td>
+                </tr>
+                <tr>
+                  <td class="optionName" title="extendPageOffset" data-content="How close to the bottom of the page a user must scroll before the page is extended"><a href="#">extendPageOffset</a></td>
+                  <td>Number</td>
+                  <td>25</td>
+                  <td>Any number (pixels)</td>
                 </tr>
               </table>
               
@@ -367,8 +384,8 @@
     <!-- Le javascript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-    <script src="libs/jqueryui/jquery-ui-1.8.21.custom.min.js"></script>
+    <script src="libs/jquery/jquery-1.8.0.min.js"></script>
+    <script src="libs/jqueryui/jquery-ui-1.8.23.custom.min.js"></script>
     <script src="libs/history/jquery.history.js"></script>
     <script src="javascripts/bootstrap.js"></script>
     <script src="src/javascripts/jquery.tocify.min.js"></script>
@@ -377,7 +394,8 @@
     <script>
         $(function() {
 
-            $("#toc").tocify({ selectors: "h2, h3, h4" });
+            var toc = $("#toc").tocify({ selectors: "h2, h3, h4", theme: "twitterBootstrap" }).data("tocify");
+
             prettyPrint();
             $(".optionName").popover();
             $("a[href='#']").click(function(event) {
@@ -388,21 +406,6 @@
 
         });
     </script>
-
-<script type="text/javascript">
-
-  var _gaq = _gaq || [];
-  _gaq.push(['_setAccount', 'UA-30888305-1']);
-  _gaq.push(['_trackPageview']);
-
-  (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-  })();
-
-</script>
-    
 
   </body>
 </html>
