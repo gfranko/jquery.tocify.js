@@ -1,4 +1,4 @@
-/* jquery Tocify - v0.4.0 - 2012-08-19
+/* jquery Tocify - v0.5.0 - 2012-08-21
 * http://www.gregfranko.com/jquery.tocify.js/
 * Copyright (c) 2012 Greg Franko; Licensed MIT */
 
@@ -23,7 +23,7 @@
     $.widget("toc.tocify", {
 
         //Plugin version
-        version: "0.4.0",
+        version: "0.5.0",
 
         // These options will be used as defaults
         options: {
@@ -80,13 +80,17 @@
             // The offset distance in pixels to trigger the next active table of contents item
             highlightOffset: 40,
 
-            // **jqueryUI**: Accepts a boolean: true or false
-            // Determines if jQueryUI classes should be added to the table of contents
-            jqueryUI: true,
+            // **theme**: Accepts a string: "twitterBootstrap", "jqueryUI", or "none"
+            // Determines if Twitter Bootstrap, jQueryUI, or Tocify classes should be added to the table of contents
+            theme: "twitterBootstrap",
 
             // **extendPage**: Accepts a boolean: true or false
             // If a user scrolls to the bottom of the page and the page is not tall enough to scroll to the last table of contents item, then the page height is increased
-            extendPage: true
+            extendPage: true,
+
+            // **extendPageOffset**: Accepts a number: pixels
+            // How close to the bottom of the page a user must scroll before the page is extended
+            extendPageOffset: true
         },
 
         // _Create
@@ -204,9 +208,6 @@
             // Appends a list item HTML element to the last unordered list HTML element found within the HTML element calling the plugin
             var item = $("<li/>", {
 
-                // Sets the list item's text value to the text of the currently traversed HTML element
-                "text": self.text(),
-
                 // Sets a common class name to the list item
                 "class": "item",
 
@@ -215,7 +216,13 @@
 
                 "data-unique": (self.text() + index).replace(/\s/g, "")
 
-            });
+            }).append($("<a/>", {
+
+                "href": "#",
+
+                "text": self.text()
+
+            }));
 
             // Adds an HTML anchor tag before the currently traversed HTML element
             self.before($("<div/>", {
@@ -335,8 +342,12 @@
                 // Mouseleave event handler
                 "mouseleave.tocify": function() {
 
-                    // Removes the hover CSS class from the current list item
-                    $(this).removeClass(self.hoverClass);
+                    if(self.options.theme !== "twitterBootstrap") {
+
+                        // Removes the hover CSS class from the current list item
+                        $(this).removeClass(self.hoverClass);
+
+                    }
 
                 }
             });
@@ -368,7 +379,7 @@
                     if(self.options.extendPage) {
 
                         // If the user has scrolled to the bottom of the page and the last toc item is not focused
-                        if(($.browser.webkit && winScrollTop >= scrollHeight - winHeight) || (!$.browser.webkit && winHeight + winScrollTop > docHeight - 25)) {
+                        if(($.browser.webkit && winScrollTop >= scrollHeight - winHeight - self.options.extendPageOffset) || (!$.browser.webkit && winHeight + winScrollTop > docHeight - self.options.extendPageOffset)) {
 
                             self.element.scrollTop(winScrollTop);
 
@@ -590,12 +601,10 @@
         //      Adds CSS classes to the newly generated table of contents HTML
         _addCSSClasses: function() {
 
-            var self = this;
+            // If the user wants a jqueryUI theme
+            if(this.options.theme === "jqueryUI") {
 
-            // If the jQueryUI option is set to true
-            if(this.options.jqueryUI) {
-
-                this.focusClass = "ui-state-focus";
+                this.focusClass = "ui-state-default";
 
                 this.hoverClass = "ui-state-hover";
 
@@ -604,6 +613,16 @@
 
             }
 
+            // If the user wants a twitterBootstrap theme
+            else if(this.options.theme === "twitterBootstrap") {
+
+                this.element.addClass("bs-docs-sidebar").find(".header, .sub-header").addClass("nav nav-list bs-docs-sidenav");
+
+                this.focusClass = "active";
+
+            }
+
+            // If a user does not want a prebuilt theme
             else {
 
                 // Adds more neutral classes (instead of jqueryUI)
@@ -620,10 +639,11 @@
         },
 
         // setOption
-        // ----------
+        // ---------
         //      Sets a single Tocify option after the plugin is invoked
         setOption: function() {
 
+            // Calls the jQueryUI Widget Factory setOption method
             $.Widget.prototype._setOption.apply(this, arguments);
 
         },
@@ -633,6 +653,7 @@
         //      Sets a single or multiple Tocify options after the plugin is invoked
         setOptions: function() {
 
+            // Calls the jQueryUI Widget Factory setOptions method
             $.Widget.prototype._setOptions.apply(this, arguments);
 
         }

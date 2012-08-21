@@ -1,7 +1,7 @@
 jquery.tocify.js - jQuery Table of Contents
 -------------------------------------------
 
-A jQuery plugin that dynamically generates a table of contents. Tocify can be optionally styled with **jQueryUI Themeroller**, and optionally animated with jQuery show/hide effects. Tocify also optionally provides support for **smooth scrolling**, **scroll highlighting**, **scroll page extending**, and the **HTML5 pushstate API** via [History.js](https://github.com/balupton/History.js/).
+A jQuery plugin that dynamically generates a table of contents. Tocify can be optionally styled with **Twitter Bootstrap** or **jQueryUI Themeroller**, and optionally animated with jQuery show/hide effects. Tocify also optionally provides support for **smooth scrolling**, **scroll highlighting**, **scroll page extending**, and the **HTML5 pushstate API** via [History.js](https://github.com/balupton/History.js/).
 
 [Homepage](http://gregfranko.com/jquery.tocify.js/)
 
@@ -9,7 +9,7 @@ A jQuery plugin that dynamically generates a table of contents. Tocify can be op
 
 **Notable Features**
 
-   - Styleable with the **jQueryUI Themeroller**
+   - Themeable with **Twitter Bootstrap** or **jQueryUI Themeroller**
 
    - Supports dynamic scroll and click **jQuery show/hide effects**
 
@@ -50,6 +50,13 @@ You'll find source code in the "src" subdirectory!
 If you find that you need a feature that Tocify does not currently support, either let me know via the Tocify issue tracker, or fork Tocify on Github and easily extend it to create your own widget!
 
 ##Change Log
+
+`0.5.0` - August 21, 2012
+
+- Added support for Twitter Bootstrap Theming
+- Added the **theme** and **extendPageOffset** options.
+- Removed the **jqueryUI** option *BREAKING CHANGE*
+- Updated demo page to show off new Twitter Bootstrap theming
 
 `0.4.0` - August 19, 2012
 

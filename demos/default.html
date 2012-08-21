@@ -35,6 +35,14 @@
     .headerDoc {
       color: #005580;
     }
+
+@media (max-width: 767px) {
+    #toc {
+        position: relative;
+        width: 100%;
+        margin: 0px 0px 20px 0px;
+    }
+}
     </style>
   </head>
 
@@ -343,16 +351,22 @@
                   <td>Accepts any number (pixels)</td>
                 </tr>
                 <tr>
-                  <td class="optionName" title="jqueryUI" data-content="Determines if jqueryUI or regular CSS classes will be added to the table of contents"><a href="#">jqueryUI</a></td>
-                  <td>Boolean</td>
-                  <td>true</td>
-                  <td>true or false</td>
+                  <td class="optionName" title="theme" data-content="Determines if Twitter Bootstrap, jQueryUI, or Tocify classes should be added to the table of contents"><a href="#">theme</a></td>
+                  <td>String</td>
+                  <td>"twitterBootstrap"</td>
+                  <td>"twitterBootstrap", "jqueryUI", or "none"</td>
                 </tr>
                 <tr>
                   <td class="optionName" title="extendPage" data-content="If a user scrolls to the bottom of the page and the page is not tall enough to scroll to the last table of contents item, then the page height is increased"><a href="#">extendPage</a></td>
                   <td>Boolean</td>
                   <td>true</td>
                   <td>true or false</td>
+                </tr>
+                <tr>
+                  <td class="optionName" title="extendPageOffset" data-content="How close to the bottom of the page a user must scroll before the page is extended"><a href="#">extendPageOffset</a></td>
+                  <td>Number</td>
+                  <td>25</td>
+                  <td>Any number (pixels)</td>
                 </tr>
               </table>
               
@@ -374,13 +388,13 @@
     <script src="../libs/jqueryui/jquery-ui-1.8.23.custom.min.js"></script>
     <script src="../libs/history/jquery.history.js"></script>
     <script src="javascripts/bootstrap.js"></script>
-    <script src="../src/javascripts/jquery.tocify.min.js"></script>
+    <script src="../src/javascripts/jquery.tocify.js"></script>
     <script src="javascripts/prettify.js"></script>
     <script src="javascripts/githubrepo.js"></script>
     <script>
         $(function() {
 
-            var toc = $("#toc").tocify({ selectors: "h2, h3, h4" }).data("tocify");
+            var toc = $("#toc").tocify({ selectors: "h2, h3, h4", theme: "twitterBootstrap" }).data("tocify");
 
             prettyPrint();
             $(".optionName").popover();

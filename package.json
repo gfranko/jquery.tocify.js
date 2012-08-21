@@ -2,7 +2,7 @@
   "name": "jquery.tocify",
   "title": "jquery Tocify",
   "description": "A jQuery plugin that creates a dynamic table of contents",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "homepage": "",
   "author": {
     "name": "Greg Franko",
@@ -27,5 +27,5 @@
     "jqueryUI Widget Factory": "1.8.23",
     "jquery.history.js": "1.7.1"
   },
-  "keywords": ["jQuery", "jQueryUI", "Table of Contents Plugin"]
+  "keywords": ["jQuery", "jQueryUI", "Twitter Bootstrap", "Table of Contents Plugin"]
 }
