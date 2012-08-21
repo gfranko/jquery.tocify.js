@@ -397,7 +397,7 @@
             var toc = $("#toc").tocify({ selectors: "h2, h3, h4", theme: "twitterBootstrap" }).data("tocify");
 
             prettyPrint();
-            $(".optionName").popover();
+            $(".optionName").popover({ trigger: "hover" });
             $("a[href='#']").click(function(event) {
  
                 event.preventDefault();
