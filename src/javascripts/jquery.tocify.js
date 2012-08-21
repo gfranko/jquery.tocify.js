@@ -272,7 +272,7 @@
                 $(this).addClass(self.focusClass);
 
                 // If the History.js plugin has not been included on the page
-                if(!window.History && !window.History.Adapter && self.options.showAndHide) {
+                if(!window.History && (window.History && !window.History.Adapter) && self.options.showAndHide) {
 
                     // Show the all of the sub-headers within the current header
                     self.show($(this).closest(".header").find(".sub-header"));
