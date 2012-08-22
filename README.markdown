@@ -51,6 +51,12 @@ If you find that you need a feature that Tocify does not currently support, eith
 
 ##Change Log
 
+`0.6.0` - August 22, 2012
+
+- Nested subheader element bug fixes
+
+- Greatly improved showing/hiding deeply nested subheader elements
+
 `0.5.0` - August 21, 2012
 
 - Added support for Twitter Bootstrap Theming

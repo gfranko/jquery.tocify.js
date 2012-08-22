@@ -1,4 +1,4 @@
-/* jquery Tocify - v0.5.0 - 2012-08-21
+/* jquery Tocify - v0.6.0 - 2012-08-22
 * http://www.gregfranko.com/jquery.tocify.js/
 * Copyright (c) 2012 Greg Franko; Licensed MIT */
 
@@ -23,7 +23,7 @@
     $.widget("toc.tocify", {
 
         //Plugin version
-        version: "0.5.0",
+        version: "0.6.0",
 
         // These options will be used as defaults
         options: {
@@ -272,8 +272,9 @@
                 // If the History.js plugin has not been included on the page
                 if(!window.History && (window.History && !window.History.Adapter) && self.options.showAndHide) {
 
-                    // Show the all of the sub-headers within the current header
-                    self.show($(this).closest(".header").find(".sub-header"));
+                    var elem = $('li[data-href="' + $(this).attr("data-href") + '"]');
+
+                    self._triggerShow(elem);
 
                 }
 
@@ -354,7 +355,7 @@
             $(window).on("scroll.tocify", function() {
 
                 // Once all animations on the page are complete, this callback function will be called
-                $("html, body").promise().done(function() {
+                $(":animated").promise().done(function() {
 
                     // Local variables
 
@@ -427,25 +428,11 @@
                                 // If the `showAndHideOnScroll` option is true
                                 if(self.options.showAndHideOnScroll && self.options.showAndHide) {
 
-                                     // If the current element's parent is a header element
-                                     if(elem.parent().hasClass("header")) {
+                                    self._triggerShow(elem);
 
+                                }
 
-                                         // Shows the next sub-header element
-                                         self.show(elem.next(".sub-header"));
-
-                                     }
-
-                                     // If the current element's parent is a subheader element
-                                     else if(elem.parent().hasClass("sub-header")) {
- 
-                                         // Shows the parent sub-header element
-                                         self.show(elem.parent());
-
-                                     }
-                                 }
-
-                                 return false;
+                                return false;
 
                             }
 
@@ -466,12 +453,7 @@
                     // The list item that corresponds to the state change
                     var elem = $('li[data-href="' + window.History.getState().title + '"]');
 
-                    if(elem.next(".sub-header").length || elem.parent().is(".header")) {
-
-                        // Show the all of the sub-headers within the current header
-                        self.show(elem.next(".sub-header"));
-
-                    }
+                    self._triggerShow(elem);
 
                 });
 
@@ -485,10 +467,18 @@
         show: function(elem) {
 
             // Stores the plugin context in the `self` variable
-            var self = this;
+            var self = this,
+                element = elem;
 
             // If the sub-header is not already visible
             if (!elem.is(":visible")) {
+
+                if(!elem.children(".sub-header").length) {
+
+                    elem = elem.closest(".header").find(".sub-header");
+
+                }
+
 
                 //Determines what jQuery effect to use
                 switch (self.options.showEffect) {
@@ -530,13 +520,14 @@
 
                 }
 
-                // Hides all non-active sub-headers
-                self.hide($(".sub-header").not(elem.closest(".header").find(".sub-header")));
-
             }
+
+            // Hides all non-active sub-headers
+            self.hide($(".sub-header").not(elem.closest(".header").find(".sub-header").not(element.children(".sub-header"))));
 
             // Maintains chainablity
             return this;
+
         },
 
         // Hide
@@ -592,6 +583,29 @@
 
             // Maintains chainablity
             return this;
+        },
+
+        // _triggerShow
+        // ------------
+        //      Determines what elements get shown on scroll and click
+        _triggerShow: function(elem) {
+
+            // If the current element's parent is a header element or the next element is a nested subheader element
+            if(elem.parent().is(".header") || elem.next().is(".sub-header")) {
+
+                // Shows the next sub-header element
+                this.show(elem.next(".sub-header"));
+
+            }
+
+            // If the current element's parent is a subheader element
+            else if(elem.parent().is(".sub-header")) {
+
+                // Shows the parent sub-header element
+                this.show(elem.parent());
+
+            }
+
         },
 
         // _addCSSClasses
@@ -659,4 +673,3 @@
     });
 
 })); //end of plugin
-
