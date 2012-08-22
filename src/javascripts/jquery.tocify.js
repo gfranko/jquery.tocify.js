@@ -218,8 +218,6 @@
 
             }).append($("<a/>", {
 
-                "href": "#",
-
                 "text": self.text()
 
             }));
