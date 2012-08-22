@@ -218,7 +218,7 @@
 
             }).append($("<a/>", {
 
-                "href": "#",
+                "href": "javascript:;",
 
                 "text": self.text()
 
