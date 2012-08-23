@@ -473,12 +473,11 @@
             // If the sub-header is not already visible
             if (!elem.is(":visible")) {
 
-                if(!elem.children(".sub-header").length) {
+                if(!elem.children(".sub-header").length && !elem.parent().is(".header")) {
 
                     elem = elem.closest(".header").find(".sub-header");
 
                 }
-
 
                 //Determines what jQuery effect to use
                 switch (self.options.showEffect) {
@@ -522,8 +521,21 @@
 
             }
 
-            // Hides all non-active sub-headers
-            self.hide($(".sub-header").not(elem.closest(".header").find(".sub-header").not(element.children(".sub-header"))));
+            // If the current subheader parent element is a header
+            if(elem.parent().is(".header")) {
+
+                // Hides all non-active sub-headers
+                self.hide($(".sub-header").not(elem));
+
+            }
+
+            // If the current subheader parent element is not a header
+            else {
+
+                // Hides all non-active sub-headers
+                self.hide($(".sub-header").not(elem.closest(".header").find(".sub-header").not(elem.children(".sub-header"))));
+
+            }
 
             // Maintains chainablity
             return this;
