@@ -51,7 +51,7 @@ If you find that you need a feature that Tocify does not currently support, eith
 
 ##Change Log
 
-'0.7.0' - September 24, 2012
+`0.7.0` - September 24, 2012
 
 - Fixed a nested element show/hide bug
 
