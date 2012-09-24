@@ -1,4 +1,4 @@
-/* jquery Tocify - v0.6.0 - 2012-08-22
+/* jquery Tocify - v0.7.0 - 2012-09-24
 * http://www.gregfranko.com/jquery.tocify.js/
 * Copyright (c) 2012 Greg Franko; Licensed MIT */
 
@@ -23,7 +23,7 @@
     $.widget("toc.tocify", {
 
         //Plugin version
-        version: "0.6.0",
+        version: "0.7.0",
 
         // These options will be used as defaults
         options: {
@@ -428,7 +428,7 @@
                                 // If the `showAndHideOnScroll` option is true
                                 if(self.options.showAndHideOnScroll && self.options.showAndHide) {
 
-                                    self._triggerShow(elem);
+                                    self._triggerShow(elem, true);
 
                                 }
 
@@ -464,7 +464,7 @@
         // Show
         // ----
         //      Opens the current sub-header
-        show: function(elem) {
+        show: function(elem, scroll) {
 
             // Stores the plugin context in the `self` variable
             var self = this,
@@ -473,9 +473,15 @@
             // If the sub-header is not already visible
             if (!elem.is(":visible")) {
 
-                if(!elem.children(".sub-header").length && !elem.parent().is(".header")) {
+                if(!elem.children(".sub-header").length && !elem.parent().is(".header") && scroll) {
 
                     elem = elem.closest(".header").find(".sub-header");
+
+                }
+
+                else if(!elem.children(".sub-header").length && !elem.parent().is(".header")) {
+
+                    elem = elem.closest(".sub-header");
 
                 }
 
@@ -600,13 +606,13 @@
         // _triggerShow
         // ------------
         //      Determines what elements get shown on scroll and click
-        _triggerShow: function(elem) {
+        _triggerShow: function(elem, scroll) {
 
             // If the current element's parent is a header element or the next element is a nested subheader element
             if(elem.parent().is(".header") || elem.next().is(".sub-header")) {
 
                 // Shows the next sub-header element
-                this.show(elem.next(".sub-header"));
+                this.show(elem.next(".sub-header"), scroll);
 
             }
 
@@ -614,7 +620,7 @@
             else if(elem.parent().is(".sub-header")) {
 
                 // Shows the parent sub-header element
-                this.show(elem.parent());
+                this.show(elem.parent(), scroll);
 
             }
 
