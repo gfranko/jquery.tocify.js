@@ -51,6 +51,10 @@ If you find that you need a feature that Tocify does not currently support, eith
 
 ##Change Log
 
+`0.8.0` - September 26, 2012
+
+- Numerous bug fixes ([nested page structure bug](https://github.com/gfranko/jquery.tocify.js/issues/4), unique naming bug, show/hide bugs)
+
 `0.7.0` - September 24, 2012
 
 - Fixed a nested element show/hide bug
