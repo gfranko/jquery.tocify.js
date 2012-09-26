@@ -1,4 +1,4 @@
-/* jquery Tocify - v0.7.0 - 2012-09-24
+/* jquery Tocify - v0.8.0 - 2012-09-26
 * http://www.gregfranko.com/jquery.tocify.js/
 * Copyright (c) 2012 Greg Franko; Licensed MIT */
 
@@ -9,7 +9,7 @@
     "use strict";
 
     // Calls the second IIFE and locally passes in the global jQuery, window, and document objects
-    tocify(jQuery, window, document);
+    tocify(window.jQuery, window, document);
 
 }
 
@@ -23,7 +23,7 @@
     $.widget("toc.tocify", {
 
         //Plugin version
-        version: "0.7.0",
+        version: "0.8.0",
 
         // These options will be used as defaults
         options: {
@@ -123,10 +123,7 @@
                 firstElem,
 
                 // Instantiated variable that will store the top level newly created unordered list DOM element
-                ul,
-
-                // Instantiated variable that will store a header DOM element
-                previousHeader;
+                ul;
 
              // If the selectors option has a comma within the string
              if(this.options.selectors.indexOf(",") !== -1) {
@@ -159,40 +156,32 @@
                 // Add the created unordered list element to the HTML element calling the plugin
                 self.element.append(ul);
 
-                // Adds all of the HTML tags within each top level selector to an array
-                $(this).nextUntil(this.nodeName.toLowerCase()).filter(self.options.selectors).each(function(index, selector) {
+                // Finds all of the HTML tags between the header and subheader elements
+                $(this).nextUntil(this.nodeName.toLowerCase()).each(function() {
 
-                        // Finds the previous header DOM element
-                        previousHeader = $(this).prevAll(self.options.selectors).first();
+                    // If there are no nested subheader elemements
+                    if($(this).find(self.options.selectors).length === 0) {
 
-                        // If the current header DOM element is smaller than the previous header DOM element
-                        if(+$(this)[0].tagName.charAt(1) < +previousHeader[0].tagName.charAt(1)) {
+                        // Loops through all of the subheader elements
+                        $(this).filter(self.options.selectors).each(function() {
 
-                            // Selects the last unordered list HTML found within the HTML element calling the plugin
-                            self.element.find(".sub-header").last().after(self._nestElements($(this), index));
+                            self._appendSubheaders.call(this, self, ul);
 
-                        }
+                        });
 
-                        // If the current header DOM element is the same type of header(eg. h4) as the previous header DOM element
-                        else if(+$(this)[0].tagName.charAt(1) === +previousHeader[0].tagName.charAt(1)) {
+                    }
 
-                            ul.find(".item").last().after(self._nestElements($(this), index));
+                    // If there are nested subheader elements
+                    else {
 
-                        }
+                        // Loops through all of the subheader elements
+                        $(this).find(self.options.selectors).each(function() {
 
-                        else {
+                            self._appendSubheaders.call(this, self, ul);
 
-                            // Selects the last unordered list HTML found within the HTML element calling the plugin
-                            ul.find(".item").last().
+                        });
 
-                            // Appends an unorderedList HTML element to the dynamic `unorderedList` variable and sets a common class name
-                            after($("<ul/>", {
-                                "class": "sub-header"
-                            })).next(".sub-header").
-
-                            // Appends a list item HTML element to the last unordered list HTML element found within the HTML element calling the plugin
-                            append(self._nestElements($(this), index));
-                        }
+                    }
 
                 });
 
@@ -202,7 +191,7 @@
 
         // _nestElements
         // -------------
-        //      Helps create the table of contents list and adds div "anchors" to the page
+        //      Helps create the table of contents list by appending nested list items
         _nestElements: function(self, index) {
 
             // Appends a list item HTML element to the last unordered list HTML element found within the HTML element calling the plugin
@@ -236,6 +225,51 @@
 
         },
 
+        // _appendElements
+        // ---------------
+        //      Helps create the table of contents list by appending subheader elements
+
+        _appendSubheaders: function(self, ul) {
+
+            // The current element index
+            var index = $(this).index(self.options.selectors),
+
+                // Finds the previous header DOM element
+                previousHeader = $(self.options.selectors).eq(index - 1);
+
+            // If the current header DOM element is smaller than the previous header DOM element or the first subheader
+            if((+$(this).prop("tagName").charAt(1) < +previousHeader.prop("tagName").charAt(1))) {
+
+                // Selects the last unordered list HTML found within the HTML element calling the plugin
+                self.element.find(".sub-header").last().after(self._nestElements($(this), index));
+
+            }
+
+            // If the current header DOM element is the same type of header(eg. h4) as the previous header DOM element
+            else if(+$(this).prop("tagName").charAt(1) === +previousHeader.prop("tagName").charAt(1)) {
+
+                ul.find(".item").last().after(self._nestElements($(this), index));
+
+            }
+
+            else {
+
+                // Selects the last unordered list HTML found within the HTML element calling the plugin
+                ul.find(".item").last().
+
+                // Appends an unorderedList HTML element to the dynamic `unorderedList` variable and sets a common class name
+                after($("<ul/>", {
+
+                    "class": "sub-header"
+
+                })).next(".sub-header").
+
+                // Appends a list item HTML element to the last unordered list HTML element found within the HTML element calling the plugin
+                append(self._nestElements($(this), index));
+            }
+
+        },
+
        // _setEventHandlers
         // ----------------
         //      Adds jQuery event handlers to the newly generated table of contents
@@ -259,7 +293,7 @@
                 if(window.History && window.History.Adapter) {
 
                     // Adds a new state and url to the history
-                    window.History.pushState(null, $(this).attr("data-href"), "?" + $(this).attr("data-href"));
+                    window.History.pushState(null, $(this).attr("data-unique"), "?" + $(this).attr("data-href"));
 
                 }
 
@@ -270,9 +304,9 @@
                 $(this).addClass(self.focusClass);
 
                 // If the History.js plugin has not been included on the page
-                if(!window.History && (window.History && !window.History.Adapter) && self.options.showAndHide) {
+                if(!window.History && self.options.showAndHide) {
 
-                    var elem = $('li[data-href="' + $(this).attr("data-href") + '"]');
+                    var elem = $('li[data-unique="' + $(this).attr("data-unique") + '"]');
 
                     self._triggerShow(elem);
 
@@ -451,7 +485,7 @@
                 window.History.Adapter.bind(window,'statechange',function() {
 
                     // The list item that corresponds to the state change
-                    var elem = $('li[data-href="' + window.History.getState().title + '"]');
+                    var elem = $('li[data-unique="' + window.History.getState().title + '"]');
 
                     self._triggerShow(elem);
 
@@ -473,14 +507,18 @@
             // If the sub-header is not already visible
             if (!elem.is(":visible")) {
 
+                // If the current element does not have any nested subheaders, is not a header, and the user is scrolling
                 if(!elem.children(".sub-header").length && !elem.parent().is(".header") && scroll) {
 
+                    // Sets the current element to all of the subheaders within the current header
                     elem = elem.closest(".header").find(".sub-header");
 
                 }
 
+                // If the current element does not have any nested subheaders, is not a header, and the user is clicking
                 else if(!elem.children(".sub-header").length && !elem.parent().is(".header")) {
 
+                    // Sets the current element to the closest subheader
                     elem = elem.closest(".sub-header");
 
                 }
@@ -539,7 +577,7 @@
             else {
 
                 // Hides all non-active sub-headers
-                self.hide($(".sub-header").not(elem.closest(".header").find(".sub-header").not(elem.children(".sub-header"))));
+                self.hide($(".sub-header").not(elem.closest(".header").find(".sub-header").not(elem.siblings())));
 
             }
 
@@ -569,7 +607,7 @@
 
                     break;
 
-                    //Uses the jQuery `hide` special effect 
+                    //Uses the jQuery `hide` special effect
                     case "hide":
 
                         elem.hide(self.options.hideEffectSpeed);
