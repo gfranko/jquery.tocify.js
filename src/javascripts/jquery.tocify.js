@@ -1,4 +1,4 @@
-/* jquery Tocify - v0.9.0 - 2012-10-03
+/* jquery Tocify - v1.0.0 - 2012-10-07
 * http://www.gregfranko.com/jquery.tocify.js/
 * Copyright (c) 2012 Greg Franko; Licensed MIT */
 
@@ -23,7 +23,7 @@
     $.widget("toc.tocify", {
 
         //Plugin version
-        version: "0.9.0",
+        version: "1.0.0",
 
         // These options will be used as defaults
         options: {
@@ -507,16 +507,16 @@
             // If the sub-header is not already visible
             if (!elem.is(":visible")) {
 
-                // If the current element does not have any nested subheaders, is not a header, and the user is scrolling
-                if(!elem.find(".sub-header").length && !elem.parent().is(".header") && !elem.parent().is(":visible") && scroll) {
+                // If the current element does not have any nested subheaders, is not a header, and its parent is not visible
+                if(!elem.find(".sub-header").length && !elem.parent().is(".header") && !elem.parent().is(":visible")) {
 
                     // Sets the current element to all of the subheaders within the current header
-                    elem = elem.closest(".header").find(".sub-header");
+                    elem = elem.parents(".sub-header").add(elem);
 
 
                 }
 
-                // If the current element does not have any nested subheaders, is not a header, and the user is clicking
+                // If the current element does not have any nested subheaders and is not a header
                 else if(!elem.children(".sub-header").length && !elem.parent().is(".header")) {
 
                     // Sets the current element to the closest subheader
