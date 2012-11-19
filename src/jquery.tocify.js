@@ -294,7 +294,7 @@
             // Event delegation that looks for any clicks on list item elements inside of the HTML element calling the plugin
             this.element.on("click.tocify", "li", function(event) {
 
-                if(self.options.history && window.location.hash !== $(this).attr("data-href")) {
+                if(self.options.history)) {
 
                     window.location.hash = $(this).attr("data-href");
 

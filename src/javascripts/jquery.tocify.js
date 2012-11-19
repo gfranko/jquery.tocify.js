@@ -1,4 +1,4 @@
-/* jquery Tocify - v1.0.0 - 2012-10-07
+/* jquery Tocify - v1.1.0 - 2012-10-07
 * http://www.gregfranko.com/jquery.tocify.js/
 * Copyright (c) 2012 Greg Franko; Licensed MIT */
 
@@ -23,7 +23,7 @@
     $.widget("toc.tocify", {
 
         //Plugin version
-        version: "1.0.0",
+        version: "1.1.0",
 
         // These options will be used as defaults
         options: {
@@ -78,7 +78,7 @@
 
             // **highlightOffset**: Accepts a number
             // The offset distance in pixels to trigger the next active table of contents item
-            highlightOffset: 40,
+            highlightOffset: 60,
 
             // **theme**: Accepts a string: "twitterBootstrap", "jqueryUI", or "none"
             // Determines if Twitter Bootstrap, jQueryUI, or Tocify classes should be added to the table of contents
@@ -90,7 +90,12 @@
 
             // **extendPageOffset**: Accepts a number: pixels
             // How close to the bottom of the page a user must scroll before the page is extended
-            extendPageOffset: true
+            extendPageOffset: true,
+
+            // **history**: Accepts a boolean: true or false
+            // Adds a hash to the page url to maintain history
+            history: true
+
         },
 
         // _Create
@@ -289,11 +294,9 @@
             // Event delegation that looks for any clicks on list item elements inside of the HTML element calling the plugin
             this.element.on("click.tocify", "li", function(event) {
 
-                // If the History.js plugin has been included on the page
-                if(window.History && window.History.Adapter) {
+                if(self.options.history && window.location.hash !== $(this).attr("data-href")) {
 
-                    // Adds a new state and url to the history
-                    window.History.pushState(null, $(this).attr("data-unique"), "?" + $(this).attr("data-href"));
+                    window.location.hash = $(this).attr("data-href");
 
                 }
 
@@ -303,8 +306,8 @@
                 // Highlights the current list item that was clicked
                 $(this).addClass(self.focusClass);
 
-                // If the History.js plugin has not been included on the page
-                if(!window.History && self.options.showAndHide) {
+                // If the showAndHide option is true
+                if(self.options.showAndHide) {
 
                     var elem = $('li[data-unique="' + $(this).attr("data-unique") + '"]');
 
@@ -477,21 +480,6 @@
                 });
 
             });
-
-            // If the History.js plugin has been included on the page
-            if(window.History && window.History.Adapter && self.options.showAndHide) {
-
-                // Binds to the StateChange Event
-                window.History.Adapter.bind(window,'statechange',function() {
-
-                    // The list item that corresponds to the state change
-                    var elem = $('li[data-unique="' + window.History.getState().title + '"]');
-
-                    self._triggerShow(elem);
-
-                });
-
-            }
 
         },
 
