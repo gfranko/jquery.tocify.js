@@ -63,7 +63,7 @@
             <h2>Description</h2>
             <div class="github-widget" data-repo="gfranko/jquery.tocify.js"></div>
             <br />
-            <p>The project is hosted on <a href="https://github.com/gfranko/jquery.tocify.js" target="_blank" class="projectLinks">Github</a>, and the <a href="http://gregfranko.com/jquery.tocify.js/docs/jquery.tocify.html" target="_blank" class="projectLinks">annotated source code</a> is available.  Tocify is available for use under the <a href="https://github.com/gfranko/jquery.tocify.js/blob/master/MIT-LICENSE.txt" target="_blank" class="projectLinks">MIT software license</a>.  You can report bugs and discuss features on the <a href="https://github.com/gfranko/jquery.tocify.js/issues?sort=created&direction=desc&state=open" target="_blank">GitHub issues page</a>, or send tweets to <a href="http://www.twitter.com/gregfranko" target="_blank">@gregfranko</a>.
+            <p>The project is hosted on <a href="https://github.com/gfranko/jquery.tocify.js" target="_blank" class="projectLinks">Github</a>, and the <a href="http://gregfranko.com/docs/jquery.tocify.html" target="_blank" class="projectLinks">annotated source code</a> is available.  Tocify is available for use under the <a href="https://github.com/gfranko/jquery.tocify.js/blob/master/MIT-LICENSE.txt" target="_blank" class="projectLinks">MIT software license</a>.  You can report bugs and discuss features on the <a href="https://github.com/gfranko/jquery.tocify.js/issues?sort=created&direction=desc&state=open" target="_blank">GitHub issues page</a>, or send tweets to <a href="http://www.twitter.com/gregfranko" target="_blank">@gregfranko</a>.
             </p>
             <p><a class="btn btn-primary btn-large" href="https://github.com/gfranko/jquery.tocify.js" target="_blank">Fork on Github &raquo;</a></p>
           </div>
@@ -78,14 +78,9 @@
               <h2>Optional Dependencies</h2>
               <br />
               <p class="well">
-              <a href="http://jqueryui.com/themeroller/" target="_blank">jQueryUI CSS Theme</a>
+              <a href="http://twitter.github.com/bootstrap/customize.html" target="_blank">Twitter Bootstrap</a> or <a href="http://jqueryui.com/download" target="_blank">jQueryUI CSS Theme</a>
               <br /><br />
-              <span class="note"><strong>Note: </strong>A jQueryUI theme is only required if you want to use jQueryUI to style your table of contents.
-              </span>
-              <br /><br />
-              <a href="https://github.com/balupton/History.js/" target="_blank">History.js 1.7.1+</a>
-              <br /><br />
-              <span class="note"><strong>Note: </strong>History.js is required if you want forward and back button support. If you do not include History.js, then Tocify will not have history support, but it will still be fully functional.
+              <span class="note"><strong>Note: </strong>A Twitter Bootstrap or jQueryUI theme is only required if you want to use either framework to style your table of contents.
               </span>
               </p>
               <br />
@@ -93,9 +88,9 @@
               <h2>Notable Features</h2>
               <br />
              <p class="well">
-             Supports <span class="headerDoc">HTML5 History pushstate API</span> (via History.js) for forward and back button support
+             Supports <span class="headerDoc">forward and back button</span> support
              <br /><br />
-             Supports styling with <span class="headerDoc">Twitter Bootstrap</span> and <span class="headerDoc">jQueryUI Themeroller</span>
+             Supports styling with <span class="headerDoc">Twitter Bootstrap</span> or <span class="headerDoc">jQueryUI Themeroller</span>
              <br /><br />
              Supports show/hide animations with <span class="headerDoc">jQuery effects</span>
              <br /><br />
@@ -128,9 +123,7 @@
                 <br />
                 <li><a href="https://github.com/gfranko/jquery.tocify.js/zipball/master">Tocify</a> (You only need jquery.tocify.js and jquery.tocify.css)</li>
                 <br />
-                <li><a href="http://jqueryui.com/download" target="_blank">jQueryUI CSS Theme</a> (Only required if you want to use jQueryUI to style your table of contents)</li>
-                <br />
-                <li><a href="https://github.com/balupton/History.js/" target="_blank">History.js</a> (Only required if you want forward and back button support)</li>
+                <li><a href="http://twitter.github.com/bootstrap/customize.html" target="_blank">Twitter Bootstrap</a> or <a href="http://jqueryui.com/download" target="_blank">jQueryUI CSS Theme</a> (Only required if you want to use either framework to style your table of contents)</li>
               </ol>
               <br />
 
@@ -141,14 +134,14 @@
               <span class="note"><strong>CSS</strong></span>
               <pre class="prettyprint">
                 &lt;link type="text/css" rel="stylesheet" href="jquery.tocify.css" /&gt;
-                &lt;link type="text/css" rel="stylesheet" href="jquery-ui-1.8.21.custom.css" /&gt;
+                &lt;link type="text/css" rel="stylesheet" href="bootstrap.css" /&gt;
               </pre>
               <br />
               <span class="note"><strong>JavaScript</strong></span>
 
               <pre class="prettyprint">
                 &lt;script src="jquery-1.7.2.min.js"&gt;&lt;/script&gt;
-                &lt;script src="jquery-ui-1.8.21.custom.min.js"&gt;&lt;/script&gt;
+                &lt;script src="jquery-ui-1.9.1.custom.min.js"&gt;&lt;/script&gt;
                 &lt;script src="jquery.tocify.min.js""&gt;&lt;/script&gt;
               </pre>
               <span class="note"><strong>Note:</strong> This assumes that you have downloaded the CSS and JavaScript files to the same folder as your HTML page. Modify the <strong>href</strong> and <strong>src</strong> attributes if you have a different folder structure.
@@ -368,6 +361,12 @@
                   <td>25</td>
                   <td>Any number (pixels)</td>
                 </tr>
+                <tr>
+                  <td class="optionName" title="history" data-content="Adds a hash to the page url to maintain history"><a href="#">history</a></td>
+                  <td>Boolean</td>
+                  <td>true</td>
+                  <td>true or false</td>
+                </tr>
               </table>
               
               <h2>Inspired By</h2>
@@ -400,7 +399,6 @@
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="libs/jquery/jquery-1.8.0.min.js"></script>
     <script src="libs/jqueryui/jquery-ui-1.8.23.custom.min.js"></script>
-    <script src="libs/history/jquery.history.js"></script>
     <script src="javascripts/bootstrap.js"></script>
     <script src="src/javascripts/jquery.tocify.min.js"></script>
     <script src="javascripts/prettify.js"></script>
@@ -408,8 +406,7 @@
     <script>
         $(function() {
 
-            var toc = $("#toc").tocify({ selectors: "h2, h3, h4", theme: "twitterBootstrap" }).data("tocify");
-
+            var toc = $("#toc").tocify({ selectors: "h2, h3, h4" }).data("tocify");
             prettyPrint();
             $(".optionName").popover({ trigger: "hover" });
 
