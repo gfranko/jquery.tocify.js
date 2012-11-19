@@ -1,7 +1,7 @@
 jquery.tocify.js - jQuery Table of Contents
 -------------------------------------------
 
-A jQuery plugin that dynamically generates a table of contents. Tocify can be optionally styled with **Twitter Bootstrap** or **jQueryUI Themeroller**, and optionally animated with jQuery show/hide effects. Tocify also optionally provides support for **smooth scrolling**, **scroll highlighting**, **scroll page extending**, and the **HTML5 pushstate API** via [History.js](https://github.com/balupton/History.js/).
+A jQuery plugin that dynamically generates a table of contents. Tocify can be optionally styled with **Twitter Bootstrap** or **jQueryUI Themeroller**, and optionally animated with jQuery show/hide effects. Tocify also optionally provides support for **smooth scrolling**, **scroll highlighting**, **scroll page extending**, and the forward and back button support.
 
 [Homepage](http://gregfranko.com/jquery.tocify.js/)
 
