@@ -28,9 +28,6 @@ jQuery 1.7.2+
 
 jQueryUI Widget Factory 1.8.21+
 
-##Optional Dependencies
-History.js 1.7.1+
-
 ##Browser Support
 IE7+, Firefox 4+, Chrome, Safari 4+, and Opera 11+
 
