@@ -487,18 +487,31 @@
                 // Sets the onhashevent event to a function
                 window.onhashchange = function() {
 
-                    var elem = self.element.find("li[data-href='" + window.location.hash.substring(1) + "']");
+                    var hash = window.location.hash.substring(1),
 
-                    // Removes highlighting from all of the list item's
-                    $("." + self.focusClass).removeClass(self.focusClass);
+                        elem = self.element.find("li[data-href='" + hash + "']");
 
-                    // Highlights the current list item that was clicked
-                    elem.addClass(self.focusClass);
+                    if(hash.length) {
 
-                    // If the showAndHide option is true
-                    if(self.options.showAndHide) {
+                        // Removes highlighting from all of the list item's
+                        $("." + self.focusClass).removeClass(self.focusClass);
 
-                        self._triggerShow(elem);
+                        // Highlights the current list item that was clicked
+                        elem.addClass(self.focusClass);
+
+                        // If the showAndHide option is true
+                        if(self.options.showAndHide) {
+
+                            self._triggerShow(elem);
+
+                        }
+
+                    }
+
+                    else {
+
+                        // Removes highlighting from all of the list item's
+                        $("." + self.focusClass).removeClass(self.focusClass);
 
                     }
 
