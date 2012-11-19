@@ -78,7 +78,7 @@
 
             // **highlightOffset**: Accepts a number
             // The offset distance in pixels to trigger the next active table of contents item
-            highlightOffset: 60,
+            highlightOffset: 40,
 
             // **theme**: Accepts a string: "twitterBootstrap", "jqueryUI", or "none"
             // Determines if Twitter Bootstrap, jQueryUI, or Tocify classes should be added to the table of contents
@@ -294,7 +294,7 @@
             // Event delegation that looks for any clicks on list item elements inside of the HTML element calling the plugin
             this.element.on("click.tocify", "li", function(event) {
 
-                if(self.options.history)) {
+                if(self.options.history) {
 
                     window.location.hash = $(this).attr("data-href");
 
@@ -392,7 +392,7 @@
             $(window).on("scroll.tocify", function() {
 
                 // Once all animations on the page are complete, this callback function will be called
-                $(":animated").promise().done(function() {
+                $("html, body").promise().done(function() {
 
                     // Local variables
 
@@ -480,6 +480,31 @@
                 });
 
             });
+
+            // If the hash change event is supported
+            if ("onhashchange" in window) {
+
+                // Sets the onhashevent event to a function
+                window.onhashchange = function() {
+
+                    var elem = self.element.find("li[data-href='" + window.location.hash.substring(1) + "']");
+
+                    // Removes highlighting from all of the list item's
+                    $("." + self.focusClass).removeClass(self.focusClass);
+
+                    // Highlights the current list item that was clicked
+                    elem.addClass(self.focusClass);
+
+                    // If the showAndHide option is true
+                    if(self.options.showAndHide) {
+
+                        self._triggerShow(elem);
+
+                    }
+
+                };
+
+            }
 
         },
 
