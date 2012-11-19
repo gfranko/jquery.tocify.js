@@ -106,11 +106,11 @@
             // Generates the HTML for the dynamic table of contents
             this._generateToc();
 
-            // Adds jQuery event handlers to the newly generated table of contents
-            this._setEventHandlers();
-
             // Adds CSS classes to the newly generated table of contents HTML
             this._addCSSClasses();
+
+            // Adds jQuery event handlers to the newly generated table of contents
+            this._setEventHandlers();
 
         },
 
@@ -191,6 +191,40 @@
                 });
 
             });
+
+        },
+
+        _setActiveElement: function() {
+
+            var self = this,
+
+                hash = window.location.hash.substring(1),
+
+                elem = self.element.find("li[data-href='" + hash + "']");
+
+            if(hash.length) {
+
+                // Removes highlighting from all of the list item's
+                $("." + self.focusClass).removeClass(self.focusClass);
+
+                // Highlights the current list item that was clicked
+                elem.addClass(self.focusClass);
+
+                // If the showAndHide option is true
+                if(self.options.showAndHide) {
+
+                    self._triggerShow(elem);
+
+                }
+
+            }
+
+            else {
+
+                // Removes highlighting from all of the list item's
+                $("." + self.focusClass).removeClass(self.focusClass);
+
+            }
 
         },
 
@@ -487,37 +521,13 @@
                 // Sets the onhashevent event to a function
                 window.onhashchange = function() {
 
-                    var hash = window.location.hash.substring(1),
-
-                        elem = self.element.find("li[data-href='" + hash + "']");
-
-                    if(hash.length) {
-
-                        // Removes highlighting from all of the list item's
-                        $("." + self.focusClass).removeClass(self.focusClass);
-
-                        // Highlights the current list item that was clicked
-                        elem.addClass(self.focusClass);
-
-                        // If the showAndHide option is true
-                        if(self.options.showAndHide) {
-
-                            self._triggerShow(elem);
-
-                        }
-
-                    }
-
-                    else {
-
-                        // Removes highlighting from all of the list item's
-                        $("." + self.focusClass).removeClass(self.focusClass);
-
-                    }
+                    self._setActiveElement();
 
                 };
 
             }
+
+            self._setActiveElement();
 
         },
 
