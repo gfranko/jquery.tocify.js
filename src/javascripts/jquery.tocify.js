@@ -78,7 +78,7 @@
 
             // **highlightOffset**: Accepts a number
             // The offset distance in pixels to trigger the next active table of contents item
-            highlightOffset: 60,
+            highlightOffset: 40,
 
             // **theme**: Accepts a string: "twitterBootstrap", "jqueryUI", or "none"
             // Determines if Twitter Bootstrap, jQueryUI, or Tocify classes should be added to the table of contents
