@@ -13,7 +13,7 @@ A jQuery plugin that dynamically generates a table of contents. Tocify can be op
 
    - Supports dynamic scroll and click **jQuery show/hide effects**
 
-   - Supports **HTML5 History pushstate API** (via History.js) for forward and back button support
+   - Supports forward and back button support
 
    - Supports **smooth scrolling** animations
 
