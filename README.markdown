@@ -51,6 +51,12 @@ If you find that you need a feature that Tocify does not currently support, eith
 
 ##Change Log
 
+`1.1.0` - November 19, 2012
+
+- **BREAKING CHANGE** : Removed the History.js logic.  All history logic is now using a hash bang instead of the HTML5 pushstate API.
+
+-  Added the **history** option
+
 `1.0.0` - October 7, 2012
 
 - Fixed scrolling show/hide bug with this [page structure](https://github.com/gfranko/jquery.tocify.js/issues/6)
