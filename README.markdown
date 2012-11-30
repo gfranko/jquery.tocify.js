@@ -5,7 +5,7 @@ A jQuery plugin that dynamically generates a table of contents. Tocify can be op
 
 [Homepage](http://gregfranko.com/jquery.tocify.js/)
 
-[Annotated Source Code](http://gregfranko.com/docs/jquery.tocify.html)
+[Annotated Source Code](http://gregfranko.com/jquery.tocify.js/docs/jquery.tocify.html)
 
 **Notable Features**
 
