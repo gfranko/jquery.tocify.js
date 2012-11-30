@@ -103,14 +103,27 @@
         //      Constructs the plugin.  Only called once.
         _create: function() {
 
+            var self = this;
+
+            // Internal array that keeps track of all TOC items (Helps to recognize if there are duplicate TOC item strings)
+            self.items = [];
+
             // Generates the HTML for the dynamic table of contents
-            this._generateToc();
+            self._generateToc();
 
             // Adds CSS classes to the newly generated table of contents HTML
-            this._addCSSClasses();
+            self._addCSSClasses();
 
             // Adds jQuery event handlers to the newly generated table of contents
-            this._setEventHandlers();
+            self._setEventHandlers();
+
+            // The setTimeout allows the correct offset() to be calculated
+            setTimeout(function() {
+
+                // Set the active TOC item
+                self._setActiveElement();
+
+            }, 0);
 
         },
 
@@ -200,7 +213,7 @@
 
                 hash = window.location.hash.substring(1),
 
-                elem = self.element.find("li[data-href='" + hash + "']");
+                elem = self.element.find("li[data-unique='" + hash + "']");
 
             if(hash.length) {
 
@@ -213,7 +226,7 @@
                 // If the showAndHide option is true
                 if(self.options.showAndHide) {
 
-                    self._triggerShow(elem);
+                    self._scrollTo(elem, true);
 
                 }
 
@@ -226,6 +239,8 @@
 
             }
 
+            return self;
+
         },
 
         // _nestElements
@@ -233,16 +248,37 @@
         //      Helps create the table of contents list by appending nested list items
         _nestElements: function(self, index) {
 
+            var arr, item;
+
+            arr = $.grep(this.items, function (item) {
+
+                return item === self.text();
+
+            });
+
+            // If there is already a duplicate TOC item
+            if(arr.length) {
+
+                // Adds the current TOC item text and index (for slight randomization) to the internal array
+                this.items.push(self.text() + index);
+
+            }
+
+            // If there not a duplicate TOC item
+            else {
+
+                // Adds the current TOC item text to the internal array
+                this.items.push(self.text());
+
+            }
+
             // Appends a list item HTML element to the last unordered list HTML element found within the HTML element calling the plugin
-            var item = $("<li/>", {
+            item = $("<li/>", {
 
                 // Sets a common class name to the list item
                 "class": "item",
 
-                // Sets the list item's HTML5 data attribute, `data-href`, to the currently traversed HTML element (also making sure that all whitespace is replaced with an underscore)
-                "data-href": self.text().replace(/\s/g, ""),
-
-                "data-unique": (self.text() + index).replace(/\s/g, "")
+                "data-unique": (!arr.length ? self.text() : self.text() + index).replace(/\s/g, "")
 
             }).append($("<a/>", {
 
@@ -256,7 +292,7 @@
                 // Sets a name attribute on the anchor tag to the text of the currently traversed HTML element (also making sure that all whitespace is replaced with an underscore)
                 "name": self.text().replace(/\s/g, ""),
 
-                "data-unique": (self.text() + index).replace(/\s/g, "")
+                "data-unique": (!arr.length ? self.text() : self.text() + index).replace(/\s/g, "")
 
             }));
 
@@ -330,7 +366,7 @@
 
                 if(self.options.history) {
 
-                    window.location.hash = $(this).attr("data-href");
+                    window.location.hash = $(this).attr("data-unique");
 
                 }
 
@@ -349,49 +385,7 @@
 
                 }
 
-                // Saves the currently clicked list item's context in the `$self` variable
-                $self = $(this);
-
-                // If the `smoothScroll` option is true
-                if (self.options.smoothScroll) {
-                    
-                    // Sets the `duration` local variable to the `smoothScrollSpeed` option
-                    duration = self.options.smoothScrollSpeed;
-                    
-                }
-
-                else {
-
-                    // Sets the `duration` local variable to 0
-                    duration = 0;
-
-                }
-
-                // Animates the html and body element scrolltops
-                $("html, body").animate({
-
-                    // Sets the jQuery `scrollTop` to the top offset of the HTML div tag that matches the current list item's `data-href` tag
-                    "scrollTop": $('div[data-unique="' + $self.attr("data-unique") + '"]').offset().top - self.options.scrollTo + "px"
-                        
-                }, {
-
-                    // Sets the smoothScroll animation time duration to the smoothScrollSpeed option
-                    "duration": duration
-
-                });
-
-                // Animates the table of contents scrolltop
-                self.element.animate({
-
-                    // Sets the jQuery `scrollTop` to the top offset of the current HTML li tag
-                    "scrollTop": $self.offset().top + "px"
-                        
-                }, {
-
-                    // Sets the smoothScroll animation time duration to the smoothScrollSpeed option
-                    "duration": duration
-
-                });
+                self._scrollTo($(this));
 
             });
 
@@ -527,8 +521,6 @@
 
             }
 
-            self._setActiveElement();
-
         },
 
         // Show
@@ -619,7 +611,7 @@
             }
 
             // Maintains chainablity
-            return this;
+            return self;
 
         },
 
@@ -675,7 +667,7 @@
             }
 
             // Maintains chainablity
-            return this;
+            return self;
         },
 
         // _triggerShow
@@ -683,11 +675,13 @@
         //      Determines what elements get shown on scroll and click
         _triggerShow: function(elem, scroll) {
 
+            var self = this;
+
             // If the current element's parent is a header element or the next element is a nested subheader element
             if(elem.parent().is(".header") || elem.next().is(".sub-header")) {
 
                 // Shows the next sub-header element
-                this.show(elem.next(".sub-header"), scroll);
+                self.show(elem.next(".sub-header"), scroll);
 
             }
 
@@ -695,9 +689,12 @@
             else if(elem.parent().is(".sub-header")) {
 
                 // Shows the parent sub-header element
-                this.show(elem.parent(), scroll);
+                self.show(elem.parent(), scroll);
 
             }
+
+            // Maintains chainability
+            return self;
 
         },
 
@@ -760,6 +757,32 @@
 
             // Calls the jQueryUI Widget Factory setOptions method
             $.Widget.prototype._setOptions.apply(this, arguments);
+
+        },
+
+        // _scrollTo
+        // ---------
+        //      Scrolls to a specific element
+        _scrollTo: function(elem, pageload) {
+
+            var self = this,
+                duration = (pageload ? 0: (self.options.smoothScroll ? self.options.smoothScroll : 0));
+
+            // Animates the html and body element scrolltops
+            $("html, body").animate({
+
+                // Sets the jQuery `scrollTop` to the top offset of the HTML div tag that matches the current list item's `data-unique` tag
+                "scrollTop": $('div[data-unique="' + elem.attr("data-unique") + '"]').offset().top - self.options.scrollTo + "px"
+                        
+            }, {
+
+                // Sets the smoothScroll animation time duration to the smoothScrollSpeed option
+                "duration": duration
+
+            });
+
+            // Maintains chainability
+            return self;
 
         }
 
