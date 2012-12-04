@@ -187,77 +187,6 @@
 
               <h2>Options API</h2>
               <br />
-              <h3>Setting Options</h3>
-<p class="well">
-              All options can be <strong>set</strong> when the plugin is called.  Certain options can also be set after the plugin is called using the <strong>setOption()</strong> or <strong>setOptions()</strong> methods.</p>
-
-              <span class="note">Here is an example of setting a <strong>single option</strong> when the plugin is first invoked:</span>
-              <pre class="prettyprint">
-              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
-              $(function() {
-                  // Calls the selectBoxIt method on your HTML select box and updates the showEffect option
-                  var toc = $("#toc").tocify({ showEffect: "fadeIn" });
-              });
-              </pre>
-              <br />
-
-              <span class="note">Here is an example of setting a <strong>single option</strong> after the plugin is first invoked using the <strong>setOption</strong> method:</span>
-              <pre class="prettyprint">
-              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
-              $(function() {
-                  // Calls the selectBoxIt method on your HTML select box
-                  var toc = $("#toc").tocify().data("tocify");
-
-                  // Sets the smoothScroll option to false
-                  toc.setOption("showEffect", "fadeIn");
-
-              });
-              </pre>
-              <br />
-
-              <span class="note">Here is an example of setting a <strong>multiple options</strong> after the plugin is first invoked using the <strong>setOptions</strong> method:</span>
-              <pre class="prettyprint">
-              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
-              $(function() {
-                  // Calls the selectBoxIt method on your HTML select box and updates the showEffect option
-                  var toc = $("#toc").tocify().data("tocify");
-
-                  // Sets the showEffect, scrollTo, and smoothScroll options
-                  toc.setOptions({ showEffect: "fadeIn", scrollTo: 50, smoothScroll: false });
-
-              });
-              </pre>
-              <br />
-              
-              <h3>Getting Options</h3>
-              <p class="well">
-              A single option can be <strong>retrieved</strong> by using the <strong>option()</strong> method.  All of the current options can be retrieved by referencing the <strong>options</strong> property.
-              </p>
-              <br />
-              <span class="note">Here is an example of retrieving a <strong>single option</strong> after the plugin is called using the <strong>option()</strong> method:</span>
-              <pre class="prettyprint">
-              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
-              $(function() {
-                  //Calls the tocify method on your HTML div
-                  var toc = $("#toc").tocify().data("tocify");
-
-                  // Writes the showEffect option to the console
-                  console.log(toc.option("showEffect"));
-              });
-              </pre>
-              <br />
-              <span class="note">Here is an example of retrieving <strong>all current options</strong> after the plugin is called using the <strong>options</strong> property:</span>
-              <pre class="prettyprint">
-              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
-              $(function() {
-                  //Calls the selectBoxIt method on your HTML select box
-                  var toc = $("#toc").tocify().data("tocify");
-
-                  // Writes all of the current plugin options to the console
-                  console.log(toc.options);
-              });
-              </pre>
-              <br />
               <h3>Options</h3>
               <table class="table table-striped table-bordered table-condensed">
                 <tr>
@@ -368,6 +297,77 @@
                   <td>true or false</td>
                 </tr>
               </table>
+              <br />
+              <h3>Setting Options</h3>
+<p class="well">
+              All options can be <strong>set</strong> when the plugin is called.  Certain options can also be set after the plugin is called using the <strong>setOption()</strong> or <strong>setOptions()</strong> methods.</p>
+
+              <span class="note">Here is an example of setting a <strong>single option</strong> when the plugin is first invoked:</span>
+              <pre class="prettyprint">
+              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
+              $(function() {
+                  // Calls the selectBoxIt method on your HTML select box and updates the showEffect option
+                  var toc = $("#toc").tocify({ showEffect: "fadeIn" });
+              });
+              </pre>
+              <br />
+
+              <span class="note">Here is an example of setting a <strong>single option</strong> after the plugin is first invoked using the <strong>setOption</strong> method:</span>
+              <pre class="prettyprint">
+              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
+              $(function() {
+                  // Calls the selectBoxIt method on your HTML select box
+                  var toc = $("#toc").tocify().data("tocify");
+
+                  // Sets the smoothScroll option to false
+                  toc.setOption("showEffect", "fadeIn");
+
+              });
+              </pre>
+              <br />
+
+              <span class="note">Here is an example of setting a <strong>multiple options</strong> after the plugin is first invoked using the <strong>setOptions</strong> method:</span>
+              <pre class="prettyprint">
+              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
+              $(function() {
+                  // Calls the selectBoxIt method on your HTML select box and updates the showEffect option
+                  var toc = $("#toc").tocify().data("tocify");
+
+                  // Sets the showEffect, scrollTo, and smoothScroll options
+                  toc.setOptions({ showEffect: "fadeIn", scrollTo: 50, smoothScroll: false });
+
+              });
+              </pre>
+              <br />
+              
+              <h3>Getting Options</h3>
+              <p class="well">
+              A single option can be <strong>retrieved</strong> by using the <strong>option()</strong> method.  All of the current options can be retrieved by referencing the <strong>options</strong> property.
+              </p>
+              <br />
+              <span class="note">Here is an example of retrieving a <strong>single option</strong> after the plugin is called using the <strong>option()</strong> method:</span>
+              <pre class="prettyprint">
+              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
+              $(function() {
+                  //Calls the tocify method on your HTML div
+                  var toc = $("#toc").tocify().data("tocify");
+
+                  // Writes the showEffect option to the console
+                  console.log(toc.option("showEffect"));
+              });
+              </pre>
+              <br />
+              <span class="note">Here is an example of retrieving <strong>all current options</strong> after the plugin is called using the <strong>options</strong> property:</span>
+              <pre class="prettyprint">
+              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
+              $(function() {
+                  //Calls the selectBoxIt method on your HTML select box
+                  var toc = $("#toc").tocify().data("tocify");
+
+                  // Writes all of the current plugin options to the console
+                  console.log(toc.options);
+              });
+              </pre>
               
               <h2>Inspired By</h2>
               <br />
