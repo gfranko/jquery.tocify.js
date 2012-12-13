@@ -218,7 +218,7 @@
             if(hash.length) {
 
                 // Removes highlighting from all of the list item's
-                $("." + self.focusClass).removeClass(self.focusClass);
+                self.element.find("." + self.focusClass).removeClass(self.focusClass);
 
                 // Highlights the current list item that was clicked
                 elem.addClass(self.focusClass);
@@ -235,7 +235,7 @@
             else {
 
                 // Removes highlighting from all of the list item's
-                $("." + self.focusClass).removeClass(self.focusClass);
+                self.element.find("." + self.focusClass).removeClass(self.focusClass);
 
             }
 
