@@ -371,7 +371,7 @@
                 }
 
                 // Removes highlighting from all of the list item's
-                $("." + self.focusClass).removeClass(self.focusClass);
+                self.element.find("." + self.focusClass).removeClass(self.focusClass);
 
                 // Highlights the current list item that was clicked
                 $(this).addClass(self.focusClass);
@@ -483,7 +483,7 @@
                                 if(self.options.highlightOnScroll && elem.length) {
 
                                     // Removes highlighting from all of the list item's
-                                    $("." + self.focusClass).removeClass(self.focusClass);
+                                    self.element.find("." + self.focusClass).removeClass(self.focusClass);
 
                                     // Highlights the corresponding list item
                                     elem.addClass(self.focusClass);
