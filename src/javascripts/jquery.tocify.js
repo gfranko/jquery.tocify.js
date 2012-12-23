@@ -117,13 +117,13 @@
             // Adds jQuery event handlers to the newly generated table of contents
             self._setEventHandlers();
 
-            // The setTimeout allows the correct offset() to be calculated
-            setTimeout(function() {
+            // The window onload events allows enough time for the correct offset to be calculated
+            window.addEventListener("load", function() {
 
-                // Set the active TOC item
+                // Sets the active TOC item
                 self._setActiveElement();
 
-            }, 0);
+            }, false);
 
         },
 
@@ -371,7 +371,7 @@
                 }
 
                 // Removes highlighting from all of the list item's
-                $("." + self.focusClass).removeClass(self.focusClass);
+                self.element.find("." + self.focusClass).removeClass(self.focusClass);
 
                 // Highlights the current list item that was clicked
                 $(this).addClass(self.focusClass);
@@ -483,7 +483,7 @@
                                 if(self.options.highlightOnScroll && elem.length) {
 
                                     // Removes highlighting from all of the list item's
-                                    $("." + self.focusClass).removeClass(self.focusClass);
+                                    self.element.find("." + self.focusClass).removeClass(self.focusClass);
 
                                     // Highlights the corresponding list item
                                     elem.addClass(self.focusClass);
