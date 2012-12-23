@@ -117,13 +117,13 @@
             // Adds jQuery event handlers to the newly generated table of contents
             self._setEventHandlers();
 
-            // The window onload events allows enough time for the correct offset to be calculated
-            window.addEventListener("load", function() {
+            // The timeout makes sure the current element offset is correct
+            setTimeout(function() {
 
                 // Sets the active TOC item
                 self._setActiveElement();
 
-            }, false);
+            }, 300);
 
         },
 
