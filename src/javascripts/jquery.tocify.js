@@ -117,13 +117,12 @@
             // Adds jQuery event handlers to the newly generated table of contents
             self._setEventHandlers();
 
-            // The timeout makes sure the current element offset is correct
-            setTimeout(function() {
+            window.addEventListener("load", function() {
 
                 // Sets the active TOC item
                 self._setActiveElement();
 
-            }, 300);
+            }, false);
 
         },
 
@@ -226,7 +225,8 @@
                 // If the showAndHide option is true
                 if(self.options.showAndHide) {
 
-                    self._scrollTo(elem, true);
+                    // Triggers the click event on the currently focused TOC item
+                    elem.click();
 
                 }
 
@@ -763,7 +763,7 @@
         _scrollTo: function(elem, pageload) {
 
             var self = this,
-                duration = (pageload ? 300: (self.options.smoothScroll ? self.options.smoothScroll : 300));
+                duration = self.options.smoothScroll || 0;
 
             // Animates the html and body element scrolltops
             $("html, body").animate({
