@@ -763,7 +763,7 @@
         _scrollTo: function(elem, pageload) {
 
             var self = this,
-                duration = (pageload ? 0: (self.options.smoothScroll ? self.options.smoothScroll : 0));
+                duration = (pageload ? 300: (self.options.smoothScroll ? self.options.smoothScroll : 300));
 
             // Animates the html and body element scrolltops
             $("html, body").animate({
