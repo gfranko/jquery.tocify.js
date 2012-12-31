@@ -50,7 +50,7 @@ If you find that you need a feature that Tocify does not currently support, eith
 
 `1.2.0` - December 31, 2012
 
-- Multiple bug fixes: [#8](https://github.com/gfranko/jquery.tocify.js/issues/8), [#9](https://github.com/gfranko/jquery.tocify.js/issues/9), [#10](https://github.com/gfranko/jquery.tocify.js/issues/10), [#11](https://github.com/gfranko/jquery.tocify.js/issues/11), [#12](https://github.com/gfranko/jquery.tocify.js/issues/12)
+- Multiple bug fixes: [#8](https://github.com/gfranko/jquery.tocify.js/issues/8), [#9](https://github.com/gfranko/jquery.tocify.js/issues/9), [#11](https://github.com/gfranko/jquery.tocify.js/issues/11), [#12](https://github.com/gfranko/jquery.tocify.js/issues/12)
 
 `1.1.0` - November 19, 2012
 
