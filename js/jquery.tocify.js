@@ -1,4 +1,4 @@
-/* jquery Tocify - v1.1.0 - 2012-10-07
+/* jquery Tocify - v1.2.0 - 2012-12-31
 * http://www.gregfranko.com/jquery.tocify.js/
 * Copyright (c) 2012 Greg Franko; Licensed MIT */
 
@@ -23,7 +23,7 @@
     $.widget("toc.tocify", {
 
         //Plugin version
-        version: "1.1.0",
+        version: "1.2.0",
 
         // These options will be used as defaults
         options: {
@@ -117,16 +117,21 @@
             // Adds jQuery event handlers to the newly generated table of contents
             self._setEventHandlers();
 
-            // Sets the active TOC item
-            self._setActiveElement();
-
-            // The extend Tocify event is triggered if the page height is increased
-            self.element.bind("extend.tocify", function() {
+            // Binding to the Window load event to make sure the correct scrollTop is calculated
+            window.addEventListener("load", function() {
 
                 // Sets the active TOC item
                 self._setActiveElement();
 
-            });
+                // The extend Tocify event is triggered if the page height is increased
+                self.element.bind("extend.tocify", function() {
+
+                    // Sets the active TOC item
+                    self._setActiveElement();
+
+                });
+
+            }, false);
 
         },
 
