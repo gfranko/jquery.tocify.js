@@ -117,12 +117,16 @@
             // Adds jQuery event handlers to the newly generated table of contents
             self._setEventHandlers();
 
-            window.addEventListener("load", function() {
+            // Sets the active TOC item
+            self._setActiveElement();
+
+            // The extend Tocify event is triggered if the page height is increased
+            self.element.bind("extend.tocify", function() {
 
                 // Sets the active TOC item
                 self._setActiveElement();
 
-            }, false);
+            });
 
         },
 
@@ -461,6 +465,8 @@
 
                                 }));
 
+                                self.element.trigger("extend.tocify");
+
                             }
 
                         }
@@ -765,16 +771,21 @@
             var self = this,
                 duration = self.options.smoothScroll || 0;
 
-            // Animates the html and body element scrolltops
-            $("html, body").animate({
+            // Once all animations on the page are complete, this callback function will be called
+            $("html, body").promise().done(function() {
 
-                // Sets the jQuery `scrollTop` to the top offset of the HTML div tag that matches the current list item's `data-unique` tag
-                "scrollTop": $('div[data-unique="' + elem.attr("data-unique") + '"]').offset().top - self.options.scrollTo + "px"
-                        
-            }, {
+                // Animates the html and body element scrolltops
+                $("html, body").animate({
 
-                // Sets the smoothScroll animation time duration to the smoothScrollSpeed option
-                "duration": duration
+                    // Sets the jQuery `scrollTop` to the top offset of the HTML div tag that matches the current list item's `data-unique` tag
+                    "scrollTop": $('div[data-unique="' + elem.attr("data-unique") + '"]').offset().top - self.options.scrollTo + "px"
+
+                }, {
+
+                    // Sets the smoothScroll animation time duration to the smoothScrollSpeed option
+                    "duration": duration
+
+                });
 
             });
 
