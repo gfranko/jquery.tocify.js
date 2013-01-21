@@ -114,11 +114,31 @@
             // Adds CSS classes to the newly generated table of contents HTML
             self._addCSSClasses();
 
+            self.webkit = (function() {
+
+                for(var prop in window) {
+
+                    if(prop) {
+
+                        if(prop.toLowerCase().indexOf("webkit") !== -1) {
+
+                            return true;
+
+                        }
+
+                    }
+
+                }
+
+                return false;
+
+            }());
+
             // Adds jQuery event handlers to the newly generated table of contents
             self._setEventHandlers();
 
             // Binding to the Window load event to make sure the correct scrollTop is calculated
-            window.addEventListener("load", function() {
+            $(window).load(function() {
 
                 // Sets the active TOC item
                 self._setActiveElement();
@@ -452,7 +472,7 @@
                     if(self.options.extendPage) {
 
                         // If the user has scrolled to the bottom of the page and the last toc item is not focused
-                        if(($.browser.webkit && winScrollTop >= scrollHeight - winHeight - self.options.extendPageOffset) || (!$.browser.webkit && winHeight + winScrollTop > docHeight - self.options.extendPageOffset)) {
+                        if((self.webkit && winScrollTop >= scrollHeight - winHeight - self.options.extendPageOffset) || (!self.webkit && winHeight + winScrollTop > docHeight - self.options.extendPageOffset)) {
 
                             self.element.scrollTop(winScrollTop);
 
