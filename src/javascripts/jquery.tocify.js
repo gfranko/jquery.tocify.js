@@ -347,7 +347,7 @@
 
             var hashValue = "";
 
-            if (this.options.hashGenerator == "pretty") {
+            if (this.options.hashGenerator === "pretty") {
 
                 // pretify the text
                 var hashValue = self.text().toLowerCase().replace(/\s/g, "-");
@@ -357,7 +357,7 @@
                     hashValue = hashValue.replace(/--/g, "-");
                 }
 
-            } else if (typeof this.options.hashGenerator == "function") {
+            } else if (typeof this.options.hashGenerator === "function") {
 
                 // call the function
                 hashValue = this.options.hashGenerator(self.text(), self);
