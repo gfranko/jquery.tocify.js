@@ -101,7 +101,7 @@
             //
             // "compact" (default) - #CompressesEverythingTogether
             // "pretty" - #looks-like-a-nice-url-and-is-easily-readable
-            // function(text){} - Your own hash generation function that accepts the text as an
+            // function(text, element){} - Your own hash generation function that accepts the text as an
             // argument, and returns the hash value.
             hashGenerator: "compact"
 
