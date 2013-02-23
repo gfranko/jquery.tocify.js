@@ -43,18 +43,23 @@ After you have verified your code, send a pull request to the `Tocify` dev branc
 
 You'll find source code in the "src" subdirectory!
 
-###Contributors
-
-  * [Mat Ryer, Stretchr](https://github.com/matryer)
-
 ##Forking
 If you find that you need a feature that Tocify does not currently support, either let me know via the Tocify issue tracker, or fork Tocify on Github and easily extend it to create your own widget!
+
+###Contributors
+
+  * [Greg Franko](https://github.com/gfranko)
+
+  * [Mat Ryer, Stretchr](https://github.com/matryer)
 
 ##Change Log
 
 `1.2.1` - February 20, 2013
 
+**Special thanks to [Mat Ryer](https://github.com/matryer) for helping with this release
+
 - Added the **hashGenerator** option
+- Fixed the pageload scroll bug [#15](https://github.com/gfranko/jquery.tocify.js/issues/15)
 
 `1.2.0` - December 31, 2012
 
@@ -121,8 +126,6 @@ If you find that you need a feature that Tocify does not currently support, eith
 
 - Initial Tocify release.  Added annotated source code and documentation
 
-**Contributors**
-Greg Franko
 
 ## License
 Copyright (c) 2012 Greg Franko  

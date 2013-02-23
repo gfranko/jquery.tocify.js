@@ -1,4 +1,4 @@
-/* jquery Tocify - v1.2.0 - 2012-12-31
+/* jquery Tocify - v1.3.0 - 2012-02-23
 * http://www.gregfranko.com/jquery.tocify.js/
 * Copyright (c) 2012 Greg Franko; Licensed MIT */
 
@@ -23,7 +23,7 @@
     $.widget("toc.tocify", {
 
         //Plugin version
-        version: "1.2.1",
+        version: "1.3.0",
 
         // These options will be used as defaults
         options: {
@@ -160,7 +160,7 @@
 
                 });
 
-            }, false);
+            });
 
         },
 
@@ -286,7 +286,7 @@
         //      Helps create the table of contents list by appending nested list items
         _nestElements: function(self, index) {
 
-            var arr, item;
+            var arr, item, hashValue;
 
             arr = $.grep(this.items, function (item) {
 
@@ -310,7 +310,7 @@
 
             }
 
-            var hashValue = this._generateHashValue(arr, self, index);
+            hashValue = this._generateHashValue(arr, self, index);
 
             // Appends a list item HTML element to the last unordered list HTML element found within the HTML element calling the plugin
             item = $("<li/>", {
@@ -345,22 +345,23 @@
         //      Generates the hash value that will be used to refer to each item.
         _generateHashValue: function(arr, self, index) {
 
-            var hashValue = "";
+            var hashValue = "",
+                hashGeneratorOption = this.options.hashGenerator;
 
-            if (this.options.hashGenerator === "pretty") {
+            if (hashGeneratorOption === "pretty") {
 
-                // pretify the text
-                var hashValue = self.text().toLowerCase().replace(/\s/g, "-");
+                // prettify the text
+                hashValue = self.text().toLowerCase().replace(/\s/g, "-");
 
                 // fix double hyphens
                 while (hashValue.indexOf("--") > -1) {
                     hashValue = hashValue.replace(/--/g, "-");
                 }
 
-            } else if (typeof this.options.hashGenerator === "function") {
+            } else if (typeof hashGeneratorOption === "function") {
 
                 // call the function
-                hashValue = this.options.hashGenerator(self.text(), self);
+                hashValue = hashGeneratorOption(self.text(), self);
 
             } else {
 
