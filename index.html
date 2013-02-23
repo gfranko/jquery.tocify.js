@@ -339,7 +339,7 @@
               //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
               $(function() {
                   // Calls the selectBoxIt method on your HTML select box
-                  var toc = $("#toc").tocify().data("tocify");
+                  var toc = $("#toc").tocify().data("toc-tocify");
 
                   // Sets the smoothScroll option to false
                   toc.setOption("showEffect", "fadeIn");
@@ -353,7 +353,7 @@
               //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
               $(function() {
                   // Calls the selectBoxIt method on your HTML select box and updates the showEffect option
-                  var toc = $("#toc").tocify().data("tocify");
+                  var toc = $("#toc").tocify().data("toc-tocify");
 
                   // Sets the showEffect, scrollTo, and smoothScroll options
                   toc.setOptions({ showEffect: "fadeIn", scrollTo: 50, smoothScroll: false });
@@ -372,7 +372,7 @@
               //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
               $(function() {
                   //Calls the tocify method on your HTML div
-                  var toc = $("#toc").tocify().data("tocify");
+                  var toc = $("#toc").tocify().data("toc-tocify");
 
                   // Writes the showEffect option to the console
                   console.log(toc.option("showEffect"));
@@ -384,7 +384,7 @@
               //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
               $(function() {
                   //Calls the selectBoxIt method on your HTML select box
-                  var toc = $("#toc").tocify().data("tocify");
+                  var toc = $("#toc").tocify().data("toc-tocify");
 
                   // Writes all of the current plugin options to the console
                   console.log(toc.options);
@@ -428,7 +428,7 @@
     <script>
         $(function() {
 
-            var toc = $("#toc").tocify({ selectors: "h2, h3, h4" }).data("tocify");
+            var toc = $("#toc").tocify({ selectors: "h2, h3, h4" }).data("toc-tocify");
             prettyPrint();
             $(".optionName").popover({ trigger: "hover" });
 
