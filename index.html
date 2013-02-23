@@ -296,6 +296,28 @@
                   <td>true</td>
                   <td>true or false</td>
                 </tr>
+                <tr>
+                  <td class="optionName" title="hashGenerator" data-content="How the URL hash value get's generated."><a href="#">hashGenerator</a></td>
+                  <td>String or Function</td>
+                  <td>"compact"</td>
+                  <td>"compact", "pretty", function(text, element){}.
+                    <br />
+                    <strong>Compact</strong> - #CompressesEverythingTogether.
+                    <br />
+                    <strong>Pretty</strong> - #looks-like-a-nice-url-and-is-easily-readable.
+                    <br />
+                    <strong>function(text, element){}</strong> - Your own hash generation function that accepts the text as an argument, and returns the hash value.</td>
+                </tr>
+
+
+                            // **hashGenerator**: How the hash value (the anchor segment of the URL, following the
+            // # character) will be generated.
+            //
+            // "compact" (default) - #CompressesEverythingTogether
+            // "pretty" - #looks-like-a-nice-url-and-is-easily-readable
+            // function(text, element){} - Your own hash generation function that accepts the text as an
+            // argument, and returns the hash value.
+            hashGenerator: "compact"
               </table>
               <br />
               <h3>Setting Options</h3>

@@ -1,4 +1,4 @@
-/* jquery Tocify - v1.2.0 - 2012-12-31
+/* jquery Tocify - v1.3.0 - 2012-02-23
 * http://www.gregfranko.com/jquery.tocify.js/
 * Copyright (c) 2012 Greg Franko; Licensed MIT */
 
@@ -23,7 +23,7 @@
     $.widget("toc.tocify", {
 
         //Plugin version
-        version: "1.2.0",
+        version: "1.3.0",
 
         // These options will be used as defaults
         options: {
@@ -94,7 +94,16 @@
 
             // **history**: Accepts a boolean: true or false
             // Adds a hash to the page url to maintain history
-            history: true
+            history: true,
+
+            // **hashGenerator**: How the hash value (the anchor segment of the URL, following the
+            // # character) will be generated.
+            //
+            // "compact" (default) - #CompressesEverythingTogether
+            // "pretty" - #looks-like-a-nice-url-and-is-easily-readable
+            // function(text, element){} - Your own hash generation function that accepts the text as an
+            // argument, and returns the hash value.
+            hashGenerator: "compact"
 
         },
 
@@ -114,11 +123,31 @@
             // Adds CSS classes to the newly generated table of contents HTML
             self._addCSSClasses();
 
+            self.webkit = (function() {
+
+                for(var prop in window) {
+
+                    if(prop) {
+
+                        if(prop.toLowerCase().indexOf("webkit") !== -1) {
+
+                            return true;
+
+                        }
+
+                    }
+
+                }
+
+                return false;
+
+            }());
+
             // Adds jQuery event handlers to the newly generated table of contents
             self._setEventHandlers();
 
             // Binding to the Window load event to make sure the correct scrollTop is calculated
-            window.addEventListener("load", function() {
+            $(window).load(function() {
 
                 // Sets the active TOC item
                 self._setActiveElement();
@@ -131,7 +160,7 @@
 
                 });
 
-            }, false);
+            });
 
         },
 
@@ -257,7 +286,7 @@
         //      Helps create the table of contents list by appending nested list items
         _nestElements: function(self, index) {
 
-            var arr, item;
+            var arr, item, hashValue;
 
             arr = $.grep(this.items, function (item) {
 
@@ -281,13 +310,15 @@
 
             }
 
+            hashValue = this._generateHashValue(arr, self, index);
+
             // Appends a list item HTML element to the last unordered list HTML element found within the HTML element calling the plugin
             item = $("<li/>", {
 
                 // Sets a common class name to the list item
                 "class": "item",
 
-                "data-unique": (!arr.length ? self.text() : self.text() + index).replace(/\s/g, "")
+                "data-unique": hashValue
 
             }).append($("<a/>", {
 
@@ -299,13 +330,51 @@
             self.before($("<div/>", {
 
                 // Sets a name attribute on the anchor tag to the text of the currently traversed HTML element (also making sure that all whitespace is replaced with an underscore)
-                "name": self.text().replace(/\s/g, ""),
+                "name": hashValue,
 
-                "data-unique": (!arr.length ? self.text() : self.text() + index).replace(/\s/g, "")
+                "data-unique": hashValue
 
             }));
 
             return item;
+
+        },
+
+        // _generateHashValue
+        // ------------------
+        //      Generates the hash value that will be used to refer to each item.
+        _generateHashValue: function(arr, self, index) {
+
+            var hashValue = "",
+                hashGeneratorOption = this.options.hashGenerator;
+
+            if (hashGeneratorOption === "pretty") {
+
+                // prettify the text
+                hashValue = self.text().toLowerCase().replace(/\s/g, "-");
+
+                // fix double hyphens
+                while (hashValue.indexOf("--") > -1) {
+                    hashValue = hashValue.replace(/--/g, "-");
+                }
+
+            } else if (typeof hashGeneratorOption === "function") {
+
+                // call the function
+                hashValue = hashGeneratorOption(self.text(), self);
+
+            } else {
+
+                // compact - the default
+                hashValue = self.text().replace(/\s/g, "");
+
+            }
+
+            // add the index if we need to
+            if (arr.length) { hashValue += ""+index; }
+
+            // return the value
+            return hashValue;
 
         },
 
@@ -452,7 +521,7 @@
                     if(self.options.extendPage) {
 
                         // If the user has scrolled to the bottom of the page and the last toc item is not focused
-                        if(($.browser.webkit && winScrollTop >= scrollHeight - winHeight - self.options.extendPageOffset) || (!$.browser.webkit && winHeight + winScrollTop > docHeight - self.options.extendPageOffset)) {
+                        if((self.webkit && winScrollTop >= scrollHeight - winHeight - self.options.extendPageOffset) || (!self.webkit && winHeight + winScrollTop > docHeight - self.options.extendPageOffset)) {
 
                             self.element.scrollTop(winScrollTop);
 
