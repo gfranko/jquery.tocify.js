@@ -54,7 +54,7 @@ If you find that you need a feature that Tocify does not currently support, eith
 
 ##Change Log
 
-`1.3.0` - February 20, 2013
+`1.3.0` - February 23, 2013
 
 **Special thanks to [Mat Ryer](https://github.com/matryer) for helping with this release
 
