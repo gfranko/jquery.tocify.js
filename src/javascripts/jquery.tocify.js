@@ -23,7 +23,7 @@
     $.widget("toc.tocify", {
 
         //Plugin version
-        version: "1.2.0",
+        version: "1.2.1",
 
         // These options will be used as defaults
         options: {
@@ -94,7 +94,16 @@
 
             // **history**: Accepts a boolean: true or false
             // Adds a hash to the page url to maintain history
-            history: true
+            history: true,
+
+            // **hashGenerator**: How the hash value (the anchor segment of the URL, following the
+            // # character) will be generated.
+            //
+            // "compact" (default) - #CompressesEverythingTogether
+            // "pretty" - #looks-like-a-nice-url-and-is-easily-readable
+            // function(text, element){} - Your own hash generation function that accepts the text as an
+            // argument, and returns the hash value.
+            hashGenerator: "compact"
 
         },
 
@@ -301,13 +310,15 @@
 
             }
 
+            var hashValue = this._generateHashValue(arr, self, index);
+
             // Appends a list item HTML element to the last unordered list HTML element found within the HTML element calling the plugin
             item = $("<li/>", {
 
                 // Sets a common class name to the list item
                 "class": "item",
 
-                "data-unique": (!arr.length ? self.text() : self.text() + index).replace(/\s/g, "")
+                "data-unique": hashValue
 
             }).append($("<a/>", {
 
@@ -319,13 +330,50 @@
             self.before($("<div/>", {
 
                 // Sets a name attribute on the anchor tag to the text of the currently traversed HTML element (also making sure that all whitespace is replaced with an underscore)
-                "name": self.text().replace(/\s/g, ""),
+                "name": hashValue,
 
-                "data-unique": (!arr.length ? self.text() : self.text() + index).replace(/\s/g, "")
+                "data-unique": hashValue
 
             }));
 
             return item;
+
+        },
+
+        // _generateHashValue
+        // ------------------
+        //      Generates the hash value that will be used to refer to each item.
+        _generateHashValue: function(arr, self, index) {
+
+            var hashValue = "";
+
+            if (this.options.hashGenerator === "pretty") {
+
+                // pretify the text
+                var hashValue = self.text().toLowerCase().replace(/\s/g, "-");
+
+                // fix double hyphens
+                while (hashValue.indexOf("--") > -1) {
+                    hashValue = hashValue.replace(/--/g, "-");
+                }
+
+            } else if (typeof this.options.hashGenerator === "function") {
+
+                // call the function
+                hashValue = this.options.hashGenerator(self.text(), self);
+
+            } else {
+
+                // compact - the default
+                hashValue = self.text().replace(/\s/g, "");
+
+            }
+
+            // add the index if we need to
+            if (arr.length) { hashValue += ""+index; }
+
+            // return the value
+            return hashValue;
 
         },
 

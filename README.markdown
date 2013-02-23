@@ -43,10 +43,18 @@ After you have verified your code, send a pull request to the `Tocify` dev branc
 
 You'll find source code in the "src" subdirectory!
 
+###Contributors
+
+  * [Mat Ryer, Stretchr](https://github.com/matryer)
+
 ##Forking
 If you find that you need a feature that Tocify does not currently support, either let me know via the Tocify issue tracker, or fork Tocify on Github and easily extend it to create your own widget!
 
 ##Change Log
+
+`1.2.1` - February 20, 2013
+
+- Added the **hashGenerator** option
 
 `1.2.0` - December 31, 2012
 
