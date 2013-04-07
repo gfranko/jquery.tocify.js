@@ -1,11 +1,13 @@
 /*
- * jquery.tocify.css 1.2.0
+ * jquery.tocify.css 1.4.0
  * Author: @gregfranko
  */
 
 /* The Table of Contents container element */
 #toc {
     width: 20%;
+    max-height: 90%;
+    overflow: auto;
     margin-left: 2%;
     position: fixed;
     border: 1px solid #ccc;
