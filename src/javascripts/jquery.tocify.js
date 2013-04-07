@@ -1,4 +1,4 @@
-/* jquery Tocify - v1.3.0 - 2012-02-23
+/* jquery Tocify - v1.4.0 - 2012-04-06
 * http://www.gregfranko.com/jquery.tocify.js/
 * Copyright (c) 2012 Greg Franko; Licensed MIT */
 
@@ -23,7 +23,7 @@
     $.widget("toc.tocify", {
 
         //Plugin version
-        version: "1.3.0",
+        version: "1.4.0",
 
         // These options will be used as defaults
         options: {
@@ -103,7 +103,11 @@
             // "pretty" - #looks-like-a-nice-url-and-is-easily-readable
             // function(text, element){} - Your own hash generation function that accepts the text as an
             // argument, and returns the hash value.
-            hashGenerator: "compact"
+            hashGenerator: "compact",
+
+            // **highlightDefault**: Accepts a boolean: true or false
+            // Set's the first TOC item as active if no other TOC item is active.
+            highlightDefault: true
 
         },
 
@@ -143,6 +147,8 @@
 
             }());
 
+            self.hash = window.location.hash.substring(1),
+
             // Adds jQuery event handlers to the newly generated table of contents
             self._setEventHandlers();
 
@@ -152,8 +158,8 @@
                 // Sets the active TOC item
                 self._setActiveElement();
 
-                // The extend Tocify event is triggered if the page height is increased
-                self.element.bind("extend.tocify", function() {
+                // The extend Tocify event is triggered if the page height is increased (will only fire once)
+                self.element.one("extend.tocify", function() {
 
                     // Sets the active TOC item
                     self._setActiveElement();
@@ -181,10 +187,12 @@
                 ul;
 
              // If the selectors option has a comma within the string
-             if(this.options.selectors.indexOf(",") !== -1) {
+             if(self.options.selectors.indexOf(",") !== -1) {
 
-                 // Grabs the first selector from the string
-                 firstElem = $(this.options.context).find(this.options.selectors.replace(/ /g,"").substr(0, this.options.selectors.indexOf(",")));
+                // Grabs the first selector from the string
+                firstElem = $(self.options.context).find(self.options.selectors.replace(/ /g,"").substr(0, self.options.selectors.indexOf(",")));
+
+                self.headerTags = self.options.selectors.split(',');
 
              }
 
@@ -192,7 +200,9 @@
              else {
 
                  // Grabs the first selector from the string and makes sure there are no spaces
-                 firstElem = $(this.options.context).find(this.options.selectors.replace(/ /g,""));
+                 firstElem = $(self.options.context).find(self.options.selectors.replace(/ /g,""));
+
+                 self.headerTags = self.options.selectors.split('');
 
              }
 
@@ -248,9 +258,15 @@
 
             var self = this,
 
-                hash = window.location.hash.substring(1),
+                hash = self.hash,
+
+                currentElem = self.element.find('li.active[data-unique]'),
 
                 elem = self.element.find("li[data-unique='" + hash + "']");
+
+            if(currentElem.attr('data-unique')) {
+                return;
+            }
 
             if(hash.length) {
 
@@ -274,6 +290,10 @@
 
                 // Removes highlighting from all of the list item's
                 self.element.find("." + self.focusClass).removeClass(self.focusClass);
+
+                if(self.options.highlightDefault) {
+                    self.element.find('li[data-unique]').first().addClass(self.focusClass);
+                }
 
             }
 
@@ -393,18 +413,41 @@
             var index = $(this).index(self.options.selectors),
 
                 // Finds the previous header DOM element
-                previousHeader = $(self.options.selectors).eq(index - 1);
+                previousHeader = $(self.options.selectors).eq(index - 1),
+
+                currentTagName = +$(this).prop("tagName").charAt(1),
+
+                previousTagName = +previousHeader.prop("tagName").charAt(1),
+
+                lastSubheader;
 
             // If the current header DOM element is smaller than the previous header DOM element or the first subheader
-            if((+$(this).prop("tagName").charAt(1) < +previousHeader.prop("tagName").charAt(1))) {
+            if(currentTagName < previousTagName) {
 
-                // Selects the last unordered list HTML found within the HTML element calling the plugin
-                self.element.find(".sub-header").last().after(self._nestElements($(this), index));
+                lastSubheader = self.element.find(".sub-header[data-tag=" + currentTagName + "]");
+
+                if(lastSubheader.length) {
+
+                    lastSubheader.
+
+                    // Appends an unorderedList HTML element to the dynamic `unorderedList` variable and sets a common class name
+                    after($("<ul/>", {
+
+                        "class": "sub-header",
+
+                        "data-tag": currentTagName
+
+                    })).
+
+                    // Appends a list item HTML element to the last unordered list HTML element found within the HTML element calling the plugin
+                    append(self._nestElements($(this), index));
+
+                }
 
             }
 
             // If the current header DOM element is the same type of header(eg. h4) as the previous header DOM element
-            else if(+$(this).prop("tagName").charAt(1) === +previousHeader.prop("tagName").charAt(1)) {
+            else if(currentTagName === previousTagName) {
 
                 ul.find(".item").last().after(self._nestElements($(this), index));
 
@@ -418,7 +461,9 @@
                 // Appends an unorderedList HTML element to the dynamic `unorderedList` variable and sets a common class name
                 after($("<ul/>", {
 
-                    "class": "sub-header"
+                    "class": "sub-header",
+
+                    "data-tag": currentTagName
 
                 })).next(".sub-header").
 
@@ -626,7 +671,6 @@
                     // Sets the current element to all of the subheaders within the current header
                     elem = elem.parents(".sub-header").add(elem);
 
-
                 }
 
                 // If the current element does not have any nested subheaders and is not a header
@@ -656,7 +700,7 @@
 
                     //Uses the jQuery `slideDown` special effect
                     case "slideDown":
-        
+
                         elem.slideDown(self.options.showEffectSpeed);
 
                     break;
@@ -694,6 +738,19 @@
                 self.hide($(".sub-header").not(elem.closest(".header").find(".sub-header").not(elem.siblings())));
 
             }
+
+            // Once all animations on the page are complete, this callback function will be called
+            $("html, body").promise().done(function() {
+                if(element.length) {
+                    // Checks if the current element is visible
+                    if(!self.isVisible(element[0])) {
+
+                        // Updates the scrollTop positioning
+                        self.element.scrollTop(element.position().top);
+
+                    }
+                }
+            });
 
             // Maintains chainablity
             return self;
@@ -870,6 +927,56 @@
 
             // Maintains chainability
             return self;
+
+        },
+
+        isVisible: function(elem) {
+
+            var height, rects, on_top;
+
+            if(!elem || (elem && elem.nodeType !== 1) || !elem.getClientRects || !document.elementFromPoint || !document.querySelector || !elem.contains) {
+
+                return false;
+
+            }
+
+            if (elem.offsetWidth === 0 || elem.offsetHeight === 0) {
+
+                return false;
+
+            }
+
+            height = window.innerHeight ? window.innerHeight: document.documentElement.clientHeight;
+
+            rects = elem.getClientRects();
+
+            on_top = function(r, elem) {
+
+                var x = (r.left + r.right)/2,
+
+                    y = (r.top + r.bottom)/2,
+
+                    elemFromPoint = document.elementFromPoint(x, y);
+
+                return (elemFromPoint === elem || elem.contains(elemFromPoint));
+
+            };
+
+            for (var i = 0, l = rects.length; i < l; i++) {
+
+                var r = rects[i],
+
+                    in_viewport = r.top > 0 ? r.top <= height : (r.bottom > 0 && r.bottom <= height);
+
+                if (in_viewport && on_top(r, elem)) {
+
+                    return true;
+
+                }
+
+            }
+
+            return false;
 
         }
 
