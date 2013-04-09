@@ -32,6 +32,10 @@
             // The container element that holds all of the elements used to generate the table of contents
             context: "body",
 
+            // **ignoreSelector**: Accepts String: Any jQuery selector
+            // A selector to any element that would be matched by selectors that you wish to be ignored
+            ignoreSelector: null,
+
             // **selectors**: Accepts an Array of Strings: Any jQuery selectors
             // The element's used to generate the table of contents.  The order is very important since it will determine the table of content's nesting structure
             selectors: "h1, h2, h3",
@@ -208,6 +212,12 @@
             // Loops through each top level selector
             firstElem.each(function(index) {
 
+                //If the element matches the ignoreSelector then we skip it
+                if($(this).is(self.options.ignoreSelector))
+                {
+                    return;
+                }
+
                 // Creates an unordered list HTML element and adds a dynamic ID and standard class name
                 ul = $("<ul/>", {
                     "id": "Header" + index,
@@ -229,6 +239,12 @@
                         // Loops through all of the subheader elements
                         $(this).filter(self.options.selectors).each(function() {
 
+                            //If the element matches the ignoreSelector then we skip it
+                            if($(this).is(self.options.ignoreSelector))
+                            {
+                                return;
+                            }
+
                             self._appendSubheaders.call(this, self, ul);
 
                         });
@@ -240,6 +256,12 @@
 
                         // Loops through all of the subheader elements
                         $(this).find(self.options.selectors).each(function() {
+
+                            //If the element matches the ignoreSelector then we skip it
+                            if($(this).is(self.options.ignoreSelector))
+                            {
+                                return;
+                            }
 
                             self._appendSubheaders.call(this, self, ul);
 
