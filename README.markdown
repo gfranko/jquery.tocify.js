@@ -54,6 +54,16 @@ If you find that you need a feature that Tocify does not currently support, eith
 
 ##Change Log
 
+`1.4.0` - April 6, 2013
+
+**Special thanks to [Joaquin Casares](https://github.com/joaquincasares) for helping with this release
+
+- Fixed colon-spaced hashes [#22](https://github.com/gfranko/jquery.tocify.js/pull/22)
+- Created solution for long menu's on smaller screens [#19](https://github.com/gfranko/jquery.tocify.js/issues/19)
+- Fixed scroll jump bug with **extendPage** option [#20](https://github.com/gfranko/jquery.tocify.js/issues/20)
+- Added the **highlightDefault** option [#21](https://github.com/gfranko/jquery.tocify.js/issues/21)
+- Fixed a TOC item nesting bug [#23](https://github.com/gfranko/jquery.tocify.js/issues/23)
+
 `1.3.0` - February 23, 2013
 
 **Special thanks to [Mat Ryer](https://github.com/matryer) for helping with this release

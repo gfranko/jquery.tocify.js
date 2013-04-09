@@ -1,4 +1,4 @@
-/* jquery Tocify - v1.3.0 - 2012-02-23
+/* jquery Tocify - v1.4.0 - 2012-04-07
 * http://www.gregfranko.com/jquery.tocify.js/
 * Copyright (c) 2012 Greg Franko; Licensed MIT */
 
@@ -23,7 +23,7 @@
     $.widget("toc.tocify", {
 
         //Plugin version
-        version: "1.3.0",
+        version: "1.4.0",
 
         // These options will be used as defaults
         options: {
@@ -84,9 +84,9 @@
             // The offset distance in pixels to trigger the next active table of contents item
             highlightOffset: 40,
 
-            // **theme**: Accepts a string: "twitterBootstrap", "jqueryUI", or "none"
+            // **theme**: Accepts a string: "bootstrap", "jqueryui", or "none"
             // Determines if Twitter Bootstrap, jQueryUI, or Tocify classes should be added to the table of contents
-            theme: "twitterBootstrap",
+            theme: "bootstrap",
 
             // **extendPage**: Accepts a boolean: true or false
             // If a user scrolls to the bottom of the page and the page is not tall enough to scroll to the last table of contents item, then the page height is increased
@@ -94,7 +94,7 @@
 
             // **extendPageOffset**: Accepts a number: pixels
             // How close to the bottom of the page a user must scroll before the page is extended
-            extendPageOffset: true,
+            extendPageOffset: 100,
 
             // **history**: Accepts a boolean: true or false
             // Adds a hash to the page url to maintain history
@@ -107,7 +107,11 @@
             // "pretty" - #looks-like-a-nice-url-and-is-easily-readable
             // function(text, element){} - Your own hash generation function that accepts the text as an
             // argument, and returns the hash value.
-            hashGenerator: "compact"
+            hashGenerator: "compact",
+
+            // **highlightDefault**: Accepts a boolean: true or false
+            // Set's the first TOC item as active if no other TOC item is active.
+            highlightDefault: true
 
         },
 
@@ -117,6 +121,8 @@
         _create: function() {
 
             var self = this;
+
+            self.extendPageScroll = true;
 
             // Internal array that keeps track of all TOC items (Helps to recognize if there are duplicate TOC item strings)
             self.items = [];
@@ -154,13 +160,16 @@
             $(window).load(function() {
 
                 // Sets the active TOC item
-                self._setActiveElement();
+                self._setActiveElement(true);
 
-                // The extend Tocify event is triggered if the page height is increased
-                self.element.bind("extend.tocify", function() {
+                // Once all animations on the page are complete, this callback function will be called
+                $("html, body").promise().done(function() {
 
-                    // Sets the active TOC item
-                    self._setActiveElement();
+                    setTimeout(function() {
+
+                        self.extendPageScroll = false;
+
+                    },0);
 
                 });
 
@@ -266,7 +275,7 @@
 
         },
 
-        _setActiveElement: function() {
+        _setActiveElement: function(pageload) {
 
             var self = this,
 
@@ -296,6 +305,13 @@
 
                 // Removes highlighting from all of the list item's
                 self.element.find("." + self.focusClass).removeClass(self.focusClass);
+
+                if(!hash.length && pageload && self.options.highlightDefault) {
+
+                    // Highlights the first TOC item if no other items are highlighted
+                    self.element.find(".item").first().addClass(self.focusClass);
+
+                }
 
             }
 
@@ -415,18 +431,24 @@
             var index = $(this).index(self.options.selectors),
 
                 // Finds the previous header DOM element
-                previousHeader = $(self.options.selectors).eq(index - 1);
+                previousHeader = $(self.options.selectors).eq(index - 1),
+
+                currentTagName = +$(this).prop("tagName").charAt(1),
+
+                previousTagName = +previousHeader.prop("tagName").charAt(1),
+
+                lastSubheader;
 
             // If the current header DOM element is smaller than the previous header DOM element or the first subheader
-            if((+$(this).prop("tagName").charAt(1) < +previousHeader.prop("tagName").charAt(1))) {
+            if(currentTagName < previousTagName) {
 
                 // Selects the last unordered list HTML found within the HTML element calling the plugin
-                self.element.find(".sub-header").last().after(self._nestElements($(this), index));
+                self.element.find(".sub-header[data-tag=" + currentTagName + "]").last().append(self._nestElements($(this), index));
 
             }
 
             // If the current header DOM element is the same type of header(eg. h4) as the previous header DOM element
-            else if(+$(this).prop("tagName").charAt(1) === +previousHeader.prop("tagName").charAt(1)) {
+            else if(currentTagName === previousTagName) {
 
                 ul.find(".item").last().after(self._nestElements($(this), index));
 
@@ -440,7 +462,9 @@
                 // Appends an unorderedList HTML element to the dynamic `unorderedList` variable and sets a common class name
                 after($("<ul/>", {
 
-                    "class": "sub-header"
+                    "class": "sub-header",
+
+                    "data-tag": currentTagName
 
                 })).next(".sub-header").
 
@@ -511,7 +535,7 @@
                 // Mouseleave event handler
                 "mouseleave.tocify": function() {
 
-                    if(self.options.theme !== "twitterBootstrap") {
+                    if(self.options.theme !== "bootstrap") {
 
                         // Removes the hover CSS class from the current list item
                         $(this).removeClass(self.hoverClass);
@@ -543,30 +567,42 @@
                         // Instantiates a variable that will be used to hold a selected HTML element
                         elem,
 
-                        lastElemOffset;
+                        lastElem,
+
+                        lastElemOffset,
+
+                        currentElem;
 
                     if(self.options.extendPage) {
 
                         // If the user has scrolled to the bottom of the page and the last toc item is not focused
                         if((self.webkit && winScrollTop >= scrollHeight - winHeight - self.options.extendPageOffset) || (!self.webkit && winHeight + winScrollTop > docHeight - self.options.extendPageOffset)) {
 
-                            self.element.scrollTop(winScrollTop);
-
                             if(!$(".tocify-extend-page").length) {
 
+                                lastElem = $('div[data-unique="' + $(".item").last().attr("data-unique") + '"]');
+
                                 // Gets the top offset of the page header that is linked to the last toc item
-                                lastElemOffset = $('div[data-unique="' + $(".item").last().attr("data-unique") + '"]').offset().top;
+                                lastElemOffset = lastElem.offset().top;
 
                                 // Appends a div to the bottom of the page and sets the height to the difference of the window scrollTop and the last element's position top offset
                                 $(self.options.context).append($("<div />", {
 
                                     "class": "tocify-extend-page",
 
-                                    "height": Math.abs(lastElemOffset - winScrollTop) + "px"
+                                    "height": Math.abs(lastElemOffset - winScrollTop) + "px",
+
+                                    "data-unique": "tocify-extend-page"
 
                                 }));
 
-                                self.element.trigger("extend.tocify");
+                                if(self.extendPageScroll) {
+
+                                    currentElem = self.element.find('li.active');
+
+                                    self._scrollTo($("div[data-unique=" + currentElem.attr("data-unique") + "]"));
+
+                                }
 
                             }
 
@@ -678,7 +714,7 @@
 
                     //Uses the jQuery `slideDown` special effect
                     case "slideDown":
-        
+
                         elem.slideDown(self.options.showEffectSpeed);
 
                     break;
@@ -690,7 +726,7 @@
 
                     break;
 
-                    //If none of the above options were passed, then a `jqueryUI show effect` is expected
+                    //If none of the above options were passed, then a `jQueryUI show effect` is expected
                     default:
 
                         elem.show();
@@ -808,7 +844,7 @@
         _addCSSClasses: function() {
 
             // If the user wants a jqueryUI theme
-            if(this.options.theme === "jqueryUI") {
+            if(this.options.theme === "jqueryui") {
 
                 this.focusClass = "ui-state-default";
 
@@ -820,7 +856,7 @@
             }
 
             // If the user wants a twitterBootstrap theme
-            else if(this.options.theme === "twitterBootstrap") {
+            else if(this.options.theme === "bootstrap") {
 
                 this.element.addClass("bs-docs-sidebar").find(".header, .sub-header").addClass("nav nav-list bs-docs-sidenav");
 
@@ -831,7 +867,7 @@
             // If a user does not want a prebuilt theme
             else {
 
-                // Adds more neutral classes (instead of jqueryUI)
+                // Adds more neutral classes (instead of jqueryui)
 
                 this.focusClass = "tocify-focus";
 
@@ -867,7 +903,7 @@
         // _scrollTo
         // ---------
         //      Scrolls to a specific element
-        _scrollTo: function(elem, pageload) {
+        _scrollTo: function(elem) {
 
             var self = this,
                 duration = self.options.smoothScroll || 0;

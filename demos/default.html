@@ -79,7 +79,7 @@
               <h2>Optional Dependencies</h2>
               <br />
               <p class="well">
-              <a href="http://jqueryui.com/themeroller/" target="_blank">Twitter Bootstrap or jQueryUI CSS Theme</a>
+              <a href="http://twitter.github.com/bootstrap/customize.html" target="_blank">Twitter Bootstrap</a> or <a href="http://jqueryui.com/download" target="_blank">jQueryUI CSS Theme</a>
               <br /><br />
               <span class="note"><strong>Note: </strong>A Twitter Bootstrap or jQueryUI theme is only required if you want to use either framework to style your table of contents.
               </span>
@@ -188,77 +188,6 @@
 
               <h2>Options API</h2>
               <br />
-              <h3>Setting Options</h3>
-<p class="well">
-              All options can be <strong>set</strong> when the plugin is called.  Certain options can also be set after the plugin is called using the <strong>setOption()</strong> or <strong>setOptions()</strong> methods.</p>
-
-              <span class="note">Here is an example of setting a <strong>single option</strong> when the plugin is first invoked:</span>
-              <pre class="prettyprint">
-              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
-              $(function() {
-                  // Calls the selectBoxIt method on your HTML select box and updates the showEffect option
-                  var toc = $("#toc").tocify({ showEffect: "fadeIn" });
-              });
-              </pre>
-              <br />
-
-              <span class="note">Here is an example of setting a <strong>single option</strong> after the plugin is first invoked using the <strong>setOption</strong> method:</span>
-              <pre class="prettyprint">
-              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
-              $(function() {
-                  // Calls the selectBoxIt method on your HTML select box
-                  var toc = $("#toc").tocify().data("tocify");
-
-                  // Sets the smoothScroll option to false
-                  toc.setOption("showEffect", "fadeIn");
-
-              });
-              </pre>
-              <br />
-
-              <span class="note">Here is an example of setting a <strong>multiple options</strong> after the plugin is first invoked using the <strong>setOptions</strong> method:</span>
-              <pre class="prettyprint">
-              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
-              $(function() {
-                  // Calls the selectBoxIt method on your HTML select box and updates the showEffect option
-                  var toc = $("#toc").tocify().data("tocify");
-
-                  // Sets the showEffect, scrollTo, and smoothScroll options
-                  toc.setOptions({ showEffect: "fadeIn", scrollTo: 50, smoothScroll: false });
-
-              });
-              </pre>
-              <br />
-              
-              <h3>Getting Options</h3>
-              <p class="well">
-              A single option can be <strong>retrieved</strong> by using the <strong>option()</strong> method.  All of the current options can be retrieved by referencing the <strong>options</strong> property.
-              </p>
-              <br />
-              <span class="note">Here is an example of retrieving a <strong>single option</strong> after the plugin is called using the <strong>option()</strong> method:</span>
-              <pre class="prettyprint">
-              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
-              $(function() {
-                  //Calls the tocify method on your HTML div
-                  var toc = $("#toc").tocify().data("tocify");
-
-                  // Writes the showEffect option to the console
-                  console.log(toc.option("showEffect"));
-              });
-              </pre>
-              <br />
-              <span class="note">Here is an example of retrieving <strong>all current options</strong> after the plugin is called using the <strong>options</strong> property:</span>
-              <pre class="prettyprint">
-              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
-              $(function() {
-                  //Calls the selectBoxIt method on your HTML select box
-                  var toc = $("#toc").tocify().data("tocify");
-
-                  // Writes all of the current plugin options to the console
-                  console.log(toc.options);
-              });
-              </pre>
-              <br />
               <h3>Options</h3>
               <table class="table table-striped table-bordered table-condensed">
                 <tr>
@@ -366,7 +295,7 @@
                 <tr>
                   <td class="optionName" title="extendPageOffset" data-content="How close to the bottom of the page a user must scroll before the page is extended"><a href="#">extendPageOffset</a></td>
                   <td>Number</td>
-                  <td>25</td>
+                  <td>100</td>
                   <td>Any number (pixels)</td>
                 </tr>
                 <tr>
@@ -375,13 +304,116 @@
                   <td>true</td>
                   <td>true or false</td>
                 </tr>
+                <tr>
+                  <td class="optionName" title="hashGenerator" data-content="How the URL hash value get's generated."><a href="#">hashGenerator</a></td>
+                  <td>String or Function</td>
+                  <td>"compact"</td>
+                  <td>"compact", "pretty", function(text, element){}.
+                    <br />
+                    <strong>Compact</strong> - #CompressesEverythingTogether.
+                    <br />
+                    <strong>Pretty</strong> - #looks-like-a-nice-url-and-is-easily-readable.
+                    <br />
+                    <strong>function(text, element){}</strong> - Your own hash generation function that accepts the text as an argument, and returns the hash value.</td>
+                </tr>
+                <tr>
+                  <td class="optionName" title="highlightDefault" data-content="Set's the first TOC item as active if no other TOC item is active."><a href="#">highlightDefault</a></td>
+                  <td>Boolean</td>
+                  <td>true</td>
+                  <td>true or false</td>
+                </tr>
               </table>
+              <br />
+              <h3>Setting Options</h3>
+<p class="well">
+              All options can be <strong>set</strong> when the plugin is called.  Certain options can also be set after the plugin is called using the <strong>setOption()</strong> or <strong>setOptions()</strong> methods.</p>
+
+              <span class="note">Here is an example of setting a <strong>single option</strong> when the plugin is first invoked:</span>
+              <pre class="prettyprint">
+              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
+              $(function() {
+                  // Calls the selectBoxIt method on your HTML select box and updates the showEffect option
+                  var toc = $("#toc").tocify({ showEffect: "fadeIn" });
+              });
+              </pre>
+              <br />
+
+              <span class="note">Here is an example of setting a <strong>single option</strong> after the plugin is first invoked using the <strong>setOption</strong> method:</span>
+              <pre class="prettyprint">
+              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
+              $(function() {
+                  // Calls the selectBoxIt method on your HTML select box
+                  var toc = $("#toc").tocify().data("toc-tocify");
+
+                  // Sets the smoothScroll option to false
+                  toc.setOption("showEffect", "fadeIn");
+
+              });
+              </pre>
+              <br />
+
+              <span class="note">Here is an example of setting a <strong>multiple options</strong> after the plugin is first invoked using the <strong>setOptions</strong> method:</span>
+              <pre class="prettyprint">
+              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
+              $(function() {
+                  // Calls the selectBoxIt method on your HTML select box and updates the showEffect option
+                  var toc = $("#toc").tocify().data("toc-tocify");
+
+                  // Sets the showEffect, scrollTo, and smoothScroll options
+                  toc.setOptions({ showEffect: "fadeIn", scrollTo: 50, smoothScroll: false });
+
+              });
+              </pre>
+              <br />
+              
+              <h3>Getting Options</h3>
+              <p class="well">
+              A single option can be <strong>retrieved</strong> by using the <strong>option()</strong> method.  All of the current options can be retrieved by referencing the <strong>options</strong> property.
+              </p>
+              <br />
+              <span class="note">Here is an example of retrieving a <strong>single option</strong> after the plugin is called using the <strong>option()</strong> method:</span>
+              <pre class="prettyprint">
+              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
+              $(function() {
+                  //Calls the tocify method on your HTML div
+                  var toc = $("#toc").tocify().data("toc-tocify");
+
+                  // Writes the showEffect option to the console
+                  console.log(toc.option("showEffect"));
+              });
+              </pre>
+              <br />
+              <span class="note">Here is an example of retrieving <strong>all current options</strong> after the plugin is called using the <strong>options</strong> property:</span>
+              <pre class="prettyprint">
+              //Executes your code when the DOM is ready.  Acts the same as $(document).ready().
+              $(function() {
+                  //Calls the selectBoxIt method on your HTML select box
+                  var toc = $("#toc").tocify().data("toc-tocify");
+
+                  // Writes all of the current plugin options to the console
+                  console.log(toc.options);
+              });
+              </pre>
               
               <h2>Inspired By</h2>
               <br />
               <h3 class="headerDoc well"><a href="http://www.canjs.us/" target="_blank">Can.js</a></h3>
               <br /><br />
               <h3 class="headerDoc well"><a href="http://bonsaiden.github.com/JavaScript-Garden/" target="_blank">JavaScript Garden</a></h3>
+
+              <br />
+             <h2>Donation</h2>
+              <p class="well">
+              If you would like to support the Tocify project, please consider sending a donation to Greg Franko (the project maintainer).  All donations (small or large) are appreciated and help the continued development of the project. &nbsp;
+              <iframe style="border: 0; margin: 0; padding: 0;" src="https://www.gittip.com/gfranko/widget.html" width="48pt" height="20pt"></iframe>
+              </p>
+
+              <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+              <input type="hidden" name="cmd" value="_s-xclick">
+              <input type="hidden" name="encrypted" value="-----BEGIN PKCS7-----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-----END PKCS7-----">
+              <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+              <img alt="" border="0" src="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" width="1" height="1">
+              </form>
 
         </div><!--/span-->
       </div><!--/row-->
@@ -399,7 +431,7 @@
     <script>
         $(function() {
 
-            $("#toc").tocify({ selectors: "h2, h3, h4, h5", hashGenerator: "pretty" }).data("tocify");
+            $("#toc").tocify({ selectors: "h2,h3,h4,h5" }).data("toc-tocify");
 
             prettyPrint();
             $(".optionName").popover({ trigger: "hover" });
