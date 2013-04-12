@@ -387,7 +387,7 @@
             } else {
 
                 // compact - the default
-                hashValue = self.text().replace(/\s/g, "");
+                hashValue = self.text().replace(/[^a-zA-Z0-9]/g, "");
 
             }
 
