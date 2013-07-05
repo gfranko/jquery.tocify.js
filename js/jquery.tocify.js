@@ -1,4 +1,4 @@
-/* jquery Tocify - v1.4.0 - 2012-04-07
+/* jquery Tocify - v1.5.0 - 2012-04-07
 * http://www.gregfranko.com/jquery.tocify.js/
 * Copyright (c) 2012 Greg Franko; Licensed MIT */
 
@@ -23,7 +23,7 @@
     $.widget("toc.tocify", {
 
         //Plugin version
-        version: "1.4.0",
+        version: "1.5.0",
 
         // These options will be used as defaults
         options: {
@@ -31,6 +31,10 @@
             // **context**: Accepts String: Any jQuery selector
             // The container element that holds all of the elements used to generate the table of contents
             context: "body",
+
+            // **ignoreSelector**: Accepts String: Any jQuery selector
+            // A selector to any element that would be matched by selectors that you wish to be ignored
+            ignoreSelector: null,
 
             // **selectors**: Accepts an Array of Strings: Any jQuery selectors
             // The element's used to generate the table of contents.  The order is very important since it will determine the table of content's nesting structure
@@ -187,7 +191,8 @@
                 firstElem,
 
                 // Instantiated variable that will store the top level newly created unordered list DOM element
-                ul;
+                ul,
+                ignoreSelector = self.options.ignoreSelector;
 
              // If the selectors option has a comma within the string
              if(this.options.selectors.indexOf(",") !== -1) {
@@ -207,6 +212,11 @@
 
             // Loops through each top level selector
             firstElem.each(function(index) {
+
+                //If the element matches the ignoreSelector then we skip it
+                if($(this).is(ignoreSelector)) {
+                    return;
+                }
 
                 // Creates an unordered list HTML element and adds a dynamic ID and standard class name
                 ul = $("<ul/>", {
@@ -229,6 +239,11 @@
                         // Loops through all of the subheader elements
                         $(this).filter(self.options.selectors).each(function() {
 
+                            //If the element matches the ignoreSelector then we skip it
+                            if($(this).is(ignoreSelector)) {
+                                return;
+                            }
+
                             self._appendSubheaders.call(this, self, ul);
 
                         });
@@ -240,6 +255,11 @@
 
                         // Loops through all of the subheader elements
                         $(this).find(self.options.selectors).each(function() {
+
+                            //If the element matches the ignoreSelector then we skip it
+                            if($(this).is(ignoreSelector)) {
+                                return;
+                            }
 
                             self._appendSubheaders.call(this, self, ul);
 
@@ -560,6 +580,8 @@
 
                                 lastElem = $('div[data-unique="' + $(".item").last().attr("data-unique") + '"]');
 
+                                if(!lastElem.length) return;
+
                                 // Gets the top offset of the page header that is linked to the last toc item
                                 lastElemOffset = lastElem.offset().top;
 
@@ -836,7 +858,7 @@
             // If the user wants a twitterBootstrap theme
             else if(this.options.theme === "bootstrap") {
 
-                this.element.addClass("bs-docs-sidebar").find(".header, .sub-header").addClass("nav nav-list bs-docs-sidenav");
+                this.element.find(".header, .sub-header").addClass("nav nav-list");
 
                 this.focusClass = "active";
 
