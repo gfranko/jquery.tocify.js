@@ -2,7 +2,7 @@
   "name": "jquery.tocify",
   "title": "jquery Tocify",
   "description": "A jQuery plugin that creates a dynamic table of contents",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "homepage": "http://gregfranko.com/jquery.tocify.js/",
   "author": {
     "name": "Greg Franko",

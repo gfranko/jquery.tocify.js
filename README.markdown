@@ -54,6 +54,12 @@ If you find that you need a feature that Tocify does not currently support, eith
 
 ##Change Log
 
+`1.5.0` - July 5, 2013
+
+- Added **ignoreSelector**  option[#27](https://github.com/gfranko/jquery.tocify.js/issues/27)
+- Removed the bootstrap docs.css class names [#30](https://github.com/gfranko/jquery.tocify.js/issues/30)
+- Fixed a bug when there is only one selector [#31](https://github.com/gfranko/jquery.tocify.js/issues/31)
+
 `1.4.0` - April 6, 2013
 
 **Special thanks to [Joaquin Casares](https://github.com/joaquincasares) for helping with this release
