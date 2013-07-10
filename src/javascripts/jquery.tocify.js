@@ -613,38 +613,48 @@
                     // The zero timeout ensures the following code is run after the scroll events
                     setTimeout(function() {
 
-                        // Loops through each anchor tag on the page with a `name` attribute
-                        $(self.options.context).find("div[data-unique]").next().each(function() {
+                        // _Local variables_
 
-                            // If the user has scrolled to within x (the highlightOffset option) distance of the currently traversed anchor tag
-                            if ((Math.abs($(this).offset().top - winScrollTop) < self.options.highlightOffset)) {
+                        // Stores the distance to the closest anchor
+                        var closestAnchorDistance = null,
 
-                                // Stores the list item HTML element that corresponds to the currently traversed anchor tag
-                                elem = $('li[data-unique="' + $(this).prev("div[data-unique]").attr("data-unique") + '"]');
+                        // Stores the index of the closest anchor
+                            closestAnchorIdx = null,
 
-                                // If the `highlightOnScroll` option is true and a next element is found
-                                if(self.options.highlightOnScroll && elem.length) {
+                        // Keeps a reference to all anchors
+                            anchors = $(self.options.context).find("div[data-unique]");
 
-                                    // Removes highlighting from all of the list item's
-                                    self.element.find("." + self.focusClass).removeClass(self.focusClass);
-
-                                    // Highlights the corresponding list item
-                                    elem.addClass(self.focusClass);
-
-                                }
-
-                                // If the `showAndHideOnScroll` option is true
-                                if(self.options.showAndHideOnScroll && self.options.showAndHide) {
-
-                                    self._triggerShow(elem, true);
-
-                                }
-
+                        // Determines the index of the closest anchor
+                        anchors.each(function(idx) {
+                            var distance = Math.abs($(this).next().offset().top - winScrollTop - self.options.highlightOffset);
+                            if (closestAnchorDistance == null || distance < closestAnchorDistance) {
+                                closestAnchorDistance = distance;
+                                closestAnchorIdx = idx;
+                            } else {
                                 return false;
-
                             }
+                        })
 
-                        });
+                        // Stores the list item HTML element that corresponds to the currently traversed anchor tag
+                        elem = $('li[data-unique="' + $(anchors[closestAnchorIdx]).attr("data-unique") + '"]');
+
+                        // If the `highlightOnScroll` option is true and a next element is found
+                        if(self.options.highlightOnScroll && elem.length) {
+
+                            // Removes highlighting from all of the list item's
+                            self.element.find("." + self.focusClass).removeClass(self.focusClass);
+
+                            // Highlights the corresponding list item
+                            elem.addClass(self.focusClass);
+                        }
+
+                        // If the `showAndHideOnScroll` option is true
+                        if(self.options.showAndHideOnScroll && self.options.showAndHide) {
+
+                            self._triggerShow(elem, true);
+
+                        }
+
 
                     }, 0);
 
