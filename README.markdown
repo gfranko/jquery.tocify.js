@@ -54,6 +54,11 @@ If you find that you need a feature that Tocify does not currently support, eith
 
 ##Change Log
 
+`1.6.0` - July 24, 2013
+
+- Updated the **scrollTo**  option to accept a function [#33](https://github.com/gfranko/jquery.tocify.js/issues/33)
+- Improved scroll highlighting accuracy [#33](https://github.com/gfranko/jquery.tocify.js/issues/33) [#34](https://github.com/gfranko/jquery.tocify.js/issues/34) Special thanks to [Andre Kampert](https://github.com/andrekampert) for this improvement
+
 `1.5.0` - July 5, 2013
 
 - Added **ignoreSelector**  option[#27](https://github.com/gfranko/jquery.tocify.js/issues/27)

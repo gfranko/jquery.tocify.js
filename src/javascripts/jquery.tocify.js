@@ -1,6 +1,6 @@
-/* jquery Tocify - v1.5.0 - 2012-04-07
+/* jquery Tocify - v1.6.0 - 2013-07-24
 * http://www.gregfranko.com/jquery.tocify.js/
-* Copyright (c) 2012 Greg Franko; Licensed MIT */
+* Copyright (c) 2013 Greg Franko; Licensed MIT */
 
 // Immediately-Invoked Function Expression (IIFE) [Ben Alman Blog Post](http://benalman.com/news/2010/11/immediately-invoked-function-expression/) that calls another IIFE that contains all of the plugin logic.  I used this pattern so that anyone viewing this code would not have to scroll to the bottom of the page to view the local parameters that were passed to the main IIFE.
 (function(tocify) {
@@ -23,7 +23,7 @@
     $.widget("toc.tocify", {
 
         //Plugin version
-        version: "1.5.0",
+        version: "1.6.0",
 
         // These options will be used as defaults
         options: {
@@ -626,14 +626,14 @@
 
                         // Determines the index of the closest anchor
                         anchors.each(function(idx) {
-                            var distance = Math.abs($(this).next().offset().top - winScrollTop - self.options.highlightOffset);
+                            var distance = Math.abs(($(this).next().length ? $(this).next() : $(this)).offset().top - winScrollTop - self.options.highlightOffset);
                             if (closestAnchorDistance == null || distance < closestAnchorDistance) {
                                 closestAnchorDistance = distance;
                                 closestAnchorIdx = idx;
                             } else {
                                 return false;
                             }
-                        })
+                        });
 
                         // Stores the list item HTML element that corresponds to the currently traversed anchor tag
                         elem = $('li[data-unique="' + $(anchors[closestAnchorIdx]).attr("data-unique") + '"]');
@@ -916,7 +916,8 @@
         _scrollTo: function(elem) {
 
             var self = this,
-                duration = self.options.smoothScroll || 0;
+                duration = self.options.smoothScroll || 0,
+                scrollTo = self.options.scrollTo;
 
             // Once all animations on the page are complete, this callback function will be called
             $("html, body").promise().done(function() {
@@ -925,7 +926,7 @@
                 $("html, body").animate({
 
                     // Sets the jQuery `scrollTop` to the top offset of the HTML div tag that matches the current list item's `data-unique` tag
-                    "scrollTop": $('div[data-unique="' + elem.attr("data-unique") + '"]').offset().top - self.options.scrollTo + "px"
+                    "scrollTop": $('div[data-unique="' + elem.attr("data-unique") + '"]').offset().top - ($.isFunction(scrollTo) ? scrollTo.call() : scrollTo) + "px"
 
                 }, {
 
