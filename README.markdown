@@ -54,6 +54,11 @@ If you find that you need a feature that Tocify does not currently support, eith
 
 ##Change Log
 
+`1.7.0` - August 13, 2013
+
+- Improved the CSS class naming convention and implementation
+- Improved the CSS handling if no TOC items are found
+
 `1.6.0` - July 24, 2013
 
 - Updated the **scrollTo**  option to accept a function [#33](https://github.com/gfranko/jquery.tocify.js/issues/33)
