@@ -1,10 +1,10 @@
 /*
- * jquery.tocify.css 1.4.0
+ * jquery.tocify.css 1.7.0
  * Author: @gregfranko
  */
 
 /* The Table of Contents container element */
-#toc {
+.tocify {
     width: 20%;
     max-height: 90%;
     overflow: auto;
@@ -17,7 +17,7 @@
 }
 
 /* The Table of Contents is composed of multiple nested unordered lists.  These styles remove the default styling of an unordered list because it is ugly. */
-#toc ul, #toc li {
+.tocify ul, .tocify li {
     list-style: none;
     margin: 0;
     padding: 0;
@@ -26,28 +26,28 @@
 }
 
 /* Top level header elements */
-.header {
+.tocify-header {
     text-indent: 10px;
 }
 
 /* Top level subheader elements.  These are the first nested items underneath a header element. */
-.sub-header {
+.tocify-subheader {
     text-indent: 20px;
     display: none;
 }
 
 /* Makes the font smaller for all subheader elements. */
-.sub-header li {
+.tocify-subheader li {
     font-size: 12px;
 }
 
 /* Further indents second level subheader elements. */
-.sub-header .sub-header {
+.tocify-subheader .tocify-subheader {
     text-indent: 30px;
 }
 
 /* Further indents third level subheader elements. You can continue this pattern if you have more nested elements. */
-.sub-header .sub-header .sub-header {
+.tocify-subheader .tocify-subheader .tocify-subheader {
     text-indent: 40px;
 }
 

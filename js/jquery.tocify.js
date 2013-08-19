@@ -1,4 +1,4 @@
-/* jquery Tocify - v1.6.0 - 2013-07-24
+/* jquery Tocify - v1.7.0 - 2013-07-24
 * http://www.gregfranko.com/jquery.tocify.js/
 * Copyright (c) 2013 Greg Franko; Licensed MIT */
 
@@ -19,11 +19,26 @@
     // ECMAScript 5 Strict Mode: [John Resig Blog Post](http://ejohn.org/blog/ecmascript-5-strict-mode-json-and-more/)
     "use strict";
 
+    var tocClassName = "tocify",
+        tocClass = "." + tocClassName,
+        tocFocusClassName = "tocify-focus",
+        tocHoverClassName = "tocify-hover",
+        hideTocClassName = "tocify-hide",
+        hideTocClass = "." + hideTocClassName,
+        headerClassName = "tocify-header",
+        headerClass = "." + headerClassName,
+        subheaderClassName = "tocify-subheader",
+        subheaderClass = "." + subheaderClassName,
+        itemClassName = "tocify-item",
+        itemClass = "." + itemClassName,
+        extendPageClassName = "tocify-extend-page",
+        extendPageClass = "." + extendPageClassName;
+
     // Calling the jQueryUI Widget Factory Method
     $.widget("toc.tocify", {
 
         //Plugin version
-        version: "1.6.0",
+        version: "1.7.0",
 
         // These options will be used as defaults
         options: {
@@ -210,6 +225,16 @@
 
              }
 
+            if(!firstElem.length) {
+
+                self.element.addClass(hideTocClassName);
+
+                return;
+
+            }
+
+            self.element.addClass(tocClassName);
+
             // Loops through each top level selector
             firstElem.each(function(index) {
 
@@ -220,8 +245,8 @@
 
                 // Creates an unordered list HTML element and adds a dynamic ID and standard class name
                 ul = $("<ul/>", {
-                    "id": "Header" + index,
-                    "class": "header"
+                    "id": headerClassName + index,
+                    "class": headerClassName
                 }).
 
                 // Appends a top level list item HTML element to the previously created HTML header
@@ -307,7 +332,7 @@
                 if(!hash.length && pageload && self.options.highlightDefault) {
 
                     // Highlights the first TOC item if no other items are highlighted
-                    self.element.find(".item").first().addClass(self.focusClass);
+                    self.element.find(itemClass).first().addClass(self.focusClass);
 
                 }
 
@@ -352,7 +377,7 @@
             item = $("<li/>", {
 
                 // Sets a common class name to the list item
-                "class": "item",
+                "class": itemClassName,
 
                 "data-unique": hashValue
 
@@ -441,30 +466,30 @@
             if(currentTagName < previousTagName) {
 
                 // Selects the last unordered list HTML found within the HTML element calling the plugin
-                self.element.find(".sub-header[data-tag=" + currentTagName + "]").last().append(self._nestElements($(this), index));
+                self.element.find(itemClass + "[data-tag=" + currentTagName + "]").last().append(self._nestElements($(this), index));
 
             }
 
             // If the current header DOM element is the same type of header(eg. h4) as the previous header DOM element
             else if(currentTagName === previousTagName) {
 
-                ul.find(".item").last().after(self._nestElements($(this), index));
+                ul.find(itemClass).last().after(self._nestElements($(this), index));
 
             }
 
             else {
 
                 // Selects the last unordered list HTML found within the HTML element calling the plugin
-                ul.find(".item").last().
+                ul.find(itemClass).last().
 
                 // Appends an unorderedList HTML element to the dynamic `unorderedList` variable and sets a common class name
                 after($("<ul/>", {
 
-                    "class": "sub-header",
+                    "class": subheaderClassName,
 
                     "data-tag": currentTagName
 
-                })).next(".sub-header").
+                })).next(subheaderClass).
 
                 // Appends a list item HTML element to the last unordered list HTML element found within the HTML element calling the plugin
                 append(self._nestElements($(this), index));
@@ -576,9 +601,9 @@
                         // If the user has scrolled to the bottom of the page and the last toc item is not focused
                         if((self.webkit && winScrollTop >= scrollHeight - winHeight - self.options.extendPageOffset) || (!self.webkit && winHeight + winScrollTop > docHeight - self.options.extendPageOffset)) {
 
-                            if(!$(".tocify-extend-page").length) {
+                            if(!$(extendPageClass).length) {
 
-                                lastElem = $('div[data-unique="' + $(".item").last().attr("data-unique") + '"]');
+                                lastElem = $('div[data-unique="' + $(itemClass).last().attr("data-unique") + '"]');
 
                                 if(!lastElem.length) return;
 
@@ -588,11 +613,11 @@
                                 // Appends a div to the bottom of the page and sets the height to the difference of the window scrollTop and the last element's position top offset
                                 $(self.options.context).append($("<div />", {
 
-                                    "class": "tocify-extend-page",
+                                    "class": extendPageClassName,
 
                                     "height": Math.abs(lastElemOffset - winScrollTop) + "px",
 
-                                    "data-unique": "tocify-extend-page"
+                                    "data-unique": extendPageClassName
 
                                 }));
 
@@ -689,19 +714,19 @@
             if (!elem.is(":visible")) {
 
                 // If the current element does not have any nested subheaders, is not a header, and its parent is not visible
-                if(!elem.find(".sub-header").length && !elem.parent().is(".header") && !elem.parent().is(":visible")) {
+                if(!elem.find(subheaderClass).length && !elem.parent().is(headerClass) && !elem.parent().is(":visible")) {
 
                     // Sets the current element to all of the subheaders within the current header
-                    elem = elem.parents(".sub-header").add(elem);
+                    elem = elem.parents(subheaderClass).add(elem);
 
 
                 }
 
                 // If the current element does not have any nested subheaders and is not a header
-                else if(!elem.children(".sub-header").length && !elem.parent().is(".header")) {
+                else if(!elem.children(subheaderClass).length && !elem.parent().is(headerClass)) {
 
                     // Sets the current element to the closest subheader
-                    elem = elem.closest(".sub-header");
+                    elem = elem.closest(subheaderClass);
 
                 }
 
@@ -748,10 +773,10 @@
             }
 
             // If the current subheader parent element is a header
-            if(elem.parent().is(".header")) {
+            if(elem.parent().is(headerClass)) {
 
                 // Hides all non-active sub-headers
-                self.hide($(".sub-header").not(elem));
+                self.hide($(subheaderClass).not(elem));
 
             }
 
@@ -759,7 +784,7 @@
             else {
 
                 // Hides all non-active sub-headers
-                self.hide($(".sub-header").not(elem.closest(".header").find(".sub-header").not(elem.siblings())));
+                self.hide($(subheaderClass).not(elem.closest(headerClass).find(subheaderClass).not(elem.siblings())));
 
             }
 
@@ -828,15 +853,15 @@
             var self = this;
 
             // If the current element's parent is a header element or the next element is a nested subheader element
-            if(elem.parent().is(".header") || elem.next().is(".sub-header")) {
+            if(elem.parent().is(headerClass) || elem.next().is(subheaderClass)) {
 
                 // Shows the next sub-header element
-                self.show(elem.next(".sub-header"), scroll);
+                self.show(elem.next(subheaderClass), scroll);
 
             }
 
             // If the current element's parent is a subheader element
-            else if(elem.parent().is(".sub-header")) {
+            else if(elem.parent().is(subheaderClass)) {
 
                 // Shows the parent sub-header element
                 self.show(elem.parent(), scroll);
@@ -868,7 +893,7 @@
             // If the user wants a twitterBootstrap theme
             else if(this.options.theme === "bootstrap") {
 
-                this.element.find(".header, .sub-header").addClass("nav nav-list");
+                this.element.find(headerClass + "," + subheaderClass).addClass("nav nav-list");
 
                 this.focusClass = "active";
 
@@ -879,9 +904,9 @@
 
                 // Adds more neutral classes (instead of jqueryui)
 
-                this.focusClass = "tocify-focus";
+                this.focusClass = tocFocusClassName;
 
-                this.hoverClass = "tocify-hover";
+                this.hoverClass = tocHoverClassName;
 
             }
 
