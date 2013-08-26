@@ -1,0 +1,11 @@
+{
+  "name": "jquery.tocify.js",
+  "version": "1.7.1",
+  "homepage": "http://gregfranko.com/jquery.tocify.js",
+  "authors": [
+    "gfranko <gregfranko5@gmail.com>"
+  ],
+  "description": "A jQuery plugin that dynamically generates a table of contents.",
+  "main": "jquery.tocify.js",
+  "license": "MIT"
+}
