@@ -5,6 +5,10 @@
   "authors": [
     "gfranko <gregfranko5@gmail.com>"
   ],
+  "dependencies": {
+    "jquery": "~1.9.1",
+    "jquery-ui": "~1.10.3",
+  }
   "description": "A jQuery plugin that dynamically generates a table of contents.",
   "main": "jquery.tocify.js",
   "license": "MIT"
