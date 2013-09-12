@@ -466,7 +466,7 @@
             if(currentTagName < previousTagName) {
 
                 // Selects the last unordered list HTML found within the HTML element calling the plugin
-                self.element.find(itemClass + "[data-tag=" + currentTagName + "]").last().append(self._nestElements($(this), index));
+                self.element.find(subheaderClass + "[data-tag=" + currentTagName + "]").last().append(self._nestElements($(this), index));
 
             }
 
