@@ -54,6 +54,11 @@ If you find that you need a feature that Tocify does not currently support, eith
 
 ##Change Log
 
+`1.8.0` - September 16, 2013
+
+- Added the **scrollHistory** option [#41](https://github.com/gfranko/jquery.tocify.js/issues/41)
+- Fixed a non-linear nesting bug [#40](https://github.com/gfranko/jquery.tocify.js/issues/40)
+
 `1.7.0` - August 13, 2013
 
 - Improved the CSS class naming convention and implementation
