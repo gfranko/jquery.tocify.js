@@ -1,4 +1,4 @@
-/* jquery Tocify - v1.7.0 - 2013-07-24
+/* jquery Tocify - v1.8.0 - 2013-09-16
 * http://www.gregfranko.com/jquery.tocify.js/
 * Copyright (c) 2013 Greg Franko; Licensed MIT */
 
@@ -38,7 +38,7 @@
     $.widget("toc.tocify", {
 
         //Plugin version
-        version: "1.7.0",
+        version: "1.8.0",
 
         // These options will be used as defaults
         options: {
@@ -114,6 +114,10 @@
             // **history**: Accepts a boolean: true or false
             // Adds a hash to the page url to maintain history
             history: true,
+
+            // **scrollHistory**: Accepts a boolean: true or false
+            // Adds a hash to the page url, to maintain history, when scrolling to a TOC item
+            scrollHistory: false,
 
             // **hashGenerator**: How the hash value (the anchor segment of the URL, following the
             // # character) will be generated.
@@ -466,7 +470,7 @@
             if(currentTagName < previousTagName) {
 
                 // Selects the last unordered list HTML found within the HTML element calling the plugin
-                self.element.find(itemClass + "[data-tag=" + currentTagName + "]").last().append(self._nestElements($(this), index));
+                self.element.find(subheaderClass + "[data-tag=" + currentTagName + "]").last().append(self._nestElements($(this), index));
 
             }
 
@@ -643,11 +647,13 @@
                         // Stores the distance to the closest anchor
                         var closestAnchorDistance = null,
 
-                        // Stores the index of the closest anchor
+                            // Stores the index of the closest anchor
                             closestAnchorIdx = null,
 
-                        // Keeps a reference to all anchors
-                            anchors = $(self.options.context).find("div[data-unique]");
+                            // Keeps a reference to all anchors
+                            anchors = $(self.options.context).find("div[data-unique]"),
+
+                            anchorText;
 
                         // Determines the index of the closest anchor
                         anchors.each(function(idx) {
@@ -660,8 +666,10 @@
                             }
                         });
 
+                        anchorText = $(anchors[closestAnchorIdx]).attr("data-unique");
+
                         // Stores the list item HTML element that corresponds to the currently traversed anchor tag
-                        elem = $('li[data-unique="' + $(anchors[closestAnchorIdx]).attr("data-unique") + '"]');
+                        elem = $('li[data-unique="' + anchorText + '"]');
 
                         // If the `highlightOnScroll` option is true and a next element is found
                         if(self.options.highlightOnScroll && elem.length) {
@@ -671,6 +679,17 @@
 
                             // Highlights the corresponding list item
                             elem.addClass(self.focusClass);
+
+                        }
+
+                        if(self.options.scrollHistory) {
+
+                            if(window.location.hash !== anchorText) {
+
+                                window.location.hash = anchorText;
+
+                            }
+
                         }
 
                         // If the `showAndHideOnScroll` option is true
@@ -680,24 +699,11 @@
 
                         }
 
-
                     }, 0);
 
                 });
 
             });
-
-            // If the hash change event is supported
-            if ("onhashchange" in window) {
-
-                // Sets the onhashevent event to a function
-                window.onhashchange = function() {
-
-                    self._setActiveElement();
-
-                };
-
-            }
 
         },
 
@@ -718,7 +724,6 @@
 
                     // Sets the current element to all of the subheaders within the current header
                     elem = elem.parents(subheaderClass).add(elem);
-
 
                 }
 
