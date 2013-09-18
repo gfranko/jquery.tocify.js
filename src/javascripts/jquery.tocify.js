@@ -684,12 +684,11 @@
 
                         if(self.options.scrollHistory) {
 
-                            if(window.location.hash !== anchorText) {
+                            if(window.location.hash !== "#" + anchorText) {
 
-                                window.location.hash = anchorText;
+                                window.location.replace("#" + anchorText);
 
                             }
-
                         }
 
                         // If the `showAndHideOnScroll` option is true
