@@ -437,7 +437,10 @@
     <script>
         $(function() {
 
-            var toc = $("#toc").tocify({ selectors: "h2,h3,h4,h5", scrollHistory: true }).data("toc-tocify");
+            var toc = $("#toc").tocify({
+              selectors: "h2,h3,h4,h5",
+              scrollHistory: true
+            }).data("toc-tocify");
 
             prettyPrint();
             $(".optionName").popover({ trigger: "hover" });
