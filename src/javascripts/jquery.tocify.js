@@ -308,7 +308,7 @@
 
                 hash = window.location.hash.substring(1),
 
-                elem = self.element.find("li[data-unique='" + hash + "']");
+                elem = self.element.find('li[data-unique="' + hash + '"]');
 
             if(hash.length) {
 
@@ -632,7 +632,7 @@
 
                                         currentElem = self.element.find('li.active');
 
-                                        self._scrollTo($("div[data-unique=" + currentElem.attr("data-unique") + "]"));
+                                        self._scrollTo($('div[data-unique="' + currentElem.attr("data-unique") + '"]'));
 
                                     }
 
@@ -950,7 +950,14 @@
 
             var self = this,
                 duration = self.options.smoothScroll || 0,
-                scrollTo = self.options.scrollTo;
+                scrollTo = self.options.scrollTo,
+                currentDiv = $('div[data-unique="' + elem.attr("data-unique") + '"]');
+
+            if(!currentDiv.length) {
+
+                return self;
+
+            }
 
             // Once all animations on the page are complete, this callback function will be called
             $("html, body").promise().done(function() {
@@ -959,7 +966,7 @@
                 $("html, body").animate({
 
                     // Sets the jQuery `scrollTop` to the top offset of the HTML div tag that matches the current list item's `data-unique` tag
-                    "scrollTop": $('div[data-unique="' + elem.attr("data-unique") + '"]').offset().top - ($.isFunction(scrollTo) ? scrollTo.call() : scrollTo) + "px"
+                    "scrollTop": currentDiv.offset().top - ($.isFunction(scrollTo) ? scrollTo.call() : scrollTo) + "px"
 
                 }, {
 
