@@ -54,6 +54,13 @@ If you find that you need a feature that Tocify does not currently support, eith
 
 ##Change Log
 
+`1.9.0` - October 1, 2013
+
+- Fixed hash/history bug that threw a JavaScript error when the hash did not match an element on the page
+- Fixed bug that affected TOC items which contained special characters [#45](https://github.com/gfranko/jquery.tocify.js/issues/45)
+- Only register scroll event handlers if necessary [#44](https://github.com/gfranko/jquery.tocify.js/issues/44)
+- Improved the **scrollHistory** option [#42](https://github.com/gfranko/jquery.tocify.js/issues/42)
+
 `1.8.0` - September 16, 2013
 
 - Added the **scrollHistory** option [#41](https://github.com/gfranko/jquery.tocify.js/issues/41)
