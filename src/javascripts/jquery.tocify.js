@@ -1,4 +1,4 @@
-/* jquery Tocify - v1.9.0 - 2013-10-01
+/* jquery Tocify - v1.9.1 - 2013-10-22
 * http://www.gregfranko.com/jquery.tocify.js/
 * Copyright (c) 2013 Greg Franko; Licensed MIT */
 
@@ -38,7 +38,7 @@
     $.widget("toc.tocify", {
 
         //Plugin version
-        version: "1.9.0",
+        version: "1.9.1",
 
         // These options will be used as defaults
         options: {
@@ -385,11 +385,21 @@
 
                 "data-unique": hashValue
 
-            }).append($("<a/>", {
+            });
 
-                "text": self.text()
+            if(this.options.theme !== "bootstrap3") {
 
-            }));
+                item.append($("<a/>", {
+
+                    "text": self.text()
+
+                }));
+
+            } else {
+
+                item.text(self.text());
+
+            }
 
             // Adds an HTML anchor tag before the currently traversed HTML element
             self.before($("<div/>", {
@@ -618,7 +628,7 @@
                                     lastElemOffset = lastElem.offset().top;
 
                                     // Appends a div to the bottom of the page and sets the height to the difference of the window scrollTop and the last element's position top offset
-                                    $(self.options.context).append($("<div />", {
+                                    $(self.options.context).append($("<div/>", {
 
                                         "class": extendPageClassName,
 
@@ -630,7 +640,7 @@
 
                                     if(self.extendPageScroll) {
 
-                                        currentElem = self.element.find('li.active');
+                                        currentElem = self.element.find('li.' + self.focusClass);
 
                                         self._scrollTo($('div[data-unique="' + currentElem.attr("data-unique") + '"]'));
 
@@ -902,6 +912,17 @@
             else if(this.options.theme === "bootstrap") {
 
                 this.element.find(headerClass + "," + subheaderClass).addClass("nav nav-list");
+
+                this.focusClass = "active";
+
+            }
+
+            // If the user wants a twitterBootstrap theme
+            else if(this.options.theme === "bootstrap3") {
+
+                this.element.find(headerClass + "," + subheaderClass).addClass("list-group");
+
+                this.element.find(itemClass).addClass("list-group-item");
 
                 this.focusClass = "active";
 

@@ -1,5 +1,5 @@
 /*
- * jquery.tocify.css 1.9.0
+ * jquery.tocify.css 1.9.1
  * Author: @gregfranko
  */
 
@@ -52,11 +52,24 @@
 }
 
 /* Twitter Bootstrap Override Style */
-.nav-list > li > a, .nav-list .nav-header {
+.tocify .tocify-item > a, .tocify .nav-list .nav-header {
     margin: 0px;
 }
 
-/* Twitter Bootstrap Override Style */
-.nav-list > li > a {
+/* Twitter Bootstrap Override Styles */
+.tocify .tocify-item a, .tocify .list-group-item {
     padding: 5px;
 }
+
+.tocify .nav-pills > li {
+    float: none;
+}
+
+.tocify .list-group-item:hover, .tocify .list-group-item:focus {
+    background-color: #f5f5f5;
+}
+
+.tocify .list-group-item.active:hover, .tocify .list-group-item.active:focus {
+    background-color: #428bca;
+}
+ /* End Twitter Bootstrap Override Styles */
