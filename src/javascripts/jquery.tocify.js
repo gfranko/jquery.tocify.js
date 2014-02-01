@@ -32,7 +32,8 @@
         itemClassName = "tocify-item",
         itemClass = "." + itemClassName,
         extendPageClassName = "tocify-extend-page",
-        extendPageClass = "." + extendPageClassName;
+        extendPageClass = "." + extendPageClassName,
+        History = window.History;
 
     // Calling the jQueryUI Widget Factory Method
     $.widget("toc.tocify", {
@@ -175,11 +176,31 @@
             // Adds jQuery event handlers to the newly generated table of contents
             self._setEventHandlers();
 
+            // If history option is enabled and History.js is present
+            if (self.options.history && History.enabled) {
+
+                // bind the changes to state change event
+                $(window).bind('popstate', function(e) {
+
+                    // set the current hash as the active TOC item
+                    self._setActiveElement(History.getHash());
+
+
+                });
+            }
+
             // Binding to the Window load event to make sure the correct scrollTop is calculated
             $(window).load(function() {
 
+                var hash;
+                if (History.enabled) {
+                    hash = History.getHash();
+                } else {
+                    hash = window.location.hash.substring(1);
+                }
+
                 // Sets the active TOC item
-                self._setActiveElement(true);
+                self._setActiveElement(hash);
 
                 // Once all animations on the page are complete, this callback function will be called
                 $("html, body").promise().done(function() {
@@ -306,7 +327,7 @@
 
             var self = this,
 
-                hash = window.location.hash.substring(1),
+                hash = pageload,
 
                 elem = self.element.find('li[data-unique="' + hash + '"]');
 
@@ -333,13 +354,30 @@
                 // Removes highlighting from all of the list item's
                 self.element.find("." + self.focusClass).removeClass(self.focusClass);
 
-                if(!hash.length && pageload && self.options.highlightDefault) {
+                if(!hash.length && self.options.highlightDefault) {
 
                     // Highlights the first TOC item if no other items are highlighted
                     self.element.find(itemClass).first().addClass(self.focusClass);
+		
+                    $("html, body").promise().done(function() {
 
+                    	// Animates the html and body element scrolltops
+                    	$("html, body").animate({
+
+                    	    // Sets the jQuery `scrollTop` to the top of the page
+                    	    "scrollTop": "0px"
+
+              		}, {
+
+                    	    // Sets the smoothScroll animation time duration to the smoothScrollSpeed option
+                    	    "duration": self.options.duration
+
+                        });
+
+                   });
+
+			
                 }
-
             }
 
             return self;
@@ -529,12 +567,9 @@
 
             // Event delegation that looks for any clicks on list item elements inside of the HTML element calling the plugin
             this.element.on("click.tocify", "li", function(event) {
-
-                if(self.options.history) {
-
-                    window.location.hash = $(this).attr("data-unique");
-
-                }
+		
+		// to prevent hashchanges in url, if history is disabled
+                event.preventDefault();
 
                 // Removes highlighting from all of the list item's
                 self.element.find("." + self.focusClass).removeClass(self.focusClass);
@@ -542,16 +577,36 @@
                 // Highlights the current list item that was clicked
                 $(this).addClass(self.focusClass);
 
-                // If the showAndHide option is true
-                if(self.options.showAndHide) {
+                var data_unique = $(this).attr("data-unique");
 
-                    var elem = $('li[data-unique="' + $(this).attr("data-unique") + '"]');
+                // If the showAndHide option is true
+                if (self.options.showAndHide) {
+
+                    var elem = $('li[data-unique="' + data_unique + '"]');
 
                     self._triggerShow(elem);
 
                 }
 
                 self._scrollTo($(this));
+
+		if(self.options.history) {
+
+		    	// push a new browser state for the TOC item
+			if (History.enabled) {
+			    if (History.getHash() != data_unique) {
+				History.pushState({}, null, '#' + data_unique);
+			    }
+			} else {
+			    if (window.location.hash !== "#" + data_unique) {
+
+				window.location.replace("#" + data_unique);
+
+			    }
+			}
+
+                }
+
 
             });
 
@@ -693,16 +748,27 @@
                                 // Highlights the corresponding list item
                                 elem.addClass(self.focusClass);
 
-                            }
+				// unless history option is enabled, scrollhistory can't be available.
+                                if (self.options.history && self.options.scrollHistory) {
+                                    
+                                    //proper history if History.js is available.
+                                    if (History.enabled) {
+                                        if (History.getHash() != anchorText) {
+                                            History.pushState({}, null, '#' + anchorText);
+                                        }
+                                    } else {
+                                        if (window.location.hash !== "#" + anchorText) {
 
-                            if(self.options.scrollHistory) {
+                                            window.location.replace("#" + anchorText);
 
-                                if(window.location.hash !== "#" + anchorText) {
-
-                                    window.location.replace("#" + anchorText);
+                                        }
+                                    }
 
                                 }
+
                             }
+
+                            
 
                             // If the `showAndHideOnScroll` option is true
                             if(self.options.showAndHideOnScroll && self.options.showAndHide) {
