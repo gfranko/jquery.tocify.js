@@ -354,13 +354,30 @@
                 // Removes highlighting from all of the list item's
                 self.element.find("." + self.focusClass).removeClass(self.focusClass);
 
-                if(!hash.length && pageload && self.options.highlightDefault) {
+                if(!hash.length && self.options.highlightDefault) {
 
                     // Highlights the first TOC item if no other items are highlighted
                     self.element.find(itemClass).first().addClass(self.focusClass);
+		
+                    $("html, body").promise().done(function() {
 
+                    	// Animates the html and body element scrolltops
+                    	$("html, body").animate({
+
+                    	    // Sets the jQuery `scrollTop` to the top of the page
+                    	    "scrollTop": "0px"
+
+              		}, {
+
+                    	    // Sets the smoothScroll animation time duration to the smoothScrollSpeed option
+                    	    "duration": self.options.duration
+
+                        });
+
+                   });
+
+			
                 }
-
             }
 
             return self;
