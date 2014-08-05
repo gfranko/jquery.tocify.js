@@ -107,10 +107,6 @@
             // If a user scrolls to the bottom of the page and the page is not tall enough to scroll to the last table of contents item, then the page height is increased
             extendPage: true,
 
-            // **extendPageOffset**: Accepts a number: pixels
-            // How close to the bottom of the page a user must scroll before the page is extended
-            extendPageOffset: 100,
-
             // **history**: Accepts a boolean: true or false
             // Adds a hash to the page url to maintain history
             history: true,
@@ -300,6 +296,29 @@
 
             });
 
+            if(self.options.extendPage) {
+                // If the user has scrolled to the bottom of the page and the last toc item is not focused
+                var lastElem, currentElem, calculatedPadding;
+
+                if(!$(extendPageClass).length) {
+                    lastElem = $('div[data-unique="' + $(itemClass).last().attr("data-unique") + '"]');
+
+                    if(!lastElem.length) return;
+
+                    calculatedPadding = $(window).height() - ($(document).height() - lastElem.offset().top);
+
+                    // Appends a div to the bottom of the page and sets the height to the difference of the window scrollTop and the last element's position top offset
+                    $(self.options.context).append($("<div />", {
+                        "class": extendPageClassName,
+                        "height": calculatedPadding + "px",
+                        "data-unique": extendPageClassName
+                    }));
+                    if(self.extendPageScroll) {
+                        currentElem = self.element.find('li.active');
+                        self._scrollTo($('div[data-unique="' + currentElem.attr("data-unique") + '"]'));
+                    }
+                }
+            }
         },
 
         _setActiveElement: function(pageload) {
@@ -585,62 +604,7 @@
 
                         // Stores how far the user has scrolled
                         var winScrollTop = $(window).scrollTop(),
-
-                            // Stores the height of the window
-                            winHeight = $(window).height(),
-
-                            // Stores the height of the document
-                            docHeight = $(document).height(),
-
-                            scrollHeight = $("body")[0].scrollHeight,
-
-                            // Instantiates a variable that will be used to hold a selected HTML element
-                            elem,
-
-                            lastElem,
-
-                            lastElemOffset,
-
-                            currentElem;
-
-                        if(self.options.extendPage) {
-
-                            // If the user has scrolled to the bottom of the page and the last toc item is not focused
-                            if((self.webkit && winScrollTop >= scrollHeight - winHeight - self.options.extendPageOffset) || (!self.webkit && winHeight + winScrollTop > docHeight - self.options.extendPageOffset)) {
-
-                                if(!$(extendPageClass).length) {
-
-                                    lastElem = $('div[data-unique="' + $(itemClass).last().attr("data-unique") + '"]');
-
-                                    if(!lastElem.length) return;
-
-                                    // Gets the top offset of the page header that is linked to the last toc item
-                                    lastElemOffset = lastElem.offset().top;
-
-                                    // Appends a div to the bottom of the page and sets the height to the difference of the window scrollTop and the last element's position top offset
-                                    $(self.options.context).append($("<div />", {
-
-                                        "class": extendPageClassName,
-
-                                        "height": Math.abs(lastElemOffset - winScrollTop) + "px",
-
-                                        "data-unique": extendPageClassName
-
-                                    }));
-
-                                    if(self.extendPageScroll) {
-
-                                        currentElem = self.element.find('li.active');
-
-                                        self._scrollTo($('div[data-unique="' + currentElem.attr("data-unique") + '"]'));
-
-                                    }
-
-                                }
-
-                            }
-
-                        }
+                            elem;
 
                         // The zero timeout ensures the following code is run after the scroll events
                         setTimeout(function() {
