@@ -318,13 +318,8 @@
           // Highlights the current list item that was clicked
           elem.addClass(self.focusClass);
 
-          // If the showAndHide option is true
-          if (self.options.showAndHide) {
-
-            // Triggers the click event on the currently focused TOC item
-            elem.click();
-
-          }
+          // Triggers the click event on the currently focused TOC item
+          elem.click();
 
         } else {
 
