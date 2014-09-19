@@ -385,11 +385,21 @@
 
                 "data-unique": hashValue
 
-            }).append($("<a/>", {
+            });
+
+            if (this.options.theme !== "bootstrap3") {
+
+              item.append($("<a/>", {
 
                 "text": self.text()
 
-            }));
+              }));
+
+            } else {
+
+              item.text(self.text());
+
+            }
 
             // Adds an HTML anchor tag before the currently traversed HTML element
             self.before($("<div/>", {
@@ -904,6 +914,17 @@
                 this.element.find(headerClass + "," + subheaderClass).addClass("nav nav-list");
 
                 this.focusClass = "active";
+
+            }
+
+            // If the user wants a twitterBootstrap 3 theme
+            else if (this.options.theme === "bootstrap3") {
+
+              this.element.find(headerClass + "," + subheaderClass).addClass("list-group");
+
+              this.element.find(itemClass).addClass("list-group-item");
+
+              this.focusClass = "active";
 
             }
 
