@@ -23,6 +23,7 @@
       tocClass = "." + tocClassName,
       tocFocusClassName = "tocify-focus",
       tocHoverClassName = "tocify-hover",
+      tocOpenClassName = "tocify-open",
       hideTocClassName = "tocify-hide",
       hideTocClass = "." + hideTocClassName,
       headerClassName = "tocify-header",
@@ -788,6 +789,12 @@
           // Hides all non-active sub-headers
           self.hide($(subheaderClass).not(elem));
 
+          // Removes open class on all non-active sub-headers
+          self.element.find("." + self.openClass).removeClass(self.openClass);
+
+          // Adds open class to header
+          elem.closest(headerClass).addClass(tocOpenClassName);
+
         }
 
         // If the current subheader parent element is not a header
@@ -795,6 +802,9 @@
 
           // Hides all non-active sub-headers
           self.hide($(subheaderClass).not(elem.closest(headerClass).find(subheaderClass).not(elem.siblings())));
+          
+          // Removes open class on all non-active sub-headers
+          self.element.find("." + self.openClass).removeClass(self.openClass);
 
         }
 
