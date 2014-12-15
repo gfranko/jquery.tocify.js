@@ -10,6 +10,9 @@
         "jquery-ui": "~1.10.3"
     },
     "description": "A jQuery plugin that dynamically generates a table of contents.",
-    "main": "jquery.tocify.js",
+    "main": [
+      "src/javascripts/jquery.tocify.js",
+      "src/stylesheets/jquery.tocify.css"
+    ],
     "license": "MIT"
 }
