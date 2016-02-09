@@ -972,7 +972,7 @@
 
                     // Sets the smoothScroll animation time duration to the smoothScrollSpeed option
                     "duration": duration,
-                    "complete": function() {
+                    "done": function() {
                         currentDiv.trigger('tocify.scrollEnd');    
                     }
                 });
