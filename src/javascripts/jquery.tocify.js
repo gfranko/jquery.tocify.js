@@ -971,12 +971,11 @@
                 }, {
 
                     // Sets the smoothScroll animation time duration to the smoothScrollSpeed option
-                    "duration": duration,
-                    "done": function() {
-                        currentDiv.trigger('tocify.scrollEnd');    
-                    }
+                    "duration": duration
                 });
 
+            }).promise().done(function(){
+              currentDiv.trigger('tocify.scrollEnd');    
             });
 
             // Maintains chainability
