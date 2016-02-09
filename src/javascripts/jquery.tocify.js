@@ -972,10 +972,9 @@
 
                     // Sets the smoothScroll animation time duration to the smoothScrollSpeed option
                     "duration": duration
+                }).promise().done(function(){
+                  currentDiv.trigger('tocify.scrollEnd');    
                 });
-
-            }).promise().done(function(){
-              currentDiv.trigger('tocify.scrollEnd');    
             });
 
             // Maintains chainability
