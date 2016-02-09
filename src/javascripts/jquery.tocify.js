@@ -130,7 +130,7 @@
 
             // **highlightDefault**: Accepts a boolean: true or false
             // Set's the first TOC item as active if no other TOC item is active.
-            highlightDefault: true
+            highlightDefault: true,
 
         },
 
@@ -973,6 +973,8 @@
                     // Sets the smoothScroll animation time duration to the smoothScrollSpeed option
                     "duration": duration
 
+                }, function(){
+                    currentDiv.trigger('tocify.scrollEnd');
                 });
 
             });
