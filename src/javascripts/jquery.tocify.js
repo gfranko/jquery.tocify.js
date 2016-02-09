@@ -975,7 +975,6 @@
                     "complete": function() {
                         currentDiv.trigger('tocify.scrollEnd');    
                     }
-                }
                 });
 
             });
