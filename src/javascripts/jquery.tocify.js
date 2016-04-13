@@ -130,8 +130,11 @@
 
             // **highlightDefault**: Accepts a boolean: true or false
             // Set's the first TOC item as active if no other TOC item is active.
-            highlightDefault: true
+            highlightDefault: true,
 
+            // **highlightSubheader**: Accepts a boolean: true or false
+            // Set's the subheader of the active TOC item as active.
+            highlightSubheader: true
         },
 
         // _Create
@@ -318,6 +321,11 @@
                 // Highlights the current list item that was clicked
                 elem.addClass(self.focusClass);
 
+                // If the `highlightSubheader` option is true
+                if(self.options.highlightSubheader) {
+                    self._highlightSubheader(elem);
+                }
+
                 // If the showAndHide option is true
                 if(self.options.showAndHide) {
 
@@ -501,7 +509,7 @@
 
         },
 
-       // _setEventHandlers
+        // _setEventHandlers
         // ----------------
         //      Adds jQuery event handlers to the newly generated table of contents
         _setEventHandlers: function() {
@@ -530,7 +538,12 @@
                 self.element.find("." + self.focusClass).removeClass(self.focusClass);
 
                 // Highlights the current list item that was clicked
-                $(this).addClass(self.focusClass);
+                var elem = $(this).addClass(self.focusClass);
+
+                // If the `highlightSubheader` option is true
+                if(self.options.highlightSubheader) {
+                    self._highlightSubheader(elem);
+                }
 
                 // If the showAndHide option is true
                 if(self.options.showAndHide) {
@@ -682,6 +695,11 @@
 
                                 // Highlights the corresponding list item
                                 elem.addClass(self.focusClass);
+
+                                // If the `highlightSubheader` option is true
+                                if(self.options.highlightSubheader) {
+                                    self._highlightSubheader(elem);
+                                }
 
                             }
 
@@ -976,6 +994,23 @@
                 });
 
             });
+
+            // Maintains chainability
+            return self;
+
+        },
+
+        // _highlightSubheader
+        // ---------
+        //      Highlights the subheader of the active element
+        _highlightSubheader: function($elem) {
+
+            var self = this,
+                $subheader = $elem.parent(subheaderClass);
+
+            if(!!$subheader.length) {
+                $subheader.siblings(itemClass).addClass(this.focusClass);
+            }
 
             // Maintains chainability
             return self;
