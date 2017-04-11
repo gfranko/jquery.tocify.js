@@ -23,18 +23,18 @@ A jQuery plugin that dynamically generates a table of contents. Tocify can be op
 
    - Passes **jsHint** with no errors
 
-##Requirements
+## Requirements
 jQuery 1.7.2+
 
 jQueryUI Widget Factory 1.8.21+
 
-##Browser Support
+## Browser Support
 IE7+, Firefox 4+, Chrome, Safari 4+, and Opera 11+
 
-##Unit Tests
+## Unit Tests
 All unit tests are written using the Jasmine Framework (Work in Progress)
 
-##Contributing
+## Contributing
 Take care to maintain the existing coding style. Add Jasmine unit tests for any new or changed functionality. Lint and test your code using [grunt](https://github.com/cowboy/grunt).
 
 If you plan to contribute to `Tocify` in the future, keep in mind that you should make sure your code passes the Grunt checks.  If you are on Windows (like me) remember you need to run the grunt command using `grunt.cmd`.  Also, if you have trouble getting the Jasmine Unit Tests to work with PhantomJS 1.5 (the current release), install PhantomJS 1.3.
@@ -43,16 +43,16 @@ After you have verified your code, send a pull request to the `Tocify` dev branc
 
 You'll find source code in the "src" subdirectory!
 
-##Forking
+## Forking
 If you find that you need a feature that Tocify does not currently support, either let me know via the Tocify issue tracker, or fork Tocify on Github and easily extend it to create your own widget!
 
-###Contributors
+## Contributors
 
   * [Greg Franko](https://github.com/gfranko)
 
   * [Mat Ryer, Stretchr](https://github.com/matryer)
 
-##Change Log
+## Change Log
 
 `1.9.0` - October 1, 2013
 
