@@ -318,12 +318,12 @@
                 elem.addClass(self.focusClass);
 
                 // If the showAndHide option is true
-                if(self.options.showAndHide) {
+                // if(self.options.showAndHide) {
 
                     // Triggers the click event on the currently focused TOC item
                     elem.click();
 
-                }
+                // }
 
             }
 
