@@ -239,6 +239,12 @@
 
             self.element.addClass(tocClassName);
 
+            // find all elements regardless of sibling relationship
+            var allElem = $(this.options.context).find(this.options.selectors);
+
+            // Index of top element in allElem
+            var topIndex = 0;
+
             // Loops through each top level selector
             firstElem.each(function(index) {
 
@@ -259,45 +265,26 @@
                 // Add the created unordered list element to the HTML element calling the plugin
                 self.element.append(ul);
 
-                // Finds all of the HTML tags between the header and subheader elements
-                $(this).nextUntil(this.nodeName.toLowerCase()).each(function() {
+                // find the index of current top element in allElem
+                while (allElem[topIndex] !== this) {
+                    topIndex += 1;
+                }
+                // find the index of next top element in allElem (or the end)
+                var nextIndex = topIndex + 1;
+                while (nextIndex < allElem.length && allElem[nextIndex].nodeName.toLowerCase() !== allElem[topIndex].nodeName.toLowerCase()) {
+                    nextIndex += 1;
+                }
+                // Finds all headers between the two top elements, regardless if they are sibling or children etc
+                topIndex += 1;
+                while (topIndex < nextIndex ) {
+                    var elem = allElem[topIndex];
 
-                    // If there are no nested subheader elemements
-                    if($(this).find(self.options.selectors).length === 0) {
-
-                        // Loops through all of the subheader elements
-                        $(this).filter(self.options.selectors).each(function() {
-
-                            //If the element matches the ignoreSelector then we skip it
-                            if($(this).is(ignoreSelector)) {
-                                return;
-                            }
-
-                            self._appendSubheaders.call(this, self, ul);
-
-                        });
-
+                    //If the element matches the ignoreSelector then we skip it
+                    if( !$(elem).is(ignoreSelector)) {
+                        self._appendSubheaders.call(elem, self, ul);
                     }
-
-                    // If there are nested subheader elements
-                    else {
-
-                        // Loops through all of the subheader elements
-                        $(this).find(self.options.selectors).each(function() {
-
-                            //If the element matches the ignoreSelector then we skip it
-                            if($(this).is(ignoreSelector)) {
-                                return;
-                            }
-
-                            self._appendSubheaders.call(this, self, ul);
-
-                        });
-
-                    }
-
-                });
-
+                    topIndex += 1;
+                }
             });
 
         },
