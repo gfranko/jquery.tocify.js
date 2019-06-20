@@ -141,6 +141,7 @@
 
             var self = this;
 
+            self.tocifyWrapper = $('.tocify-wrapper');
             self.extendPageScroll = true;
 
             // Internal array that keeps track of all TOC items (Helps to recognize if there are duplicate TOC item strings)
@@ -148,6 +149,10 @@
 
             // Generates the HTML for the dynamic table of contents
             self._generateToc();
+
+            // Caches heights and anchors
+            self.cachedHeights = [],
+            self.cachedAnchors = [];
 
             // Adds CSS classes to the newly generated table of contents HTML
             self._addCSSClasses();
@@ -377,6 +382,9 @@
 
             hashValue = this._generateHashValue(arr, self, index);
 
+            // Add the hash value to the element's id
+            // self.attr("id", "link-" + hashValue);
+
             // Appends a list item HTML element to the last unordered list HTML element found within the HTML element calling the plugin
             item = $("<li/>", {
 
@@ -417,6 +425,9 @@
 
                 // prettify the text
                 hashValue = self.text().toLowerCase().replace(/\s/g, "-");
+
+                // remove weird characters
+                hashValue = hashValue.replace(/[^\x00-\x7F]/g, "");
 
                 // fix double hyphens
                 while (hashValue.indexOf("--") > -1) {
@@ -575,7 +586,13 @@
             // only attach handler if needed (expensive in IE)
             if (self.options.extendPage || self.options.highlightOnScroll || self.options.scrollHistory || self.options.showAndHideOnScroll)
             {
-            // Window scroll event handler
+
+                // Reset height cache on scroll
+                $(window).on('resize', function() {
+                    self.calculateHeights();
+                });
+
+                // Window scroll event handler
                 $(window).on("scroll.tocify", function() {
 
                     // Once all animations on the page are complete, this callback function will be called
@@ -647,35 +664,33 @@
 
                             // _Local variables_
 
-                            // Stores the distance to the closest anchor
-                            var closestAnchorDistance = null,
-
-                                // Stores the index of the closest anchor
-                                closestAnchorIdx = null,
-
-                                // Keeps a reference to all anchors
-                                anchors = $(self.options.context).find("div[data-unique]"),
-
+                            // Stores the index of the closest anchor
+                            var closestAnchorIdx = null,
                                 anchorText;
 
+                            // if never calculated before, calculate and cache the heights
+                            if (self.cachedHeights.length == 0) {
+                                self.calculateHeights();
+                            }
+
+                            var scrollTop = $(window).scrollTop();
+
                             // Determines the index of the closest anchor
-                            anchors.each(function(idx) {
-                                var distance = Math.abs(($(this).next().length ? $(this).next() : $(this)).offset().top - winScrollTop - self.options.highlightOffset);
-                                if (closestAnchorDistance == null || distance < closestAnchorDistance) {
-                                    closestAnchorDistance = distance;
+                            self.cachedAnchors.each(function(idx) {
+                                if (self.cachedHeights[idx] - scrollTop < 0) {
                                     closestAnchorIdx = idx;
                                 } else {
                                     return false;
                                 }
                             });
 
-                            anchorText = $(anchors[closestAnchorIdx]).attr("data-unique");
+                            anchorText = $(self.cachedAnchors[closestAnchorIdx]).attr("data-unique");
 
                             // Stores the list item HTML element that corresponds to the currently traversed anchor tag
                             elem = $('li[data-unique="' + anchorText + '"]');
 
                             // If the `highlightOnScroll` option is true and a next element is found
-                            if(self.options.highlightOnScroll && elem.length) {
+                            if(self.options.highlightOnScroll && elem.length && !elem.hasClass(self.focusClass)) {
 
                                 // Removes highlighting from all of the list item's
                                 self.element.find("." + self.focusClass).removeClass(self.focusClass);
@@ -683,13 +698,37 @@
                                 // Highlights the corresponding list item
                                 elem.addClass(self.focusClass);
 
+                                // Scroll to highlighted element's header
+                                var tocifyWrapper = self.tocifyWrapper;
+                                var scrollToElem = $(elem).closest('.tocify-header');
+
+                                var elementOffset = scrollToElem.offset().top,
+                                    wrapperOffset = tocifyWrapper.offset().top;
+                                var offset = elementOffset - wrapperOffset;
+
+                                if (offset >= $(window).height()) {
+                                   var scrollPosition = offset + tocifyWrapper.scrollTop();
+                                   tocifyWrapper.scrollTop(scrollPosition);
+                                } else if (offset < 0) {
+                                   tocifyWrapper.scrollTop(0);
+                                }
+
                             }
 
                             if(self.options.scrollHistory) {
 
-                                if(window.location.hash !== "#" + anchorText) {
+                                if(window.location.hash !== "#" + anchorText && anchorText !== undefined) {
 
-                                    window.location.replace("#" + anchorText);
+                                    if(history.replaceState) {
+                                        history.replaceState({}, "", "#" + anchorText);
+                                    // provide a fallback
+                                    } else {
+                                        scrollV = document.body.scrollTop;
+                                        scrollH = document.body.scrollLeft;
+                                        location.hash = "#" + anchorText;
+                                        document.body.scrollTop = scrollV;
+                                        document.body.scrollLeft = scrollH;
+                                    }
 
                                 }
                             }
@@ -708,6 +747,21 @@
                 });
             }
 
+        },
+
+        // Calculate Heights
+        // ----
+        //      Calculates Heights
+        calculateHeights: function() {
+            var self = this;
+            self.cachedHeights = [];
+            self.cachedAnchors = [];
+            var anchors = $(self.options.context).find("div[data-unique]");
+            anchors.each(function(idx) {
+                var distance = (($(this).next().length ? $(this).next() : $(this)).offset().top - self.options.highlightOffset);
+                self.cachedHeights[idx] = distance;
+            });
+            self.cachedAnchors = anchors;
         },
 
         // Show
@@ -966,7 +1020,7 @@
                 $("html, body").animate({
 
                     // Sets the jQuery `scrollTop` to the top offset of the HTML div tag that matches the current list item's `data-unique` tag
-                    "scrollTop": currentDiv.offset().top - ($.isFunction(scrollTo) ? scrollTo.call() : scrollTo) + "px"
+                    "scrollTop": $('div[data-unique="' + elem.attr("data-unique") + '"]').next().offset().top - ($.isFunction(scrollTo) ? scrollTo.call() : scrollTo) + "px"
 
                 }, {
 
