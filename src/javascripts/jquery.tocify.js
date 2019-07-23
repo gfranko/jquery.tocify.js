@@ -127,6 +127,13 @@
             // function(text, element){} - Your own hash generation function that accepts the text as an
             // argument, and returns the hash value.
             hashGenerator: "compact",
+            
+            // **textGenerator**: How the text value (the text appearing in the menu) will be generated
+            //
+            // "text" (default) - The same text as the selector
+            // function(text, element){} - Your own text generation function that accepts the text as an
+            // argument, and returns a text value
+            textGenerator: "text",
 
             // **highlightDefault**: Accepts a boolean: true or false
             // Set's the first TOC item as active if no other TOC item is active.
@@ -351,7 +358,7 @@
         //      Helps create the table of contents list by appending nested list items
         _nestElements: function(self, index) {
 
-            var arr, item, hashValue;
+            var arr, item, hashValue, textValue;
 
             arr = $.grep(this.items, function (item) {
 
@@ -376,6 +383,8 @@
             }
 
             hashValue = this._generateHashValue(arr, self, index);
+            
+            textValue = this._generateTextValue(arr, self, index);
 
             // Appends a list item HTML element to the last unordered list HTML element found within the HTML element calling the plugin
             item = $("<li/>", {
@@ -387,7 +396,7 @@
 
             }).append($("<a/>", {
 
-                "text": self.text()
+                "text": textValue
 
             }));
 
@@ -402,6 +411,28 @@
             }));
 
             return item;
+
+        },
+        
+        // _generateTextValue
+        // ------------------
+        //      Generates the text value that will be used in the menu
+        _generateTextValue: function(arr, self, index) {
+
+            var textValue = "",
+                textGeneratorOption = this.options.textGenerator;
+
+            if (textGeneratorOption === "text") {
+
+                textValue = self.text();
+
+            } else if (typeof textGeneratorOption === "function") {
+
+                textValue = textGeneratorOption(self.text(), self);
+
+            }
+
+            return textValue;
 
         },
 
