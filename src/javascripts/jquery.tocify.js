@@ -176,8 +176,7 @@
             self._setEventHandlers();
 
             // Binding to the Window load event to make sure the correct scrollTop is calculated
-            $(window).load(function() {
-
+            $(window).on("load", function() {
                 // Sets the active TOC item
                 self._setActiveElement(true);
 
@@ -319,12 +318,12 @@
                 elem.addClass(self.focusClass);
 
                 // If the showAndHide option is true
-                if(self.options.showAndHide) {
+                // if(self.options.showAndHide) {
 
                     // Triggers the click event on the currently focused TOC item
                     elem.click();
 
-                }
+                // }
 
             }
 

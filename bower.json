@@ -6,8 +6,8 @@
         "gfranko <gregfranko5@gmail.com>"
     ],
     "dependencies": {
-        "jquery": "~1.9.1",
-        "jquery-ui": "~1.10.3"
+        "jquery": "~3.5.1",
+        "jquery-ui": "~1.12.1"
     },
     "description": "A jQuery plugin that dynamically generates a table of contents.",
     "main": "jquery.tocify.js",
