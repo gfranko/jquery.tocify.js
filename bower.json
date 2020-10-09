@@ -6,7 +6,7 @@
         "gfranko <gregfranko5@gmail.com>"
     ],
     "dependencies": {
-        "jquery": "~3.4.1",
+        "jquery": "~3.5.1",
         "jquery-ui": "~1.12.1"
     },
     "description": "A jQuery plugin that dynamically generates a table of contents.",
